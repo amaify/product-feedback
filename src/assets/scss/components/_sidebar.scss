@@ -68,6 +68,11 @@
 
 			&:hover {
 				cursor: pointer;
+				background: $color-blue-hover;
+				color: $color-blue;
+			}
+
+			&.active {
 				background: $color-blue;
 				color: $color-white;
 			}

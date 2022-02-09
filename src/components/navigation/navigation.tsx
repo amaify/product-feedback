@@ -22,6 +22,7 @@ function Navigation() {
 				btnNumber="1"
 				icon={<img src={IconPlus} alt="Addition Sign" />}
 				btnText="Add Feedback"
+				link="/new-feedback"
 			/>
 		</nav>
 	);

@@ -1,11 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { ListOfArray } from "../../utils/model";
 
-interface FeatureList {
-	id: number;
-	text: string;
-}
-
-const listItems: FeatureList[] = [
+const listItems: ListOfArray[] = [
 	{ id: 0, text: "All" },
 	{ id: 1, text: "UI" },
 	{ id: 2, text: "UX" },
@@ -15,6 +11,12 @@ const listItems: FeatureList[] = [
 ];
 
 function Feature() {
+	const [activeFeature, setActiveFeature] = useState(0);
+
+	const setActiveFeatureHandler = (item: { id: number; text: string }) => {
+		setActiveFeature(item.id);
+	};
+
 	return (
 		<div className="sidebar-feature">
 			<ul className="sidebar-feature__list">
@@ -22,7 +24,10 @@ function Feature() {
 					<li
 						key={item.id}
 						id={item.text}
-						className="sidebar-feature__list--item"
+						className={`sidebar-feature__list--item ${
+							item.id === activeFeature ? "active" : null
+						}`}
+						onClick={() => setActiveFeatureHandler(item)}
 					>
 						{item.text}
 					</li>
