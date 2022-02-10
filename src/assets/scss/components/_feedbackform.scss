@@ -1,0 +1,167 @@
+.feedbackForm {
+	&-content {
+		width: 54em;
+		margin: 0 auto;
+
+		&__link {
+			margin-bottom: 6.8em;
+			cursor: pointer;
+
+			& span:last-child {
+				font-size: 1.4em;
+				line-height: 20px;
+				font-weight: normal;
+				color: $color-grey;
+				text-transform: capitalize;
+				text-decoration: underline;
+				margin-left: 1.5em;
+			}
+		}
+	}
+
+	&-form {
+		background: $color-white;
+		padding: 5.2em 4.2em 4em 4.2em;
+		border-radius: 10px;
+		position: relative;
+
+		&__icon {
+			position: absolute;
+			top: -3em;
+			left: 4em;
+		}
+
+		&__heading {
+			color: $color-darkerBlue;
+			text-transform: capitalize;
+			font-weight: 700;
+			font-size: 2.4em;
+			line-height: 34.68px;
+
+			margin-bottom: 1.5em;
+		}
+
+		&__control {
+			display: flex;
+			flex-direction: column;
+
+			&:not(:last-child) {
+				margin-bottom: 2.4em;
+			}
+
+			& label {
+				margin-bottom: 1.6em;
+
+				& span {
+					display: block;
+					font-size: 1.4em;
+					line-height: 20px;
+				}
+
+				& span:first-child {
+					font-weight: 700;
+					text-transform: capitalize;
+					color: $color-darkerBlue;
+				}
+
+				& span:last-child {
+					color: $color-grey;
+				}
+			}
+
+			& input,
+			textarea {
+				border: none;
+				outline: none;
+				padding: 1.3em 2.4em;
+				background: $color-background-light;
+				border-radius: 5px;
+			}
+		}
+
+		&__select {
+			padding: 1.3em 2.4em;
+			background: $color-background-light;
+			border-radius: 5px;
+			cursor: pointer;
+			position: relative;
+			z-index: 2;
+
+			& p {
+				font-size: 1.5em;
+				color: $color-darkBlue;
+
+				display: flex;
+
+				& span:first-child {
+					margin-right: auto;
+				}
+			}
+
+			&--options {
+				position: absolute;
+				background: $color-white;
+				box-shadow: 0px 10px 40px -7px rgba(55, 63, 104, 0.350492);
+				border-radius: 10px;
+				top: 6.5em;
+				left: 0;
+				width: 100%;
+				list-style: none;
+				z-index: -1;
+
+				opacity: 0;
+				visibility: hidden;
+
+				&.show-options {
+					opacity: 1;
+					visibility: visible;
+				}
+
+				&__item {
+					font-size: 1.6em;
+					line-height: 23px;
+					color: $color-grey;
+
+					padding: 1.1em 2.4em;
+					display: flex;
+					position: relative;
+
+					& span:first-child {
+						margin-right: auto;
+					}
+
+					&:not(:last-child) {
+						&::after {
+							content: "";
+							position: absolute;
+							bottom: 0;
+							left: 0;
+							width: 100%;
+							height: 1px;
+							background: $color-darkerBlue;
+							opacity: 0.15;
+						}
+					}
+
+					&:hover {
+						color: $color-alpha;
+					}
+
+					&.active {
+						color: $color-alpha;
+					}
+				}
+			}
+		}
+
+		&__btns {
+			margin-top: 3.2em;
+			display: flex;
+			justify-content: flex-end;
+
+			& .button-3 {
+				margin-right: 1.6em;
+			}
+		}
+	}
+}

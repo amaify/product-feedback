@@ -1,0 +1,59 @@
+import React, { useState } from "react";
+import FeedbackDropdown from "./feedback-dropdown";
+
+import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
+import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
+
+interface InputSelectProps {
+	labelTitle: string;
+	labelDescription: string;
+	labelHtmlFor: string;
+}
+
+function InputSelect(props: InputSelectProps) {
+	const [displayOptions, setDisplayOptions] = useState(false);
+	const [activeClick, setActiveClick] = useState(0);
+	const [activeText, setActiveText] = useState("Feature");
+
+	const onSelectItemHandler = (item: { id: number; text: string }) => {
+		setActiveClick(item.id);
+		setActiveText(item.text);
+	};
+
+	const onSelectOptionHandler = () => {
+		setDisplayOptions(!displayOptions);
+	};
+
+	return (
+		<div className="feedbackForm-form__control">
+			<label htmlFor={props.labelHtmlFor}>
+				<span>{props.labelTitle}</span>
+				<span>{props.labelDescription}</span>
+			</label>
+			<div
+				className="feedbackForm-form__select"
+				onClick={onSelectOptionHandler}
+			>
+				<p>
+					<span>{activeText}</span>
+					<span>
+						{displayOptions ? (
+							<img src={ArrowUp} alt="Arrow pointing down" />
+						) : (
+							<img src={ArrowDown} alt="Arrow pointing up" />
+						)}
+					</span>
+				</p>
+
+				<FeedbackDropdown
+					activeElement={activeClick}
+					activeTextElement={activeText}
+					onSelectItem={onSelectItemHandler}
+					displayElement={displayOptions}
+				/>
+			</div>
+		</div>
+	);
+}
+
+export default InputSelect;
