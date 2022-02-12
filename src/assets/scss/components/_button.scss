@@ -32,6 +32,16 @@
 		}
 	}
 
+	&-4 {
+		font-weight: 700;
+		background: $color-red;
+		color: $color-white;
+
+		&:hover {
+			background: $color-red-hover;
+		}
+	}
+
 	&-icon {
 		margin-right: 0.15em;
 	}

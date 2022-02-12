@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/button";
 import InputSelect from "./input/select";
+import EditInputSelect from "./input/edit-select";
 import FormInput from "./input/input";
 
 import LeftArrow from "../../assets/images/shared/icon-arrow-left.svg";
 import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
+import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
 
 function NewFeedbackForm() {
 	const navigate = useNavigate();
+
+	const [editForm, setEditForm] = useState(false);
 
 	return (
 		<section className="feedbackForm">
@@ -23,9 +27,17 @@ function NewFeedbackForm() {
 
 				<form className="feedbackForm-form">
 					<div className="feedbackForm-form__icon">
-						<img src={NewFeedbackIcon} alt="Suggestion Icon" />
+						{!editForm ? (
+							<img src={NewFeedbackIcon} alt="New feedback display" />
+						) : (
+							<img src={EditFeedbackIcon} alt="Edit feedback display" />
+						)}
 					</div>
-					<h2 className="feedbackForm-form__heading">create new feedback</h2>
+					<h2 className="feedbackForm-form__heading">
+						{!editForm
+							? "create new feedback"
+							: `Editing 'Add a dark theme option'`}
+					</h2>
 
 					<FormInput
 						labelHtmlFor="title"
@@ -43,6 +55,14 @@ function NewFeedbackForm() {
 						labelDescription="Choose a category for your feedback"
 					/>
 
+					{editForm && (
+						<EditInputSelect
+							labelHtmlFor="updateStatus"
+							labelTitle="update status"
+							labelDescription="Change feedback state"
+						/>
+					)}
+
 					<FormInput
 						control="textarea"
 						labelHtmlFor="details"
@@ -53,8 +73,15 @@ function NewFeedbackForm() {
 					/>
 
 					<div className="feedbackForm-form__btns">
-						<Button btnText="Cancel" btnNumber="3" />
-						<Button btnText="Add Feedback" btnNumber="1" />
+						{editForm && (
+							<div className="feedbackForm-form__btns--delete">
+								<Button btnText="Delete" btnNumber="4" />
+							</div>
+						)}
+						<div className="feedbackForm-form__btns--actions">
+							<Button btnText="Cancel" btnNumber="3" />
+							<Button btnText="Add Feedback" btnNumber="1" />
+						</div>
 					</div>
 				</form>
 			</div>

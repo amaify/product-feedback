@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FeedbackDropdown from "./feedback-dropdown";
+import EditDropdown from "./editFeedback-dropdown";
 
 import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
 import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
@@ -10,10 +11,10 @@ interface InputSelectProps {
 	labelHtmlFor: string;
 }
 
-function InputSelect(props: InputSelectProps) {
+function EditInputSelect(props: InputSelectProps) {
 	const [displayOptions, setDisplayOptions] = useState(false);
 	const [activeClick, setActiveClick] = useState(0);
-	const [activeText, setActiveText] = useState("Feature");
+	const [activeText, setActiveText] = useState("Suggestion");
 
 	const onSelectItemHandler = (item: { id: number; text: string }) => {
 		setActiveClick(item.id);
@@ -46,7 +47,7 @@ function InputSelect(props: InputSelectProps) {
 						</span>
 					</p>
 
-					<FeedbackDropdown
+					<EditDropdown
 						activeElement={activeClick}
 						activeTextElement={activeText}
 						onSelectItem={onSelectItemHandler}
@@ -58,4 +59,4 @@ function InputSelect(props: InputSelectProps) {
 	);
 }
 
-export default InputSelect;
+export default EditInputSelect;
