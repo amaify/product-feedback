@@ -1,0 +1,128 @@
+.feedback {
+	// background: $color-white;
+	// padding: 2.8em 3.2em;
+	border-radius: 10px;
+	// width: 100%;
+	// cursor: pointer;
+
+	// display: flex;
+	// align-items: center;
+
+	&-wrapper {
+		background: $color-white;
+		border-radius: 10px;
+		padding: 2.8em 3.2em;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		margin-bottom: 2em;
+
+		&:not(:last-child) {
+			margin-bottom: 2em;
+		}
+	}
+
+	&-upvote {
+		background: $color-background;
+		padding: 14px 9px 10px 9px;
+		margin-right: 4em;
+		width: 4em;
+		height: 6.3em;
+		border-radius: 10px;
+		cursor: pointer;
+
+		align-self: flex-start;
+
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		// align-content: center;
+
+		&__img {
+			width: 100%;
+			margin-bottom: 0.6em;
+
+			& img {
+				width: 70%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+
+		& p {
+			font-size: 1.3em;
+			line-height: 19px;
+			font-weight: bold;
+			color: $color-darkerBlue;
+			// width: 100%;
+			min-width: 0;
+
+			white-space: nowrap;
+		}
+	}
+
+	&-contents {
+		margin-right: auto;
+		width: 80%;
+		cursor: pointer;
+		text-decoration: none;
+
+		&__heading {
+			font-size: 1.8em;
+			font-weight: 700;
+			color: $color-darkerBlue;
+			line-height: 26px;
+		}
+
+		&__text {
+			font-size: 1.6em;
+			font-weight: 500;
+			color: #647196;
+		}
+
+		&__feature {
+			background: $color-background;
+			color: $color-alpha;
+
+			padding: 0.6em 1.6em;
+			border-radius: 10px;
+			margin-top: 1.2em;
+
+			font-size: 1.3em;
+			font-weight: 600;
+			line-height: 19px;
+			// width: 15%;
+			text-align: center;
+			display: inline-block;
+		}
+	}
+
+	&-comments {
+		display: flex;
+		align-content: center;
+		// width: 20%;
+
+		&__img {
+			width: 1.8em;
+			height: 1.6em;
+			margin-right: 0.8em;
+
+			align-self: center;
+
+			& img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+
+		& p {
+			font-size: 1.6em;
+			font-weight: 700;
+			line-height: 23.12px;
+			color: $color-darkerBlue;
+			align-self: flex-start;
+		}
+	}
+}

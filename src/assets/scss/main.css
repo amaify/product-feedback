@@ -638,4 +638,136 @@ html {
 .emptyFeedback-content__texts--description span:first-child {
   display: block;
 }
+
+.feedback {
+  border-radius: 10px;
+}
+
+.feedback-wrapper {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 2.8em 3.2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.feedback-wrapper:not(:last-child) {
+  margin-bottom: 2em;
+}
+
+.feedback-upvote {
+  background: #f2f4fe;
+  padding: 14px 9px 10px 9px;
+  margin-right: 4em;
+  width: 4em;
+  height: 6.3em;
+  border-radius: 10px;
+  cursor: pointer;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.feedback-upvote__img {
+  width: 100%;
+  margin-bottom: 0.6em;
+}
+
+.feedback-upvote__img img {
+  width: 70%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.feedback-upvote p {
+  font-size: 1.3em;
+  line-height: 19px;
+  font-weight: bold;
+  color: #3a4374;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.feedback-contents {
+  margin-right: auto;
+  width: 80%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.feedback-contents__heading {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #3a4374;
+  line-height: 26px;
+}
+
+.feedback-contents__text {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: #647196;
+}
+
+.feedback-contents__feature {
+  background: #f2f4fe;
+  color: #ad1fea;
+  padding: 0.6em 1.6em;
+  border-radius: 10px;
+  margin-top: 1.2em;
+  font-size: 1.3em;
+  font-weight: 600;
+  line-height: 19px;
+  text-align: center;
+  display: inline-block;
+}
+
+.feedback-comments {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.feedback-comments__img {
+  width: 1.8em;
+  height: 1.6em;
+  margin-right: 0.8em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.feedback-comments__img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.feedback-comments p {
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 23.12px;
+  color: #3a4374;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
 /*# sourceMappingURL=main.css.map */

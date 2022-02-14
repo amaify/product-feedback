@@ -1,7 +1,7 @@
 import React from "react";
 
 import Sidebar from "../sidebar/sidebar";
-import Feedback from "../feedback/feedback";
+import FeedbackContainer from "../feedback/feedbackContainer";
 import Navigation from "../navigation/navigation";
 
 function Layout() {
@@ -12,7 +12,7 @@ function Layout() {
 			</div>
 			<div className="layout-main">
 				<Navigation />
-				<Feedback />
+				<FeedbackContainer />
 			</div>
 		</section>
 	);
