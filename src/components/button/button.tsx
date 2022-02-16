@@ -7,12 +7,14 @@ interface ButtonProps {
 	icon?: {};
 	btnText: string;
 	link?: string;
+	onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
 	return !props.link ? (
 		<button
 			className={`button button-${props.btnNumber} button-${props.btnNumber}__${props.responsive}`}
+			onClick={props.onClick}
 		>
 			{props.icon && <span className="button-icon">{props.icon}</span>}
 			<span>{props.btnText}</span>

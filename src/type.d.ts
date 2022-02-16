@@ -1,3 +1,20 @@
+import { compose } from "redux";
+
 interface Window {
 	__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+}
+
+interface ArrayOfRoadmaps {
+	id: number;
+	roadmapType: string;
+	title: string;
+	text: string;
+	feature: string;
+	upvotes: number;
+	comments: number;
+}
+
+interface UpvoteProps {
+	divClassName: string;
+	upvoteNumbers: number;
 }

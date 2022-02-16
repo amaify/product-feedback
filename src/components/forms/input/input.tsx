@@ -4,10 +4,15 @@ interface InputPropTypes {
 	type?: string;
 	control: string;
 	name: string;
-	labelName: string;
-	labelDescription: string;
+	labelName?: string;
+	labelDescription?: string;
 	id: string;
-	labelHtmlFor: string;
+	labelHtmlFor?: string;
+	placeholder?: string;
+	onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	defaultValue?: string;
+	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	maxLength?: number;
 }
 
 const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
@@ -15,15 +20,22 @@ const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
 		<>
 			{props.control === "textarea" ? (
 				<div className="feedbackForm-form__control">
-					<label htmlFor={props.labelHtmlFor}>
-						<span>{props.labelName}</span>
-						<span>{props.labelDescription}</span>
-					</label>
+					{props.labelHtmlFor && props.labelName && props.labelDescription && (
+						<label htmlFor={props.labelHtmlFor}>
+							<span>{props.labelName}</span>
+							<span>{props.labelDescription}</span>
+						</label>
+					)}
 					<textarea
 						name={props.name}
-						cols={30}
-						rows={5}
+						// cols={30}
+						// rows={5}
 						id={props.id}
+						defaultValue={props.defaultValue}
+						placeholder={props.placeholder}
+						onChange={props.onChange}
+						onBlur={props.onBlur}
+						maxLength={props.maxLength}
 					></textarea>
 				</div>
 			) : (

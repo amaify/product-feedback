@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
-import Upvotes from "./components/upvote";
+// import Upvotes from "./components/upvote";
+import Upvotes from "../../upvotes/upvotes";
 
 function Feedback() {
 	return (
 		<section className="feedback">
 			<div className="feedback-wrapper">
-				<Upvotes />
+				<Upvotes divClassName="feedback-upvote" upvoteNumbers={108} />
 				<Link
 					to={{ pathname: `/feedback-details/${123}` }}
 					className="feedback-contents"
@@ -28,7 +29,7 @@ function Feedback() {
 			</div>
 
 			<div className="feedback-wrapper">
-				<Upvotes />
+				<Upvotes divClassName="feedback-upvote" upvoteNumbers={23} />
 				<div className="feedback-contents">
 					<h2 className="feedback-contents__heading">
 						Add a dark theme option
@@ -48,7 +49,7 @@ function Feedback() {
 			</div>
 
 			<div className="feedback-wrapper">
-				<Upvotes />
+				<Upvotes divClassName="feedback-upvote" upvoteNumbers={48} />
 				<div className="feedback-contents">
 					<h2 className="feedback-contents__heading">
 						Q&A within the challenge hubs

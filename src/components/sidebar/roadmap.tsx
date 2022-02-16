@@ -1,12 +1,12 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Roadmap() {
 	return (
 		<div className="sidebar-roadmap">
 			<div className="sidebar-roadmap__heading">
 				<h2>Roadmap</h2>
-				<a href="#">View</a>
+				<Link to="/roadmap">View</Link>
 			</div>
 
 			<ul className="sidebar-roadmap__items">
