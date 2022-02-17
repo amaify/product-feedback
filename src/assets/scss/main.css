@@ -96,7 +96,7 @@ html {
 
 .sidebar-feature__list--item:hover {
   cursor: pointer;
-  background: #cfd7ff;
+  background: #8397fb;
   color: #4661e6;
 }
 
@@ -134,9 +134,17 @@ html {
 
 .sidebar-roadmap__heading a {
   font-size: 1.3em;
+  font-weight: 600;
   line-height: 19px;
   color: #4661e6;
   opacity: 0.25;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-roadmap__heading a:hover {
+  color: #8397fb;
+  opacity: 1;
 }
 
 .sidebar-roadmap__items {
@@ -216,6 +224,10 @@ html {
   color: #ffffff;
 }
 
+.button-2:hover {
+  background: #7c91f9;
+}
+
 .button-3 {
   font-weight: 700;
   background: #3a4374;
@@ -242,6 +254,25 @@ html {
 
 .button:hover {
   cursor: pointer;
+}
+
+.upvote {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.upvote:hover {
+  background: #cfd7ff;
+}
+
+.upvote-active {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background: #4661e6 !important;
+}
+
+.upvote-active p {
+  color: #ffffff !important;
 }
 
 .navigation {
@@ -308,6 +339,8 @@ html {
   line-height: 20px;
   color: #f2f4fe;
   margin-right: 0.9em;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .navigation-sort__text span {
@@ -315,8 +348,10 @@ html {
   font-weight: 700;
 }
 
-.navigation-sort__text span:hover {
+.navigation-sort__text:hover {
   cursor: pointer;
+  color: #f2f4fe;
+  opacity: 0.75;
 }
 
 .navigation-sort__dropdown {
@@ -481,12 +516,22 @@ html {
   font-family: "Jost", sans-serif;
 }
 
+.feedbackForm-form__control input:hover, .feedbackForm-form__control input:focus,
+.feedbackForm-form__control textarea:hover,
+.feedbackForm-form__control textarea:focus {
+  outline: 1px solid #4661e6;
+}
+
 .feedbackForm-form__select {
   padding: 1.3em 2.4em;
   background: #f7f8fd;
   border-radius: 5px;
   cursor: pointer;
   position: relative;
+}
+
+.feedbackForm-form__select:hover {
+  outline: 1px solid #4661e6;
 }
 
 .feedbackForm-form__select p {
@@ -719,11 +764,17 @@ html {
   text-decoration: none;
 }
 
+.feedback-contents:hover .feedback-contents__heading {
+  color: #4661e6;
+}
+
 .feedback-contents__heading {
   font-size: 1.8em;
   font-weight: 700;
   color: #3a4374;
   line-height: 26px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .feedback-contents__text {
@@ -1012,6 +1063,12 @@ html {
   position: absolute;
   top: 0;
   right: 0;
+  -webkit-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
+}
+
+.comments-comment__contents--replyBtn:hover {
+  text-decoration: underline;
 }
 
 .comments-comment__contents--replyComment {
@@ -1109,6 +1166,10 @@ html {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+.roadmap-control__heading p span:last-child:hover {
+  text-decoration: underline;
 }
 
 .roadmap-control__heading h2 {
@@ -1229,6 +1290,10 @@ html {
 
 .roadmap-components__card a {
   text-decoration: none;
+}
+
+.roadmap-components__card a:hover .roadmap-components__card--heading {
+  color: #4661e6;
 }
 
 .roadmap-components__card:not(:last-child) {

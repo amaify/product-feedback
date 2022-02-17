@@ -8,7 +8,7 @@ function AddComment() {
 	const [inputValue, setInputValue] = useState<string>("");
 
 	const inputChangeHandler = (
-		event: React.ChangeEvent<HTMLTextAreaElement>
+		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
 	) => {
 		const char = event.target.value;
 
@@ -24,7 +24,9 @@ function AddComment() {
 		setInputValue(char);
 	};
 
-	const blurHandler = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+	const blurHandler = (
+		event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => {
 		console.log(inputValue);
 	};
 

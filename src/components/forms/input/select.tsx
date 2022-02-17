@@ -8,17 +8,20 @@ interface InputSelectProps {
 	labelTitle: string;
 	labelDescription: string;
 	labelHtmlFor: string;
+	activeText: string;
+	activeClick: number;
+	onSelectItemHandler: (item: { id: number; text: string }) => void;
 }
 
 function InputSelect(props: InputSelectProps) {
 	const [displayOptions, setDisplayOptions] = useState(false);
-	const [activeClick, setActiveClick] = useState(0);
-	const [activeText, setActiveText] = useState("Feature");
+	// const [activeClick, setActiveClick] = useState(0);
+	// const [activeText, setActiveText] = useState("Feature");
 
-	const onSelectItemHandler = (item: { id: number; text: string }) => {
-		setActiveClick(item.id);
-		setActiveText(item.text);
-	};
+	// const onSelectItemHandler = (item: { id: number; text: string }) => {
+	// 	setActiveClick(item.id);
+	// 	setActiveText(item.text);
+	// };
 
 	const onSelectOptionHandler = () => {
 		setDisplayOptions(!displayOptions);
@@ -36,7 +39,7 @@ function InputSelect(props: InputSelectProps) {
 					onClick={onSelectOptionHandler}
 				>
 					<p>
-						<span>{activeText}</span>
+						<span>{props.activeText}</span>
 						<span>
 							{displayOptions ? (
 								<img src={ArrowUp} alt="Arrow pointing down" />
@@ -47,9 +50,9 @@ function InputSelect(props: InputSelectProps) {
 					</p>
 
 					<FeedbackDropdown
-						activeElement={activeClick}
-						activeTextElement={activeText}
-						onSelectItem={onSelectItemHandler}
+						activeElement={props.activeClick}
+						activeTextElement={props.activeText}
+						onSelectItem={props.onSelectItemHandler}
 						displayElement={displayOptions}
 					/>
 				</div>

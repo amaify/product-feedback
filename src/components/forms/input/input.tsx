@@ -9,9 +9,13 @@ interface InputPropTypes {
 	id: string;
 	labelHtmlFor?: string;
 	placeholder?: string;
-	onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	onChange?: (
+		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => void;
 	defaultValue?: string;
-	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	onBlur?: (
+		event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => void;
 	maxLength?: number;
 }
 
@@ -44,7 +48,13 @@ const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
 						<span>{props.labelName}</span>
 						<span>{props.labelDescription}</span>
 					</label>
-					<input type={props.type} name={props.name} id={props.id} />
+					<input
+						type={props.type}
+						name={props.name}
+						id={props.id}
+						onChange={props.onChange}
+						defaultValue={props.defaultValue}
+					/>
 				</div>
 			)}
 		</>

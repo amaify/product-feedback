@@ -93,6 +93,11 @@
 				font-weight: normal;
 				line-height: 22px;
 				font-family: "Jost", sans-serif;
+
+				&:hover,
+				&:focus {
+					outline: 1px solid $color-blue;
+				}
 			}
 		}
 
@@ -103,6 +108,10 @@
 			cursor: pointer;
 			position: relative;
 			// z-index: 2;
+
+			&:hover {
+				outline: 1px solid $color-blue;
+			}
 
 			& p {
 				font-size: 1.5em;

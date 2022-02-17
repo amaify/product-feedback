@@ -51,14 +51,17 @@
 		line-height: 20px;
 		color: $color-background;
 		margin-right: 0.9em;
+		transition: all 0.3s ease-in-out;
 
 		& span {
 			text-transform: capitalize;
 			font-weight: 700;
+		}
 
-			&:hover {
-				cursor: pointer;
-			}
+		&:hover {
+			cursor: pointer;
+			color: $color-background;
+			opacity: 0.75;
 		}
 	}
 

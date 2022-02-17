@@ -5,6 +5,7 @@ import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
 import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
 
 import Dropdown from "./dropdown";
+import { spawn } from "child_process";
 
 const DropdownList: ListOfArray[] = [
 	{ id: 0, text: "Most Upvotes" },
@@ -30,8 +31,8 @@ const NavigationSort: React.FC = () => {
 
 	return (
 		<div className="navigation-sort">
-			<p className="navigation-sort__text">
-				Sort by : <span onClick={onDisplayDropdownHandler}>{activeText}</span>
+			<p className="navigation-sort__text" onClick={onDisplayDropdownHandler}>
+				Sort by : <span>{activeText}</span>
 			</p>
 			<div className="navigation-sort__img">
 				{!showDropdown ? (

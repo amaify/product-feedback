@@ -35,6 +35,10 @@
 						object-fit: contain;
 					}
 				}
+
+				& span:last-child:hover {
+					text-decoration: underline;
+				}
 			}
 
 			& h2 {
@@ -153,6 +157,12 @@
 
 		& a {
 			text-decoration: none;
+
+			&:hover {
+				& .roadmap-components__card--heading {
+					color: $color-blue;
+				}
+			}
 		}
 
 		&:not(:last-child) {

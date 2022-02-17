@@ -10,10 +10,45 @@ import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
 import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
 
+type FormInputsType = {
+	title: string;
+	detailDescription: string;
+	category: string;
+};
+
 function NewFeedbackForm() {
 	const navigate = useNavigate();
 
 	const [editForm, setEditForm] = useState(false);
+	const [formInput, setFormInput] = useState<FormInputsType>({
+		title: "",
+		detailDescription: "",
+		category: "Feature",
+	});
+
+	const [activeClick, setActiveClick] = useState(0);
+	const [activeText, setActiveText] = useState("Feature");
+
+	const submitFormHandler = (event: React.FormEvent) => {
+		event.preventDefault();
+		console.log(formInput);
+		// console.log(activeText);
+	};
+
+	const inputChangeHandler = (
+		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => {
+		const { name, value } = event.target;
+
+		setFormInput({ ...formInput, [name]: value });
+	};
+
+	const onSelectItemHandler = (item: { id: number; text: string }) => {
+		setActiveClick(item.id);
+		setActiveText(item.text);
+
+		setFormInput({ ...formInput, category: item.text });
+	};
 
 	return (
 		<section className="feedbackForm">
@@ -25,7 +60,7 @@ function NewFeedbackForm() {
 					<span>go back</span>
 				</p>
 
-				<form className="feedbackForm-form">
+				<form className="feedbackForm-form" onSubmit={submitFormHandler}>
 					<div className="feedbackForm-form__icon">
 						{!editForm ? (
 							<img src={NewFeedbackIcon} alt="New feedback display" />
@@ -47,12 +82,17 @@ function NewFeedbackForm() {
 						name="title"
 						id="title"
 						control="input"
+						onChange={inputChangeHandler}
+						defaultValue={formInput.title}
 					/>
 
 					<InputSelect
 						labelHtmlFor="category"
 						labelTitle="category"
 						labelDescription="Choose a category for your feedback"
+						activeText={activeText}
+						activeClick={activeClick}
+						onSelectItemHandler={onSelectItemHandler}
 					/>
 
 					{editForm && (
@@ -70,6 +110,8 @@ function NewFeedbackForm() {
 						labelDescription="Include any specific comments on what should be improved, added, etc."
 						name="detailDescription"
 						id="details"
+						onChange={inputChangeHandler}
+						defaultValue={formInput.detailDescription}
 					/>
 
 					<div className="feedbackForm-form__btns">

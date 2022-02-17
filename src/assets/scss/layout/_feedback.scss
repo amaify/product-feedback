@@ -68,11 +68,19 @@
 		cursor: pointer;
 		text-decoration: none;
 
+		&:hover {
+			& .feedback-contents__heading {
+				color: $color-blue;
+			}
+		}
+
 		&__heading {
 			font-size: 1.8em;
 			font-weight: 700;
 			color: $color-darkerBlue;
 			line-height: 26px;
+
+			transition: all 0.3s ease-in-out;
 		}
 
 		&__text {

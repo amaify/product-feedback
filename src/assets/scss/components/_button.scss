@@ -26,6 +26,10 @@
 		font-weight: 700;
 		background: $color-blue;
 		color: $color-white;
+
+		&:hover {
+			background: #7c91f9;
+		}
 	}
 
 	&-3 {
@@ -54,5 +58,24 @@
 
 	&:hover {
 		cursor: pointer;
+	}
+}
+
+//CODE FOR THE UPVOTE BUTTON
+.upvote {
+	transition: all 0.3s ease-in-out;
+
+	&:hover {
+		background: $color-blue-hover-200;
+	}
+}
+
+.upvote-active {
+	transition: all 0.3s ease-in-out;
+
+	background: $color-blue !important;
+
+	& p {
+		color: $color-white !important;
 	}
 }
