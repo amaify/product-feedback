@@ -37,9 +37,11 @@ function AddComment() {
 
 	let charLeftText;
 
-	charactersLeft <= 1
+	charactersLeft === 1
 		? (charLeftText = "Character left")
-		: (charLeftText = "Characters left");
+		: charactersLeft === 0
+		? (charLeftText = "Characters finished")
+		: (charLeftText = "Characters Left");
 
 	return (
 		<div className="addcomment">
@@ -60,7 +62,8 @@ function AddComment() {
 
 				<div className="addcomment-actions">
 					<p className="addcomment-actions__wordcount">
-						<span>{charactersLeft}</span> <span>{charLeftText}</span>
+						<span>{charactersLeft !== 0 ? charactersLeft : ""}</span>{" "}
+						<span>{charLeftText}</span>
 					</p>
 
 					<Button btnNumber="1" btnText="Post Comment" />
