@@ -17,14 +17,18 @@ function FeedbackDetails() {
 			<div className="feedbackdetails-contents">
 				<div className="feedbackdetails-contents__feedback">
 					<div className="feedbackdetails-contents__controls">
-						<p onClick={() => navigate("/")}>
+						<p onClick={() => navigate(-1)}>
 							<span>
 								<img src={ArrowLeft} alt="Arrow facing Left" />
 							</span>
 							<span>go back</span>
 						</p>
 
-						<Button btnNumber="2" btnText="Edit Feedback" />
+						<Button
+							btnNumber="2"
+							btnText="Edit Feedback"
+							link="/new-feedback"
+						/>
 					</div>
 
 					<div className="feedbackdetails-contents__feedback--text">

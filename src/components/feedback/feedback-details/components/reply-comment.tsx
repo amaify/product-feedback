@@ -1,14 +1,28 @@
 import React from "react";
-import FormInput from "../../../forms/input/input";
+
+import FormInput from "../../../input/input";
 import Button from "../../../button/button";
 
 interface ReplyCommentProps {
-	postReply: () => void;
 	commentNumber: number;
+	submitFormHandler?: (event: React.FormEvent) => void;
+	onChangeHandler?: (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+	onBlur?: (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+	hasError?: boolean;
+	isValueValid?: boolean;
+	resetInput?: () => void;
+	value?: string;
 }
 
 function ReplyComment(props: ReplyCommentProps) {
-	const inputChangeHandler = () => {};
+	const userInputClassname = !props.hasError
+		? "feedbackForm-form__control"
+		: "feedbackForm-form__control feedbackForm-form__control--invalid";
+
 	return (
 		<div
 			className={`${
@@ -17,15 +31,19 @@ function ReplyComment(props: ReplyCommentProps) {
 					: "comments-comment__contents--replyComment"
 			}`}
 		>
-			{/* <form> */}
-			<FormInput
-				control="textarea"
-				name="replyComment"
-				id="reply-comment"
-				// onChange={inputChangeHandler}
-			/>
-			<Button btnNumber="1" btnText="Post Reply" onClick={props.postReply} />
-			{/* </form> */}
+			<form onSubmit={props.submitFormHandler}>
+				<FormInput
+					control="textarea"
+					name="replyComment"
+					id="reply-comment"
+					inputClassName={userInputClassname}
+					value={props.value}
+					onBlur={props.onBlur}
+					onChange={props.onChangeHandler}
+					textAreaError={props.hasError}
+				/>
+				<Button btnNumber="1" btnText="Post Reply" />
+			</form>
 		</div>
 	);
 }

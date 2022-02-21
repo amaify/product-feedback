@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Button from "../button/button";
 import InputSelect from "./input/select";
 import EditInputSelect from "./input/edit-select";
-import FormInput from "./input/input";
+// import FormInput from "./input/input";
+import FormInput from "../input/input";
+
+import useInput from "../../hooks/use-input";
 
 import LeftArrow from "../../assets/images/shared/icon-arrow-left.svg";
 import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
@@ -19,41 +22,67 @@ type FormInputsType = {
 function NewFeedbackForm() {
 	const navigate = useNavigate();
 
-	const [editForm, setEditForm] = useState(false);
-	const [formInput, setFormInput] = useState<FormInputsType>({
-		title: "",
-		detailDescription: "",
-		category: "Feature",
-	});
+	let {
+		hasError: titleHasError,
+		category,
+		inputBlurHandler: titleBlurHanlder,
+		inputChangeHandler: titleChangeHandler,
+		isValueValid: titleIsValid,
+		onSelectItemHandler,
+		activeClick,
+		activeText,
+		resetUserInput: resetTitleInput,
+		value: titleValue,
+	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
 
-	const [activeClick, setActiveClick] = useState(0);
-	const [activeText, setActiveText] = useState("Feature");
+	let {
+		hasError: detailsDescriptionHasError,
+		inputBlurHandler: detailDescriptionBlurHanlder,
+		inputChangeHandler: detailDescriptionChangeHandler,
+		isValueValid: detailDescriptionIsValid,
+		resetUserInput: resetDetailDescriptionInput,
+		value: detailDescriptionValue,
+	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
+
+	const [editForm, setEditForm] = useState(false);
+
+	let isValid = false;
+
+	if (titleIsValid && detailDescriptionIsValid) {
+		isValid = true;
+	}
+
+	const titleClass = titleHasError
+		? "feedbackForm-form__control feedbackForm-form__control--invalid"
+		: "feedbackForm-form__control";
+	const descriptionClass = detailsDescriptionHasError
+		? "feedbackForm-form__control feedbackForm-form__control--invalid"
+		: "feedbackForm-form__control";
 
 	const submitFormHandler = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log(formInput);
-		// console.log(activeText);
-	};
 
-	const inputChangeHandler = (
-		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-	) => {
-		const { name, value } = event.target;
+		if (!isValid) {
+			titleBlurHanlder();
+			detailDescriptionBlurHanlder();
+			return;
+		}
 
-		setFormInput({ ...formInput, [name]: value });
-	};
+		const formData = {
+			title: titleValue,
+			detailDescription: detailDescriptionValue,
+			category: category,
+		};
 
-	const onSelectItemHandler = (item: { id: number; text: string }) => {
-		setActiveClick(item.id);
-		setActiveText(item.text);
-
-		setFormInput({ ...formInput, category: item.text });
+		console.log(formData);
+		resetTitleInput();
+		resetDetailDescriptionInput();
 	};
 
 	return (
 		<section className="feedbackForm">
 			<div className="feedbackForm-content">
-				<p className="feedbackForm-content__link" onClick={() => navigate("/")}>
+				<p className="feedbackForm-content__link" onClick={() => navigate(-1)}>
 					<span>
 						<img src={LeftArrow} alt="Arrow Pointing Left" />
 					</span>
@@ -82,8 +111,11 @@ function NewFeedbackForm() {
 						name="title"
 						id="title"
 						control="input"
-						onChange={inputChangeHandler}
-						defaultValue={formInput.title}
+						onChange={titleChangeHandler}
+						onBlur={titleBlurHanlder}
+						value={titleValue}
+						inputClassName={titleClass}
+						inputValueError={titleHasError}
 					/>
 
 					<InputSelect
@@ -110,8 +142,11 @@ function NewFeedbackForm() {
 						labelDescription="Include any specific comments on what should be improved, added, etc."
 						name="detailDescription"
 						id="details"
-						onChange={inputChangeHandler}
-						defaultValue={formInput.detailDescription}
+						onChange={detailDescriptionChangeHandler}
+						onBlur={detailDescriptionBlurHanlder}
+						value={detailDescriptionValue}
+						inputClassName={descriptionClass}
+						textAreaError={detailsDescriptionHasError}
 					/>
 
 					<div className="feedbackForm-form__btns">

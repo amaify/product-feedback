@@ -1,53 +1,66 @@
 import React, { useState } from "react";
-import FormInput from "../../../forms/input/input";
+
+import useInput from "../../../../hooks/use-input";
+import FormInput from "../../../input/input";
 import Button from "../../../button/button";
 
 function AddComment() {
-	const [maxCharacters, setMaxCharacter] = useState<number>(250);
-	const [charactersLeft, setCharactersLeft] = useState<number>(250);
-	const [inputValue, setInputValue] = useState<string>("");
+	let isValid = false;
 
-	const inputChangeHandler = (
-		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-	) => {
-		const char = event.target.value;
+	const {
+		value,
+		inputBlurHandler,
+		inputChangeHandler: valueChange,
+		resetUserInput,
+		hasError,
+		isValueValid,
+		charactersLeft,
+	} = useInput((value) => value.trim() !== "" && value.length >= 5);
 
-		const charCount = char.length;
-		const maxChar = maxCharacters;
+	if (isValueValid) isValid = true;
 
-		const charLength = maxChar - charCount;
+	const submitFormHandler = (event: React.FormEvent) => {
+		event.preventDefault();
 
-		console.log(charLength);
+		if (!isValid) {
+			inputBlurHandler();
+			return;
+		}
 
-		setCharactersLeft(charLength);
-
-		setInputValue(char);
+		resetUserInput();
+		console.log(value);
 	};
 
-	const blurHandler = (
-		event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>
-	) => {
-		console.log(inputValue);
-	};
+	const addCommentClassname = !hasError
+		? "feedbackForm-form__control"
+		: "feedbackForm-form__control feedbackForm-form__control--invalid";
+
+	let charLeftText;
+
+	charactersLeft <= 1
+		? (charLeftText = "Character left")
+		: (charLeftText = "Characters left");
 
 	return (
 		<div className="addcomment">
 			<h2 className="addcomment-heading">Add Comment</h2>
-			<form>
+			<form onSubmit={submitFormHandler}>
 				<FormInput
 					control="textarea"
 					name="userComment"
 					id="add-comment"
 					placeholder="Type your comment here"
-					onChange={inputChangeHandler}
-					onBlur={blurHandler}
-					defaultValue={inputValue}
+					onChange={valueChange}
+					onBlur={inputBlurHandler}
+					value={value}
 					maxLength={250}
+					inputClassName={addCommentClassname}
+					textAreaError={hasError}
 				/>
 
 				<div className="addcomment-actions">
 					<p className="addcomment-actions__wordcount">
-						<span>{charactersLeft}</span> <span>Characters left</span>
+						<span>{charactersLeft}</span> <span>{charLeftText}</span>
 					</p>
 
 					<Button btnNumber="1" btnText="Post Comment" />

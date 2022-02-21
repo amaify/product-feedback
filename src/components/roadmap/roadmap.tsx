@@ -15,7 +15,7 @@ function Roadmap() {
 	return (
 		<section className="roadmap">
 			<div className="roadmap-control">
-				<div className="roadmap-control__heading" onClick={() => navigate("/")}>
+				<div className="roadmap-control__heading" onClick={() => navigate(-1)}>
 					<p>
 						<span>
 							<img src={ArrowLeft} alt="An arrow pointing left" />

@@ -475,6 +475,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  position: relative;
 }
 
 .feedbackForm-form__control:not(:last-child) {
@@ -520,6 +521,17 @@ html {
 .feedbackForm-form__control textarea:hover,
 .feedbackForm-form__control textarea:focus {
   outline: 1px solid #4661e6;
+}
+
+.feedbackForm-form__control--invalid input,
+.feedbackForm-form__control--invalid textarea {
+  outline: 1px solid #d73737;
+}
+
+.feedbackForm-form__control--invalid input:hover, .feedbackForm-form__control--invalid input:focus,
+.feedbackForm-form__control--invalid textarea:hover,
+.feedbackForm-form__control--invalid textarea:focus {
+  outline: 1px solid #d73737;
 }
 
 .feedbackForm-form__select {
@@ -616,6 +628,20 @@ html {
 
 .feedbackForm-form__btns--delete {
   margin-right: auto;
+}
+
+.error-text {
+  font-size: 1.4em;
+  font-weight: normal;
+  line-height: 20px;
+  color: #d73737;
+  margin-top: 0.4em;
+}
+
+.error-text__input {
+  position: absolute;
+  top: 15px;
+  right: 0;
 }
 
 .wrapper {
@@ -1088,6 +1114,14 @@ html {
 .comments-comment__contents--replyComment .feedbackForm-form__control {
   width: 80%;
   margin-right: 1.6em;
+}
+
+.comments-comment__contents--replyComment form {
+  width: 100%;
+}
+
+.comments-comment__contents--replyComment form div {
+  width: 99% !important;
 }
 
 .addcomment {

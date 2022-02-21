@@ -54,6 +54,7 @@
 		&__control {
 			display: flex;
 			flex-direction: column;
+			position: relative;
 
 			&:not(:last-child) {
 				margin-bottom: 2.4em;
@@ -97,6 +98,18 @@
 				&:hover,
 				&:focus {
 					outline: 1px solid $color-blue;
+				}
+			}
+
+			&--invalid {
+				& input,
+				& textarea {
+					outline: 1px solid $color-red;
+
+					&:hover,
+					&:focus {
+						outline: 1px solid $color-red;
+					}
 				}
 			}
 		}
@@ -193,5 +206,19 @@
 				margin-right: auto;
 			}
 		}
+	}
+}
+
+.error-text {
+	font-size: 1.4em;
+	font-weight: normal;
+	line-height: 20px;
+	color: $color-red;
+	margin-top: 0.4em;
+
+	&__input {
+		position: absolute;
+		top: 15px;
+		right: 0;
 	}
 }

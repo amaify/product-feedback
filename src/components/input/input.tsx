@@ -12,18 +12,27 @@ interface InputPropTypes {
 	onChange?: (
 		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
 	) => void;
-	defaultValue?: string;
+	value?: string;
 	onBlur?: (
 		event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>
 	) => void;
 	maxLength?: number;
+	inputClassName: string;
+	inputValueError?: boolean;
+	textAreaError?: boolean;
 }
 
 const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
+	let inputValue;
+
+	props.value === ""
+		? (inputValue = "Can't be empty")
+		: (inputValue = "Enter at least 5 characters");
+
 	return (
 		<>
 			{props.control === "textarea" ? (
-				<div className="feedbackForm-form__control">
+				<div className={props.inputClassName}>
 					{props.labelHtmlFor && props.labelName && props.labelDescription && (
 						<label htmlFor={props.labelHtmlFor}>
 							<span>{props.labelName}</span>
@@ -32,18 +41,17 @@ const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
 					)}
 					<textarea
 						name={props.name}
-						// cols={30}
-						// rows={5}
 						id={props.id}
-						defaultValue={props.defaultValue}
+						value={props.value}
 						placeholder={props.placeholder}
 						onChange={props.onChange}
 						onBlur={props.onBlur}
 						maxLength={props.maxLength}
 					></textarea>
+					{props.textAreaError && <p className="error-text">{inputValue}</p>}
 				</div>
 			) : (
-				<div className="feedbackForm-form__control">
+				<div className={props.inputClassName}>
 					<label htmlFor={props.labelHtmlFor}>
 						<span>{props.labelName}</span>
 						<span>{props.labelDescription}</span>
@@ -53,8 +61,12 @@ const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
 						name={props.name}
 						id={props.id}
 						onChange={props.onChange}
-						defaultValue={props.defaultValue}
+						onBlur={props.onBlur}
+						value={props.value}
 					/>
+					{props.inputValueError && (
+						<p className="error-text error-text__input">{inputValue}</p>
+					)}
 				</div>
 			)}
 		</>

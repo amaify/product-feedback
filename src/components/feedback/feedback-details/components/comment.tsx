@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useInput from "../../../../hooks/use-input";
 
 import ElijahImg from "../../../../assets/images/user-images/image-elijah.jpg";
 import JamesImg from "../../../../assets/images/user-images/image-james.jpg";
@@ -11,14 +12,37 @@ function Comments() {
 	const [commentCount, setCommentCount] = useState(2);
 	const [replies, setReplies] = useState(2);
 
+	const {
+		value,
+		inputBlurHandler,
+		inputChangeHandler,
+		resetUserInput,
+		hasError,
+		isValueValid,
+	} = useInput((value) => value.trim() !== "" && value.length >= 5);
+
+	let isValid = false;
+
+	if (isValueValid) isValid = true;
+
 	const replyToggleHandler = () => {
 		console.log("hello there");
-		setReply("hello");
+		setReply(1);
 	};
 
-	const postReplyHandler = () => {
-		console.log("hide reply tab");
-		setReply(0);
+	const submitFormHandler = (event: React.FormEvent) => {
+		event.preventDefault();
+
+		if (!isValid) {
+			inputBlurHandler();
+			return;
+		}
+
+		console.log(value);
+
+		resetUserInput();
+
+		// setReply(0);
 	};
 
 	return (
@@ -29,12 +53,6 @@ function Comments() {
 
 			<div className="comments-wrapper">
 				<div
-					// className={`${
-					// 	commentCount > 1
-					// 		? "comments-comment comments-comment__more"
-					// 		: "comments-comment"
-					// }`}
-
 					className={`${
 						replies > 0
 							? "comments-comment comments-comment__line"
@@ -73,8 +91,13 @@ function Comments() {
 							</p>
 							{reply === 1 ? (
 								<ReplyComment
-									postReply={postReplyHandler}
 									commentNumber={commentCount}
+									submitFormHandler={submitFormHandler}
+									onChangeHandler={inputChangeHandler}
+									onBlur={inputBlurHandler}
+									hasError={hasError}
+									isValueValid={isValueValid}
+									value={value}
 								/>
 							) : (
 								""
@@ -114,14 +137,7 @@ function Comments() {
 							>
 								Reply
 							</p>
-							{reply === 2 ? (
-								<ReplyComment
-									postReply={postReplyHandler}
-									commentNumber={commentCount}
-								/>
-							) : (
-								""
-							)}
+							{reply === 2 ? <ReplyComment commentNumber={commentCount} /> : ""}
 						</div>
 					</div>
 
@@ -154,14 +170,7 @@ function Comments() {
 							>
 								Reply
 							</p>
-							{reply === 3 ? (
-								<ReplyComment
-									postReply={postReplyHandler}
-									commentNumber={commentCount}
-								/>
-							) : (
-								""
-							)}
+							{reply === 3 ? <ReplyComment commentNumber={commentCount} /> : ""}
 						</div>
 					</div>
 
@@ -194,14 +203,7 @@ function Comments() {
 							>
 								Reply
 							</p>
-							{reply === 4 ? (
-								<ReplyComment
-									postReply={postReplyHandler}
-									commentNumber={commentCount}
-								/>
-							) : (
-								""
-							)}
+							{reply === 4 ? <ReplyComment commentNumber={commentCount} /> : ""}
 						</div>
 					</div>
 

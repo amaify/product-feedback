@@ -275,6 +275,18 @@
 					width: 80%;
 					margin-right: 1.6em;
 				}
+
+				& form {
+					width: 100%;
+
+					& div {
+						width: 99% !important;
+
+						// & textarea {
+						// 	// width: 100%;
+						// }
+					}
+				}
 			}
 		}
 	}
