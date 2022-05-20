@@ -41,6 +41,7 @@ function ReplyComment(props: ReplyCommentProps) {
 					onBlur={props.onBlur}
 					onChange={props.onChangeHandler}
 					textAreaError={props.hasError}
+					maxLength={250}
 				/>
 				<Button btnNumber="1" btnText="Post Reply" />
 			</form>

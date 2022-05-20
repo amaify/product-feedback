@@ -10,7 +10,7 @@ import ReplyComment from "./reply-comment";
 function Comments() {
 	const [reply, setReply] = useState<number | string>();
 	const [commentCount, setCommentCount] = useState(2);
-	const [replies, setReplies] = useState(2);
+	const [replies, setReplies] = useState(1);
 
 	const {
 		value,

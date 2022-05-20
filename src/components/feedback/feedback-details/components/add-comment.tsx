@@ -10,7 +10,7 @@ function AddComment() {
 	const {
 		value,
 		inputBlurHandler,
-		inputChangeHandler: valueChange,
+		commentChangeHandler,
 		resetUserInput,
 		hasError,
 		isValueValid,
@@ -27,8 +27,9 @@ function AddComment() {
 			return;
 		}
 
+		const commentInput: { input: string } = { input: value };
+		console.log(commentInput);
 		resetUserInput();
-		console.log(value);
 	};
 
 	const addCommentClassname = !hasError
@@ -52,7 +53,7 @@ function AddComment() {
 					name="userComment"
 					id="add-comment"
 					placeholder="Type your comment here"
-					onChange={valueChange}
+					onChange={commentChangeHandler}
 					onBlur={inputBlurHandler}
 					value={value}
 					maxLength={250}

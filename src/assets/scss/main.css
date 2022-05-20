@@ -812,6 +812,7 @@ html {
 .feedback-contents__feature {
   background: #f2f4fe;
   color: #4661e6;
+  text-transform: capitalize;
   padding: 0.6em 1.6em;
   border-radius: 10px;
   margin-top: 1.2em;

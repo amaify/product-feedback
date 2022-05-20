@@ -13,24 +13,21 @@ import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
 import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
 
-type FormInputsType = {
-	title: string;
-	detailDescription: string;
-	category: string;
-};
-
 function NewFeedbackForm() {
 	const navigate = useNavigate();
 
 	let {
 		hasError: titleHasError,
 		category,
+		updateStatus,
 		inputBlurHandler: titleBlurHanlder,
 		inputChangeHandler: titleChangeHandler,
 		isValueValid: titleIsValid,
 		onSelectItemHandler,
 		activeClick,
 		activeText,
+		activeTextEdit,
+		editSelectItemHandler,
 		resetUserInput: resetTitleInput,
 		value: titleValue,
 	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
@@ -44,7 +41,7 @@ function NewFeedbackForm() {
 		value: detailDescriptionValue,
 	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
 
-	const [editForm, setEditForm] = useState(false);
+	const [editForm, setEditForm] = useState(true);
 
 	let isValid = false;
 
@@ -68,11 +65,22 @@ function NewFeedbackForm() {
 			return;
 		}
 
-		const formData = {
-			title: titleValue,
-			detailDescription: detailDescriptionValue,
-			category: category,
-		};
+		let formData;
+
+		if (!editForm) {
+			formData = {
+				title: titleValue,
+				detailDescription: detailDescriptionValue,
+				category: category,
+			};
+		} else {
+			formData = {
+				title: titleValue,
+				detailDescription: detailDescriptionValue,
+				category: category,
+				updateStatus: editForm ? updateStatus : "",
+			};
+		}
 
 		console.log(formData);
 		resetTitleInput();
@@ -132,6 +140,9 @@ function NewFeedbackForm() {
 							labelHtmlFor="updateStatus"
 							labelTitle="update status"
 							labelDescription="Change feedback state"
+							activeText={activeTextEdit}
+							activeClick={activeClick}
+							onSelectItemHandler={editSelectItemHandler}
 						/>
 					)}
 
