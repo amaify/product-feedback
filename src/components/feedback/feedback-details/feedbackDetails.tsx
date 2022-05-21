@@ -48,7 +48,10 @@ function FeedbackDetails() {
 					</div>
 
 					<div className="feedbackdetails-contents__feedback--text">
-						<Upvotes divClassName="feedback-upvote" upvoteNumbers={108} />
+						<Upvotes
+							divClassName="feedback-upvote"
+							upvoteNumbers={feedback.upvotes}
+						/>
 						<div className="feedback-contents">
 							<h2 className="feedback-contents__heading">{feedback.title}</h2>
 							<p className="feedback-contents__text">{feedback.description}</p>

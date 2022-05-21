@@ -4,7 +4,7 @@ import FormInput from "../../../input/input";
 import Button from "../../../button/button";
 
 interface ReplyCommentProps {
-	commentNumber: number;
+	commentNumber: string | number;
 	submitFormHandler?: (event: React.FormEvent) => void;
 	onChangeHandler?: (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

@@ -1,3 +1,4 @@
+import { CommentReplies } from "../../../type";
 import * as actionTypes from "../actionTypes";
 
 interface ProductFeedbacksData {
@@ -30,9 +31,16 @@ export const getOneProductFeedback = (
 	};
 };
 
-export const getProductComments = (productFeedback: ProductFeedbacksData[]) => {
+export const getProductComments = (productComments: ProductFeedbacksData[]) => {
 	return {
 		type: actionTypes.GET_PRODUCT_COMMENTS,
-		data: productFeedback,
+		data: productComments,
+	};
+};
+
+export const getCommentReplies = (commentReplies: CommentReplies[]) => {
+	return {
+		type: actionTypes.GET_COMMENT_REPLIES,
+		data: commentReplies,
 	};
 };

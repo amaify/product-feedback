@@ -1,16 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useInput from "../../../../hooks/use-input";
+import { useSelector } from "react-redux";
 
 import ElijahImg from "../../../../assets/images/user-images/image-elijah.jpg";
 import JamesImg from "../../../../assets/images/user-images/image-james.jpg";
 import AnneImg from "../../../../assets/images/user-images/image-anne.jpg";
 import RyanImg from "../../../../assets/images/user-images/image-ryan.jpg";
 import ReplyComment from "./reply-comment";
+import { RootState } from "../../../../type";
 
 function Comments() {
+	const comments = useSelector((state: RootState) => state.feedbackComments);
+	const commentReplies = useSelector(
+		(state: RootState) => state.commentReplies
+	);
+
 	const [reply, setReply] = useState<number | string>();
-	const [commentCount, setCommentCount] = useState(3);
+	const [commentCount, setCommentCount] = useState<number | string>(0);
 	const [replies, setReplies] = useState(1);
+
+	useEffect(() => {
+		comments !== undefined
+			? setCommentCount(comments.length)
+			: setCommentCount(0);
+	}, []);
+
+	let mainReplies;
+
+	// comments.map(comment => {
+	// 	commentReplies.map(reps => {
+	// 		if(comment._id === reps.linkedComment) {
+	// 			mainReplies =
+	// 		}
+	// 	})
+	// })
 
 	const {
 		value,
@@ -25,9 +48,9 @@ function Comments() {
 
 	if (isValueValid) isValid = true;
 
-	const replyToggleHandler = () => {
+	const replyToggleHandler = (id: number) => {
 		console.log("hello there");
-		setReply(2);
+		setReply(id);
 	};
 
 	const submitFormHandler = (event: React.FormEvent) => {
@@ -41,70 +64,164 @@ function Comments() {
 		console.log(value);
 
 		resetUserInput();
+		setReply(0);
 	};
 
 	return (
 		<div className="comments">
-			<h2 className="comments-heading">
-				<span>4</span> <span>Comments</span>
-			</h2>
+			{comments !== undefined ? (
+				<h2 className="comments-heading">
+					<span>{comments.length}</span> <span>Comments</span>
+				</h2>
+			) : (
+				<h2 className="comments-heading">
+					<span>No Comments</span>
+				</h2>
+			)}
 
 			<div className="comments-wrapper">
-				<div
-					className={`${
-						replies > 0
-							? "comments-comment comments-comment__line"
-							: commentCount > 1
-							? "comments-comment comments-comment__more"
-							: "comments-comment"
-					}`}
-				>
-					<div className="comments-comment__parent">
-						<div className="comments-comment__img">
-							<img src={ElijahImg} alt="A person named Elijah" />
-						</div>
-
-						<div className="comments-comment__contents">
-							<p className="comments-comment__contents--name">Elijah Moss</p>
-							<p className="comments-comment__contents--username">
-								@hexagon.bestagon
-							</p>
-							<p
+				{comments !== undefined
+					? comments.map((comment) => (
+							<div
 								className={`${
-									commentCount > 1
-										? "comments-comment__contents--comment comments-comment__contents--comment-more"
-										: "comments-comment__contents--comment"
+									replies > 0
+										? "comments-comment comments-comment__line"
+										: commentCount > 0
+										? "comments-comment comments-comment__more"
+										: "comments-comment"
 								}`}
+								key={comment._id}
 							>
-								Also, please allow styles to be applied based on system
-								preferences. I would love to be able to browse Frontend Mentor
-								in the evening after my device's dark mode turns on without the
-								bright background it currently has.
-							</p>
-							<p
-								className="comments-comment__contents--replyBtn"
-								onClick={replyToggleHandler}
-							>
-								Reply
-							</p>
-							{reply === 1 ? (
-								<ReplyComment
-									commentNumber={commentCount}
-									submitFormHandler={submitFormHandler}
-									onChangeHandler={inputChangeHandler}
-									onBlur={inputBlurHandler}
-									hasError={hasError}
-									isValueValid={isValueValid}
-									value={value}
-								/>
-							) : (
-								""
-							)}
-						</div>
-					</div>
-				</div>
+								<div className="comments-comment__parent">
+									<div className="comments-comment__img">
+										<img src={ElijahImg} alt="A person named Elijah" />
+									</div>
 
-				<div
+									<div className="comments-comment__contents">
+										<p className="comments-comment__contents--name">
+											{comment.creatorName}
+										</p>
+										<p className="comments-comment__contents--username">
+											<span>@</span>
+											<span>{comment.creatorUsername}</span>
+										</p>
+										<p
+											className={`${
+												commentCount > 0
+													? "comments-comment__contents--comment comments-comment__contents--comment-more"
+													: "comments-comment__contents--comment"
+											}`}
+										>
+											{comment.content}
+										</p>
+										<p
+											className="comments-comment__contents--replyBtn"
+											onClick={() => replyToggleHandler(comment.id)}
+										>
+											Reply
+										</p>
+										{reply === comment.id ? (
+											<ReplyComment
+												commentNumber={commentCount}
+												submitFormHandler={submitFormHandler}
+												onChangeHandler={inputChangeHandler}
+												onBlur={inputBlurHandler}
+												hasError={hasError}
+												isValueValid={isValueValid}
+												value={value}
+											/>
+										) : (
+											""
+										)}
+									</div>
+								</div>
+
+								{commentReplies.map((reps) => {
+									if (comment._id === reps.linkedComment) {
+										return (
+											<div className="comments-comment__replies">
+												<div
+													className={
+														replies > 0
+															? "comments-comment__img comments-comment__img--line"
+															: "comments-comment__img"
+													}
+												>
+													<img src={AnneImg} alt="A person named Elijah" />
+												</div>
+
+												<div className="comments-comment__contents">
+													<p className="comments-comment__contents--name">
+														{reps.creatorName}{" "}
+													</p>
+													<p className="comments-comment__contents--username">
+														<span>@</span>
+														<span>{reps.creatorUsername}</span>
+													</p>
+													<p className="comments-comment__contents--comment">
+														<span>@</span>
+														<span>{reps.replyingTo}</span> {reps.content}
+													</p>
+													<p
+														className="comments-comment__contents--replyBtn"
+														// onClick={replyToggleHandler}
+													>
+														Reply
+													</p>
+													{reply === 3 ? (
+														<ReplyComment commentNumber={commentCount} />
+													) : (
+														""
+													)}
+												</div>
+											</div>
+										);
+									}
+								})}
+
+								{/* <div className="comments-comment__replies">
+									<div
+										className={
+											replies > 0
+												? "comments-comment__img comments-comment__img--line"
+												: "comments-comment__img"
+										}
+									>
+										<img src={AnneImg} alt="A person named Elijah" />
+									</div>
+
+									<div className="comments-comment__contents">
+										<p className="comments-comment__contents--name">
+											Anne Valentine{" "}
+										</p>
+										<p className="comments-comment__contents--username">
+											@annev1990
+										</p>
+										<p className="comments-comment__contents--comment">
+											<span>@hummingbird1</span> While waiting for dark mode,
+											there are browser extensions that will also do the job.
+											Search for "dark theme” followed by your browser. There
+											might be a need to turn off the extension for sites with
+											naturally black backgrounds though.
+										</p>
+										<p
+											className="comments-comment__contents--replyBtn"
+											// onClick={replyToggleHandler}
+										>
+											Reply
+										</p>
+										{reply === 3 ? (
+											<ReplyComment commentNumber={commentCount} />
+										) : (
+											""
+										)}
+									</div>
+								</div> */}
+							</div>
+					  ))
+					: ""}
+
+				{/* <div
 					className={`${
 						replies > 0
 							? "comments-comment comments-comment__line"
@@ -204,75 +321,7 @@ function Comments() {
 							{reply === 4 ? <ReplyComment commentNumber={commentCount} /> : ""}
 						</div>
 					</div>
-
-					{/* <div className="comments-comment__replies">
-						<div className="comments-comment__img">
-							<img src={RyanImg} alt="A person named Elijah" />
-						</div>
-
-						<div className="comments-comment__contents">
-							<p className="comments-comment__contents--name">Ryan Welles </p>
-							<p className="comments-comment__contents--username">
-								@voyager.344
-							</p>
-							<p className="comments-comment__contents--comment">
-								<span>@annev1990</span> Good point! Using any kind of style
-								extension is great and can be highly customizable, like the
-								ability to change contrast and brightness. I'd prefer not to use
-								one of such extensions, however, for security and privacy
-								reasons.
-							</p>
-							<p
-								className="comments-comment__contents--replyBtn"
-								onClick={replyToggleHandler}
-							>
-								Reply
-							</p>
-							{reply === 4 ? (
-								<ReplyComment
-									postReply={postReplyHandler}
-									commentNumber={commentCount}
-								/>
-							) : (
-								""
-							)}
-						</div>
-					</div> */}
-
-					{/* <div className="comments-comment__replies">
-						<div className="comments-comment__img">
-							<img src={RyanImg} alt="A person named Elijah" />
-						</div>
-
-						<div className="comments-comment__contents">
-							<p className="comments-comment__contents--name">Ryan Welles </p>
-							<p className="comments-comment__contents--username">
-								@voyager.344
-							</p>
-							<p className="comments-comment__contents--comment">
-								<span>@annev1990</span> Good point! Using any kind of style
-								extension is great and can be highly customizable, like the
-								ability to change contrast and brightness. I'd prefer not to use
-								one of such extensions, however, for security and privacy
-								reasons.
-							</p>
-							<p
-								className="comments-comment__contents--replyBtn"
-								onClick={replyToggleHandler}
-							>
-								Reply
-							</p>
-							{reply === 4 ? (
-								<ReplyComment
-									postReply={postReplyHandler}
-									commentNumber={commentCount}
-								/>
-							) : (
-								""
-							)}
-						</div>
-					</div> */}
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

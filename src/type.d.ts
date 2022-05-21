@@ -33,7 +33,30 @@ interface FeedbackProps {
 	comments: string[];
 }
 
+interface FeedbackComment {
+	_id: string;
+	id: number;
+	content: string;
+	replies: string[];
+	creatorName: string;
+	creatorUsername: number;
+	productFeedback: string;
+	creator: string;
+}
+
+interface CommentReplies {
+	_id: string;
+	content: string;
+	replyingTo: string;
+	creatorName: string;
+	creatorUsername: string;
+	linkedComment: string;
+	creator: string;
+}
+
 interface RootState {
 	allFeedbacks: FeedbackProps[];
 	oneFeedback: FeedbackProps;
+	feedbackComments: FeedbackComment[];
+	commentReplies: CommentReplies[];
 }

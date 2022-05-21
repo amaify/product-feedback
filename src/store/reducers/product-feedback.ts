@@ -1,3 +1,4 @@
+import { CommentReplies } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
 
 interface ProductFeedbacksData {
@@ -25,6 +26,7 @@ type ProductFeedbackState = {
 	allFeedbacks: ProductFeedbacksData[];
 	oneFeedback: ProductFeedbacksData[];
 	feedbackComments: CommentData[];
+	commentReplies: CommentReplies[];
 };
 
 type ProductFeedbackAction = {
@@ -36,6 +38,7 @@ const initialState: ProductFeedbackState = {
 	allFeedbacks: [],
 	oneFeedback: [],
 	feedbackComments: [],
+	commentReplies: [],
 };
 
 export const productFeedbackReducer = (
@@ -59,6 +62,12 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				feedbackComments: action.data,
+			};
+
+		case actionTypes.GET_COMMENT_REPLIES:
+			return {
+				...state,
+				commentReplies: action.data,
 			};
 
 		default:

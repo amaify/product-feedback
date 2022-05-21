@@ -2,6 +2,7 @@ import {
 	getProductFeedback,
 	getOneProductFeedback,
 	getProductComments,
+	getCommentReplies,
 } from "../actions/creators/product-feedback";
 
 export const getFeedbacks = () => {
@@ -41,6 +42,18 @@ export const getOneFeedback = (productId: string) => {
 			.then((response) => response.json())
 			.then((responseData) => {
 				dispatch(getProductComments(responseData.data));
+			})
+			.catch((error) => console.log(error));
+
+		fetch("http://localhost:8080/feedback/commentReply", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((responseData) => {
+				dispatch(getCommentReplies(responseData.data));
 			})
 			.catch((error) => console.log(error));
 	};
