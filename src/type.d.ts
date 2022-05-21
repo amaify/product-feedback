@@ -20,3 +20,20 @@ interface UpvoteProps {
 	divClassName: string;
 	upvoteNumbers: number;
 }
+
+interface FeedbackProps {
+	_id: string;
+	id: number;
+	title: string;
+	category: string;
+	upvotes: number;
+	status: string;
+	description: string;
+	creator: string;
+	comments: string[];
+}
+
+interface RootState {
+	allFeedbacks: FeedbackProps[];
+	oneFeedback: FeedbackProps;
+}

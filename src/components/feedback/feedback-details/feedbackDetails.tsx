@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
+
+import { RootState, FeedbackProps } from "../../../type";
 
 import ArrowLeft from "../../../assets/images/shared/icon-arrow-left.svg";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
@@ -9,9 +13,21 @@ import Upvotes from "../../upvotes/upvotes";
 
 import Comments from "./components/comment";
 import AddComment from "./components/add-comment";
+import { getOneFeedback } from "../../../store/utils/feedbackUtil";
 
 function FeedbackDetails() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const location = useLocation();
+
+	const productId = location.state;
+
+	const feedback = useSelector((state: RootState) => state.oneFeedback);
+
+	useEffect(() => {
+		dispatch(getOneFeedback(`${productId}`));
+	}, []);
+
 	return (
 		<section className="feedbackdetails">
 			<div className="feedbackdetails-contents">
@@ -34,19 +50,17 @@ function FeedbackDetails() {
 					<div className="feedbackdetails-contents__feedback--text">
 						<Upvotes divClassName="feedback-upvote" upvoteNumbers={108} />
 						<div className="feedback-contents">
-							<h2 className="feedback-contents__heading">
-								Add tags for solution
-							</h2>
-							<p className="feedback-contents__text">
-								Easier to search for solutions based on a specific stack.
-							</p>
-							<p className="feedback-contents__feature">Enhancement</p>
+							<h2 className="feedback-contents__heading">{feedback.title}</h2>
+							<p className="feedback-contents__text">{feedback.description}</p>
+							<p className="feedback-contents__feature">{feedback.category}</p>
 						</div>
 						<div className="feedback-comments">
 							<div className="feedback-comments__img">
 								<img src={CommentsIcon} alt="Comments description" />
 							</div>
-							<p>2</p>
+							<p>
+								{feedback.comments === undefined ? 0 : feedback.comments.length}
+							</p>
 						</div>
 					</div>
 				</div>

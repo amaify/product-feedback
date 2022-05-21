@@ -20,3 +20,19 @@ export const getProductFeedback = (
 		data: productFeedbacks,
 	};
 };
+
+export const getOneProductFeedback = (
+	productFeedback: ProductFeedbacksData
+) => {
+	return {
+		type: actionTypes.GET_ONE_PRODUCT_FEEDBACK,
+		data: productFeedback,
+	};
+};
+
+export const getProductComments = (productFeedback: ProductFeedbacksData[]) => {
+	return {
+		type: actionTypes.GET_PRODUCT_COMMENTS,
+		data: productFeedback,
+	};
+};

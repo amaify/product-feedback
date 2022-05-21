@@ -9,7 +9,7 @@ import ReplyComment from "./reply-comment";
 
 function Comments() {
 	const [reply, setReply] = useState<number | string>();
-	const [commentCount, setCommentCount] = useState(2);
+	const [commentCount, setCommentCount] = useState(3);
 	const [replies, setReplies] = useState(1);
 
 	const {
@@ -27,7 +27,7 @@ function Comments() {
 
 	const replyToggleHandler = () => {
 		console.log("hello there");
-		setReply(1);
+		setReply(2);
 	};
 
 	const submitFormHandler = (event: React.FormEvent) => {
@@ -41,8 +41,6 @@ function Comments() {
 		console.log(value);
 
 		resetUserInput();
-
-		// setReply(0);
 	};
 
 	return (
