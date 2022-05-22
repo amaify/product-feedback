@@ -1106,6 +1106,7 @@ html {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  margin-bottom: 2.5em;
 }
 
 .comments-comment__contents--replyComment-more {

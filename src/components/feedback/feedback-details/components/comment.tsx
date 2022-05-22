@@ -17,23 +17,13 @@ function Comments() {
 
 	const [reply, setReply] = useState<number | string>();
 	const [commentCount, setCommentCount] = useState<number | string>(0);
-	const [replies, setReplies] = useState(1);
+	const [replies, setReplies] = useState(0);
 
 	useEffect(() => {
 		comments !== undefined
 			? setCommentCount(comments.length)
 			: setCommentCount(0);
 	}, []);
-
-	let mainReplies;
-
-	// comments.map(comment => {
-	// 	commentReplies.map(reps => {
-	// 		if(comment._id === reps.linkedComment) {
-	// 			mainReplies =
-	// 		}
-	// 	})
-	// })
 
 	const {
 		value,
@@ -48,8 +38,7 @@ function Comments() {
 
 	if (isValueValid) isValid = true;
 
-	const replyToggleHandler = (id: number) => {
-		console.log("hello there");
+	const replyToggleHandler = (id: string) => {
 		setReply(id);
 	};
 
@@ -64,7 +53,7 @@ function Comments() {
 		console.log(value);
 
 		resetUserInput();
-		setReply(0);
+		setReply("");
 	};
 
 	return (
@@ -84,10 +73,8 @@ function Comments() {
 					? comments.map((comment) => (
 							<div
 								className={`${
-									replies > 0
-										? "comments-comment comments-comment__line"
-										: commentCount > 0
-										? "comments-comment comments-comment__more"
+									commentReplies.length > 0 || comments.length > 0
+										? "comments-comment comments-comment__line comments-comment__more"
 										: "comments-comment"
 								}`}
 								key={comment._id}
@@ -116,11 +103,11 @@ function Comments() {
 										</p>
 										<p
 											className="comments-comment__contents--replyBtn"
-											onClick={() => replyToggleHandler(comment.id)}
+											onClick={() => replyToggleHandler(comment._id)}
 										>
 											Reply
 										</p>
-										{reply === comment.id ? (
+										{reply === comment._id && (
 											<ReplyComment
 												commentNumber={commentCount}
 												submitFormHandler={submitFormHandler}
@@ -130,8 +117,6 @@ function Comments() {
 												isValueValid={isValueValid}
 												value={value}
 											/>
-										) : (
-											""
 										)}
 									</div>
 								</div>
@@ -139,10 +124,10 @@ function Comments() {
 								{commentReplies.map((reps) => {
 									if (comment._id === reps.linkedComment) {
 										return (
-											<div className="comments-comment__replies">
+											<div className="comments-comment__replies" key={reps._id}>
 												<div
 													className={
-														replies > 0
+														commentReplies.length > 0
 															? "comments-comment__img comments-comment__img--line"
 															: "comments-comment__img"
 													}
@@ -164,12 +149,20 @@ function Comments() {
 													</p>
 													<p
 														className="comments-comment__contents--replyBtn"
-														// onClick={replyToggleHandler}
+														onClick={() => replyToggleHandler(reps._id)}
 													>
 														Reply
 													</p>
-													{reply === 3 ? (
-														<ReplyComment commentNumber={commentCount} />
+													{reply === reps._id ? (
+														<ReplyComment
+															commentNumber={commentCount}
+															submitFormHandler={submitFormHandler}
+															onChangeHandler={inputChangeHandler}
+															onBlur={inputBlurHandler}
+															hasError={hasError}
+															isValueValid={isValueValid}
+															value={value}
+														/>
 													) : (
 														""
 													)}

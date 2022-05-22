@@ -19,6 +19,7 @@ interface ArrayOfRoadmaps {
 interface UpvoteProps {
 	divClassName: string;
 	upvoteNumbers: number;
+	productId?: any;
 }
 
 interface FeedbackProps {

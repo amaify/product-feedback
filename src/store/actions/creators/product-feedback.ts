@@ -44,3 +44,9 @@ export const getCommentReplies = (commentReplies: CommentReplies[]) => {
 		data: commentReplies,
 	};
 };
+
+export const incrementUpvote = () => {
+	return {
+		type: actionTypes.INCREASE_UPVOTE,
+	};
+};

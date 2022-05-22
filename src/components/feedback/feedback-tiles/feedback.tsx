@@ -17,6 +17,7 @@ function Feedback() {
 					<Upvotes
 						divClassName="feedback-upvote"
 						upvoteNumbers={feed.upvotes}
+						productId={feed._id}
 					/>
 					<Link
 						to={{ pathname: `/feedback-details/${feed._id}` }}
