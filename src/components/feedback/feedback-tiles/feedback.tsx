@@ -8,7 +8,9 @@ import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 import Upvotes from "../../upvotes/upvotes";
 
 function Feedback() {
-	const prodFeedbacks = useSelector((state: RootState) => state.allFeedbacks);
+	const prodFeedbacks = useSelector(
+		(state: RootState) => state.productFeedbackReducer.allFeedbacks
+	);
 
 	return (
 		<section className="feedback">
@@ -21,7 +23,7 @@ function Feedback() {
 					/>
 					<Link
 						to={{ pathname: `/feedback-details/${feed._id}` }}
-						state={feed._id}
+						state={feed}
 						className="feedback-contents"
 					>
 						<h2 className="feedback-contents__heading">{feed.title}</h2>

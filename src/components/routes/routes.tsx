@@ -5,6 +5,9 @@ import Layout from "../layout/layout";
 import NewFeedbackForm from "../forms/new-feedback";
 import FeedbackDetails from "../feedback/feedback-details/feedbackDetails";
 import Roadmap from "../roadmap/roadmap";
+import Login from "../../pages/login";
+import Register from "../../pages/register";
+import ForgotPassword from "../../pages/forgot-password";
 
 function AppRoutes() {
 	const [state, setState] = useState(false);
@@ -20,6 +23,9 @@ function AppRoutes() {
 				element={<FeedbackDetails />}
 			/>
 			<Route path="/roadmap" element={<Roadmap />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<Register />} />
+			<Route path="forgotpassword" element={<ForgotPassword />} />
 		</Routes>
 	);
 }

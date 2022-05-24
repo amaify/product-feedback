@@ -56,8 +56,13 @@ interface CommentReplies {
 }
 
 interface RootState {
-	allFeedbacks: FeedbackProps[];
-	oneFeedback: FeedbackProps;
-	feedbackComments: FeedbackComment[];
-	commentReplies: CommentReplies[];
+	productFeedbackReducer: {
+		allFeedbacks: FeedbackProps[];
+		oneFeedback: FeedbackProps;
+	};
+
+	commentReducer: {
+		feedbackComments: FeedbackComment[];
+		commentReplies: CommentReplies[];
+	};
 }

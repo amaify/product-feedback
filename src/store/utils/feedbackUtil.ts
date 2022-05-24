@@ -1,9 +1,12 @@
 import {
 	getProductFeedback,
 	getOneProductFeedback,
+} from "../actions/creators/product-feedback";
+
+import {
 	getProductComments,
 	getCommentReplies,
-} from "../actions/creators/product-feedback";
+} from "../actions/creators/comments";
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {

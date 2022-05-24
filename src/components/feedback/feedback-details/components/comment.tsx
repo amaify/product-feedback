@@ -10,9 +10,11 @@ import ReplyComment from "./reply-comment";
 import { RootState } from "../../../../type";
 
 function Comments() {
-	const comments = useSelector((state: RootState) => state.feedbackComments);
+	const comments = useSelector(
+		(state: RootState) => state.commentReducer.feedbackComments
+	);
 	const commentReplies = useSelector(
-		(state: RootState) => state.commentReplies
+		(state: RootState) => state.commentReducer.commentReplies
 	);
 
 	const [reply, setReply] = useState<number | string>();

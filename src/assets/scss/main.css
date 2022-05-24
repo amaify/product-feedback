@@ -412,6 +412,18 @@ html {
   visibility: hidden;
 }
 
+.navigation-authentication {
+  min-width: 50px;
+  height: 100%;
+  margin-right: 2.5rem;
+}
+
+.navigation-authentication img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .feedbackForm {
   padding: 0 0 10em 0;
 }
@@ -1437,5 +1449,102 @@ html {
   font-weight: bold;
   line-height: 23px;
   color: #3a4374;
+}
+
+.login-contents {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.login-contents > p {
+  text-transform: capitalize;
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 20px;
+  color: #647196;
+  margin-bottom: 2.4rem;
+}
+
+.login-contents > p span:first-child {
+  display: inline-block;
+  margin-right: 1.5em;
+  min-width: 1%;
+}
+
+.login-contents > p span:first-child img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.login-contents > p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-contents__form {
+  background: #ffffff;
+  width: 100%;
+  padding: 3rem;
+}
+
+.login-contents__form-heading {
+  font-size: 2.4rem;
+  line-height: 32px;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.login-contents__form-input {
+  margin-bottom: 2.4rem;
+  position: relative;
+}
+
+.login-contents__form-input .error-text__input {
+  top: 0;
+}
+
+.login-contents__form-input label {
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+.login-contents__form-input label span {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #3a4374;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+
+.login-contents__form-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 1.3em 1.5em;
+  background: #f7f8fd;
+  border-radius: 5px;
+  width: 100%;
+  color: #3a4374;
+  font-size: 1.5em;
+  font-weight: normal;
+  line-height: 22px;
+  font-family: "Jost", sans-serif;
+}
+
+.login-contents__form-links {
+  margin-top: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.login-contents__form-links a {
+  text-transform: capitalize;
+  font-size: 1.7em;
+}
+
+.login-contents__form-links a:first-child {
+  margin-right: auto;
 }
 /*# sourceMappingURL=main.css.map */

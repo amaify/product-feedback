@@ -8,11 +8,13 @@ import { upvoteIncrement } from "../../store/utils/feedbackUtil";
 function Upvotes(props: UpvoteProps) {
 	const dispatch = useDispatch();
 	const [active, setActive] = useState<boolean>(false);
-	let [upvoteNumber, setUpvoteNumber] = useState<number>(0);
+	let [upvoteNumber, incrementUpvoteNumber] = useState<number>(
+		props.upvoteNumbers === null ? 0 : props.upvoteNumbers
+	);
 
 	const setActiveStateHandler = () => {
 		setActive(!active);
-		setUpvoteNumber((upvoteNumber += 1));
+		incrementUpvoteNumber((upvoteNumber += 1));
 		dispatch(upvoteIncrement(props.productId, upvoteNumber));
 		console.log(upvoteNumber);
 		console.log("clicked upvote");
@@ -28,7 +30,7 @@ function Upvotes(props: UpvoteProps) {
 			<div className={`${props.divClassName}__img`}>
 				<img src={!active ? ArrowUp : ArrowUpWhite} alt="Arrow facing up" />
 			</div>
-			<p>{props.upvoteNumbers || upvoteNumber}</p>
+			<p>{upvoteNumber}</p>
 		</div>
 	);
 }

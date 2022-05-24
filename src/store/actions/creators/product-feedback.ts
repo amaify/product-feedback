@@ -31,20 +31,6 @@ export const getOneProductFeedback = (
 	};
 };
 
-export const getProductComments = (productComments: ProductFeedbacksData[]) => {
-	return {
-		type: actionTypes.GET_PRODUCT_COMMENTS,
-		data: productComments,
-	};
-};
-
-export const getCommentReplies = (commentReplies: CommentReplies[]) => {
-	return {
-		type: actionTypes.GET_COMMENT_REPLIES,
-		data: commentReplies,
-	};
-};
-
 export const incrementUpvote = () => {
 	return {
 		type: actionTypes.INCREASE_UPVOTE,

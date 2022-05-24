@@ -20,14 +20,20 @@ function FeedbackDetails() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	const prodId: any = location.state;
+	const prod: any = location.state;
 
 	useEffect(() => {
-		dispatch(getOneFeedback(`${prodId}`));
+		dispatch(getOneFeedback(`${prod._id}`));
 	}, []);
 
-	const feedback = useSelector((state: RootState) => state.oneFeedback);
-	const comments = useSelector((state: RootState) => state.feedbackComments);
+	const feedback = useSelector(
+		(state: RootState) => state.productFeedbackReducer.oneFeedback
+	);
+	const comments = useSelector(
+		(state: RootState) => state.commentReducer.feedbackComments
+	);
+
+	console.log(prod.upvotes);
 
 	return (
 		<section className="feedbackdetails">
@@ -51,7 +57,8 @@ function FeedbackDetails() {
 					<div className="feedbackdetails-contents__feedback--text">
 						<Upvotes
 							divClassName="feedback-upvote"
-							upvoteNumbers={feedback.upvotes}
+							upvoteNumbers={prod.upvotes}
+							productId={feedback._id}
 						/>
 						<div className="feedback-contents">
 							<h2 className="feedback-contents__heading">{feedback.title}</h2>
@@ -62,7 +69,9 @@ function FeedbackDetails() {
 							<div className="feedback-comments__img">
 								<img src={CommentsIcon} alt="Comments description" />
 							</div>
-							<p>{comments === undefined ? 0 : comments.length}</p>
+							<p>
+								{feedback.comments === undefined ? 0 : feedback.comments.length}
+							</p>
 						</div>
 					</div>
 				</div>

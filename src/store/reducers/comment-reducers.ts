@@ -22,9 +22,9 @@ interface CommentData {
 	productFeedback: string;
 }
 
-type ProductFeedbackState = {
-	allFeedbacks: ProductFeedbacksData[];
-	oneFeedback: ProductFeedbacksData[];
+type CommentState = {
+	feedbackComments: CommentData[];
+	commentReplies: CommentReplies[];
 };
 
 type ProductFeedbackAction = {
@@ -32,26 +32,26 @@ type ProductFeedbackAction = {
 	data: any;
 };
 
-const initialState: ProductFeedbackState = {
-	allFeedbacks: [],
-	oneFeedback: [],
+const initialState: CommentState = {
+	feedbackComments: [],
+	commentReplies: [],
 };
 
-export const productFeedbackReducer = (
-	state: ProductFeedbackState = initialState,
+export const commentReducer = (
+	state: CommentState = initialState,
 	action: ProductFeedbackAction
 ) => {
 	switch (action.type) {
-		case actionTypes.GET_PRODUCT_FEEDBACK:
+		case actionTypes.GET_PRODUCT_COMMENTS:
 			return {
 				...state,
-				allFeedbacks: action.data,
+				feedbackComments: action.data,
 			};
 
-		case actionTypes.GET_ONE_PRODUCT_FEEDBACK:
+		case actionTypes.GET_COMMENT_REPLIES:
 			return {
 				...state,
-				oneFeedback: action.data,
+				commentReplies: action.data,
 			};
 
 		default:
