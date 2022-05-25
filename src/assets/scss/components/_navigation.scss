@@ -37,6 +37,14 @@
 			margin-right: 0.5em;
 		}
 	}
+
+	&-username {
+		font-size: 1.8em;
+		font-weight: 500;
+		text-transform: capitalize;
+		color: $color-white;
+		margin-right: 2.5em;
+	}
 }
 
 //Navigation Sort
@@ -130,6 +138,7 @@
 	min-width: 50px;
 	height: 100%;
 	margin-right: 2.5rem;
+	cursor: pointer;
 
 	& img {
 		width: 100%;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { ListOfArray } from "../../../utils/model";
+import { useDispatch } from "react-redux";
 
 import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
 import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
 
 import Dropdown from "./dropdown";
-import { spawn } from "child_process";
+import { sortFeedback } from "../../../store/actions/creators/product-feedback";
 
 const DropdownList: ListOfArray[] = [
 	{ id: 0, text: "Most Upvotes" },
@@ -15,6 +16,8 @@ const DropdownList: ListOfArray[] = [
 ];
 
 const NavigationSort: React.FC = () => {
+	const dispatch = useDispatch();
+
 	const [activeClick, setActiveClick] = useState(0);
 	const [activeText, setActiveText] = useState("Most Upvotes");
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -22,6 +25,9 @@ const NavigationSort: React.FC = () => {
 	const setActiveOnClickHandler = (drop: { id: number; text: string }) => {
 		setActiveClick(drop.id);
 		setActiveText(drop.text);
+
+		dispatch(sortFeedback(drop.text));
+
 		setShowDropdown(!showDropdown);
 	};
 

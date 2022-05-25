@@ -17,6 +17,10 @@ function Comments() {
 		(state: RootState) => state.commentReducer.commentReplies
 	);
 
+	const isAuth = useSelector(
+		(state: RootState) => state.authenticationReducer.isAuth
+	);
+
 	const [reply, setReply] = useState<number | string>();
 	const [commentCount, setCommentCount] = useState<number | string>(0);
 	const [replies, setReplies] = useState(0);
@@ -103,12 +107,16 @@ function Comments() {
 										>
 											{comment.content}
 										</p>
-										<p
-											className="comments-comment__contents--replyBtn"
-											onClick={() => replyToggleHandler(comment._id)}
-										>
-											Reply
-										</p>
+
+										{isAuth && (
+											<p
+												className="comments-comment__contents--replyBtn"
+												onClick={() => replyToggleHandler(comment._id)}
+											>
+												Reply
+											</p>
+										)}
+
 										{reply === comment._id && (
 											<ReplyComment
 												commentNumber={commentCount}
@@ -149,12 +157,16 @@ function Comments() {
 														<span>@</span>
 														<span>{reps.replyingTo}</span> {reps.content}
 													</p>
-													<p
-														className="comments-comment__contents--replyBtn"
-														onClick={() => replyToggleHandler(reps._id)}
-													>
-														Reply
-													</p>
+
+													{isAuth && (
+														<p
+															className="comments-comment__contents--replyBtn"
+															onClick={() => replyToggleHandler(reps._id)}
+														>
+															Reply
+														</p>
+													)}
+
 													{reply === reps._id ? (
 														<ReplyComment
 															commentNumber={commentCount}

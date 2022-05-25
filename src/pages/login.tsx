@@ -1,14 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import FormInput from "../components/input/input";
 import useInput from "../hooks/use-input";
 import Button from "../components/button/button";
 
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
+import { LoginUser } from "../store/utils/authentication";
 
 function Login() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	let {
 		inputBlurHandler: emailBlurHandler,
@@ -47,6 +50,8 @@ function Login() {
 		};
 
 		console.log(formData);
+
+		dispatch(LoginUser(formData, navigate));
 	};
 
 	return (
@@ -66,7 +71,7 @@ function Login() {
 						labelHtmlFor="email"
 						labelName="Email"
 						name="email"
-						placeholder="john@doe.com"
+						placeholder="email@example.com"
 						type="email"
 						inputClassName="login-contents__form-input"
 						onChange={emailChangeHandler}

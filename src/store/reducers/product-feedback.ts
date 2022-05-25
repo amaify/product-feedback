@@ -13,18 +13,20 @@ interface ProductFeedbacksData {
 	creator: string;
 }
 
-interface CommentData {
-	_id: string;
-	id: number;
-	content: string;
-	replies: [];
-	creator: string;
-	productFeedback: string;
-}
+// interface CommentData {
+// 	_id: string;
+// 	id: number;
+// 	content: string;
+// 	replies: [];
+// 	creator: string;
+// 	productFeedback: string;
+// }
 
 type ProductFeedbackState = {
 	allFeedbacks: ProductFeedbacksData[];
 	oneFeedback: ProductFeedbacksData[];
+	feedbackLoading: boolean;
+	sortText: string;
 };
 
 type ProductFeedbackAction = {
@@ -35,6 +37,8 @@ type ProductFeedbackAction = {
 const initialState: ProductFeedbackState = {
 	allFeedbacks: [],
 	oneFeedback: [],
+	feedbackLoading: false,
+	sortText: "Most Upvotes",
 };
 
 export const productFeedbackReducer = (
@@ -52,6 +56,18 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				oneFeedback: action.data,
+			};
+
+		case actionTypes.ADD_NEW_FEEDBACK:
+			return {
+				...state,
+				feedbackLoading: false,
+			};
+
+		case actionTypes.SORT_FEEDBACK:
+			return {
+				...state,
+				sortText: action.data,
 			};
 
 		default:

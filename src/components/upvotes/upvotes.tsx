@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router";
 import ArrowUp from "../../assets/images/shared/icon-arrow-up.svg";
 import ArrowUpWhite from "../../assets/images/shared/icon-arrow-up-white.svg";
-import { UpvoteProps } from "../../type";
+import { RootState, UpvoteProps } from "../../type";
 import { upvoteIncrement } from "../../store/utils/feedbackUtil";
 
 function Upvotes(props: UpvoteProps) {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const isAuth = useSelector(
+		(state: RootState) => state.authenticationReducer.isAuth
+	);
 	const [active, setActive] = useState<boolean>(false);
 	let [upvoteNumber, incrementUpvoteNumber] = useState<number>(
 		props.upvoteNumbers === null ? 0 : props.upvoteNumbers
@@ -14,6 +19,11 @@ function Upvotes(props: UpvoteProps) {
 
 	const setActiveStateHandler = () => {
 		setActive(!active);
+
+		if (!isAuth) {
+			return navigate("/login");
+		}
+
 		incrementUpvoteNumber((upvoteNumber += 1));
 		dispatch(upvoteIncrement(props.productId, upvoteNumber));
 		console.log(upvoteNumber);

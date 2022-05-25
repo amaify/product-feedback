@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import NavigationSort from "./sort/navigation-sort";
 import Button from "../button/button";
 
@@ -10,11 +11,27 @@ import IconUser from "../../assets/images/shared/icon-user.svg";
 import IconLogout from "../../assets/images/shared/icon-logout.svg";
 
 import { RootState } from "../../type";
+import { LogoutUser } from "../../store/utils/authentication";
 
 function Navigation() {
+	const dispatch = useDispatch();
+
 	const allFeedbacks = useSelector(
 		(state: RootState) => state.productFeedbackReducer.allFeedbacks
 	);
+
+	const isAuth = useSelector(
+		(state: RootState) => state.authenticationReducer.isAuth
+	);
+
+	const userName = useSelector(
+		(state: RootState) => state.authenticationReducer.name
+	);
+
+	const logoutHandler = () => {
+		dispatch(LogoutUser());
+	};
+
 	return (
 		<nav className="navigation">
 			<div className="navigation-suggestion">
@@ -27,9 +44,19 @@ function Navigation() {
 
 			<NavigationSort />
 
-			<Link to={"/login"} className="navigation-authentication">
-				<img src={IconUser} alt="User Illustration" />
-			</Link>
+			{isAuth && (
+				<p className="navigation-username">{`Hi ` + userName.split(" ")[0]}</p>
+			)}
+
+			{!isAuth ? (
+				<Link to={"/login"} className="navigation-authentication">
+					<img src={IconUser} alt="Authentication Illustration" />
+				</Link>
+			) : (
+				<div className="navigation-authentication" onClick={logoutHandler}>
+					<img src={IconLogout} alt="Authentication Illustration" />
+				</div>
+			)}
 
 			<Button
 				btnNumber="1"

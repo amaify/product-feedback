@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { RootState } from "../../../type";
 import { Link } from "react-router-dom";
@@ -11,10 +11,47 @@ function Feedback() {
 	const prodFeedbacks = useSelector(
 		(state: RootState) => state.productFeedbackReducer.allFeedbacks
 	);
+	const sortText = useSelector(
+		(state: RootState) => state.productFeedbackReducer.sortText
+	);
+
+	let sortedFeedbacks = [...prodFeedbacks];
+
+	switch (sortText) {
+		case "Most Upvotes":
+			sortedFeedbacks = sortedFeedbacks.sort(
+				(a: any, b: any) => b.upvotes - a.upvotes
+			);
+			break;
+
+		case "Least Upvotes":
+			sortedFeedbacks = sortedFeedbacks.sort(
+				(a: any, b: any) => a.upvotes - b.upvotes
+			);
+			break;
+
+		case "Most Comments":
+			sortedFeedbacks = sortedFeedbacks.sort(
+				(a: any, b: any) => b.comments.length - a.comments.length
+			);
+			break;
+
+		case "Least Comments":
+			sortedFeedbacks = sortedFeedbacks.sort(
+				(a: any, b: any) => a.comments.length - b.comments.length
+			);
+			break;
+
+		default:
+			sortedFeedbacks = sortedFeedbacks.sort(
+				(a: any, b: any) => a.upvotes - b.upvotes
+			);
+			break;
+	}
 
 	return (
 		<section className="feedback">
-			{prodFeedbacks.map((feed) => (
+			{sortedFeedbacks.map((feed) => (
 				<div className="feedback-wrapper" key={feed._id}>
 					<Upvotes
 						divClassName="feedback-upvote"

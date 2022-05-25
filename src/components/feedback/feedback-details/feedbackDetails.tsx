@@ -33,6 +33,10 @@ function FeedbackDetails() {
 		(state: RootState) => state.commentReducer.feedbackComments
 	);
 
+	const isAuth = useSelector(
+		(state: RootState) => state.authenticationReducer.isAuth
+	);
+
 	console.log(prod.upvotes);
 
 	return (
@@ -47,11 +51,13 @@ function FeedbackDetails() {
 							<span>go back</span>
 						</p>
 
-						<Button
-							btnNumber="2"
-							btnText="Edit Feedback"
-							link="/new-feedback"
-						/>
+						{isAuth && (
+							<Button
+								btnNumber="2"
+								btnText="Edit Feedback"
+								link="/new-feedback"
+							/>
+						)}
 					</div>
 
 					<div className="feedbackdetails-contents__feedback--text">
@@ -77,7 +83,7 @@ function FeedbackDetails() {
 				</div>
 
 				<Comments />
-				<AddComment />
+				{isAuth && <AddComment />}
 			</div>
 		</section>
 	);

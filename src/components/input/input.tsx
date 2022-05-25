@@ -63,6 +63,7 @@ const FormInput: React.FC<InputPropTypes> = (props: InputPropTypes) => {
 						onChange={props.onChange}
 						onBlur={props.onBlur}
 						value={props.value}
+						placeholder={props.placeholder}
 					/>
 					{props.inputValueError && (
 						<p className="error-text error-text__input">{inputValue}</p>

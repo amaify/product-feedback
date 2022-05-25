@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/button";
 import InputSelect from "./input/select";
@@ -12,9 +13,16 @@ import LeftArrow from "../../assets/images/shared/icon-arrow-left.svg";
 import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
 import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
+import { addNewProductFeedback } from "../../store/utils/feedbackUtil";
+import { RootState } from "../../type";
 
 function NewFeedbackForm() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const userToken = useSelector(
+		(state: RootState) => state.authenticationReducer.token
+	);
 
 	let {
 		hasError: titleHasError,
@@ -70,19 +78,20 @@ function NewFeedbackForm() {
 		if (!editForm) {
 			formData = {
 				title: titleValue,
-				detailDescription: detailDescriptionValue,
+				description: detailDescriptionValue,
 				category: category,
 			};
 		} else {
 			formData = {
 				title: titleValue,
-				detailDescription: detailDescriptionValue,
+				description: detailDescriptionValue,
 				category: category,
 				updateStatus: editForm ? updateStatus : "",
 			};
 		}
 
 		console.log(formData);
+		dispatch(addNewProductFeedback(formData, navigate, userToken));
 		resetTitleInput();
 		resetDetailDescriptionInput();
 	};

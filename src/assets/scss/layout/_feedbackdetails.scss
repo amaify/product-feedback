@@ -19,7 +19,7 @@
 				cursor: pointer;
 
 				& span:first-child {
-					align-self: center;
+					align-self: flex-end;
 					margin-right: 1em;
 
 					& img {
@@ -107,6 +107,7 @@
 		&__replies {
 			display: flex;
 			padding-left: 4.5em;
+			margin-bottom: 2.5em;
 
 			& button {
 				padding: 1.25em 1.5em 1.15em 1.5em;

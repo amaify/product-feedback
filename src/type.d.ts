@@ -59,10 +59,18 @@ interface RootState {
 	productFeedbackReducer: {
 		allFeedbacks: FeedbackProps[];
 		oneFeedback: FeedbackProps;
+		feedbackLoading: boolean;
+		sortText: any;
 	};
 
 	commentReducer: {
 		feedbackComments: FeedbackComment[];
 		commentReplies: CommentReplies[];
+	};
+
+	authenticationReducer: {
+		token: string;
+		name: string;
+		isAuth: boolean;
 	};
 }

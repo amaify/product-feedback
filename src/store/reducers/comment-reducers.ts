@@ -1,17 +1,17 @@
 import { CommentReplies } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
 
-interface ProductFeedbacksData {
-	_id: string;
-	id: number;
-	title: string;
-	category: string;
-	upvotes: number;
-	status: string;
-	description: string;
-	comments: string[];
-	creator: string;
-}
+// interface ProductFeedbacksData {
+// 	_id: string;
+// 	id: number;
+// 	title: string;
+// 	category: string;
+// 	upvotes: number;
+// 	status: string;
+// 	description: string;
+// 	comments: string[];
+// 	creator: string;
+// }
 
 interface CommentData {
 	_id: string;

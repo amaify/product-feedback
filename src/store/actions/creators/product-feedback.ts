@@ -31,6 +31,19 @@ export const getOneProductFeedback = (
 	};
 };
 
+export const addNewFeedback = () => {
+	return {
+		type: actionTypes.ADD_NEW_FEEDBACK,
+	};
+};
+
+export const sortFeedback = (sortText: string) => {
+	return {
+		type: actionTypes.SORT_FEEDBACK,
+		data: sortText,
+	};
+};
+
 export const incrementUpvote = () => {
 	return {
 		type: actionTypes.INCREASE_UPVOTE,
