@@ -14,6 +14,7 @@ import Upvotes from "../../upvotes/upvotes";
 import Comments from "./components/comment";
 import AddComment from "./components/add-comment";
 import { getOneFeedback } from "../../../store/utils/feedbackUtil";
+import { setEditToTrue } from "../../../store/actions/creators/product-feedback";
 
 function FeedbackDetails() {
 	const navigate = useNavigate();
@@ -37,7 +38,17 @@ function FeedbackDetails() {
 		(state: RootState) => state.authenticationReducer.isAuth
 	);
 
+	const userId = useSelector(
+		(state: RootState) => state.authenticationReducer.userId
+	);
+
 	console.log(prod.upvotes);
+
+	const editButtonHandler = () => {
+		dispatch(setEditToTrue(feedback));
+		console.log(feedback);
+		navigate(`/edit-feedback/${feedback._id}`);
+	};
 
 	return (
 		<section className="feedbackdetails">
@@ -51,12 +62,25 @@ function FeedbackDetails() {
 							<span>go back</span>
 						</p>
 
-						{isAuth && (
+						{/* {isAuth && (
 							<Button
 								btnNumber="2"
 								btnText="Edit Feedback"
-								link="/new-feedback"
+								onClick={editButtonHandler}
 							/>
+						)} */}
+						{isAuth ? (
+							userId === feedback.creator ? (
+								<Button
+									btnNumber="2"
+									btnText="Edit Feedback"
+									onClick={editButtonHandler}
+								/>
+							) : (
+								""
+							)
+						) : (
+							""
 						)}
 					</div>
 

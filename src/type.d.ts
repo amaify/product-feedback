@@ -61,6 +61,8 @@ interface RootState {
 		oneFeedback: FeedbackProps;
 		feedbackLoading: boolean;
 		sortText: any;
+		edit: boolean;
+		editContent: FeedbackProps;
 	};
 
 	commentReducer: {
@@ -71,6 +73,23 @@ interface RootState {
 	authenticationReducer: {
 		token: string;
 		name: string;
+		userId: string;
 		isAuth: boolean;
 	};
+}
+
+interface FeedbackDropdownProps {
+	activeElement: number;
+	activeTextElement: string;
+	displayElement: boolean;
+	onSelectItem: (option: { id: number; text: string }) => void;
+}
+
+interface InputSelectProps {
+	labelTitle: string;
+	labelDescription: string;
+	labelHtmlFor: string;
+	activeText: string;
+	activeClick: number;
+	onSelectItemHandler: (item: { id: number; text: string }) => void;
 }

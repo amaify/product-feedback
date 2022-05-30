@@ -13,7 +13,10 @@ import LeftArrow from "../../assets/images/shared/icon-arrow-left.svg";
 import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
 import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
-import { addNewProductFeedback } from "../../store/utils/feedbackUtil";
+import {
+	addNewProductFeedback,
+	editProductFeedback,
+} from "../../store/utils/feedbackUtil";
 import { RootState } from "../../type";
 
 function NewFeedbackForm() {
@@ -22,6 +25,14 @@ function NewFeedbackForm() {
 
 	const userToken = useSelector(
 		(state: RootState) => state.authenticationReducer.token
+	);
+
+	const editState = useSelector(
+		(state: RootState) => state.productFeedbackReducer.edit
+	);
+
+	const editContent = useSelector(
+		(state: RootState) => state.productFeedbackReducer.editContent
 	);
 
 	let {
@@ -33,11 +44,13 @@ function NewFeedbackForm() {
 		isValueValid: titleIsValid,
 		onSelectItemHandler,
 		activeClick,
+		editActiveClick,
 		activeText,
 		activeTextEdit,
 		editSelectItemHandler,
 		resetUserInput: resetTitleInput,
 		value: titleValue,
+		editValue: editTitleValue,
 	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
 
 	let {
@@ -47,9 +60,8 @@ function NewFeedbackForm() {
 		isValueValid: detailDescriptionIsValid,
 		resetUserInput: resetDetailDescriptionInput,
 		value: detailDescriptionValue,
+		editDescription: editDescriptionValue,
 	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
-
-	const [editForm, setEditForm] = useState(true);
 
 	let isValid = false;
 
@@ -75,25 +87,39 @@ function NewFeedbackForm() {
 
 		let formData;
 
-		if (!editForm) {
+		if (!editState) {
 			formData = {
 				title: titleValue,
 				description: detailDescriptionValue,
-				category: category,
+				category: activeText,
 			};
+
+			// dispatch(addNewProductFeedback(formData, navigate, userToken));
+			resetTitleInput();
+			resetDetailDescriptionInput();
 		} else {
 			formData = {
-				title: titleValue,
-				description: detailDescriptionValue,
-				category: category,
-				updateStatus: editForm ? updateStatus : "",
+				title: editTitleValue,
+				description: editDescriptionValue,
+				category: activeText,
+				updateStatus: activeTextEdit,
 			};
+
+			// dispatch(addNewProductFeedback(formData, navigate, userToken));
+			dispatch(
+				editProductFeedback(formData, navigate, userToken, editContent._id)
+			);
 		}
 
 		console.log(formData);
-		dispatch(addNewProductFeedback(formData, navigate, userToken));
-		resetTitleInput();
-		resetDetailDescriptionInput();
+		// dispatch(addNewProductFeedback(formData, navigate, userToken));
+		// resetTitleInput();
+		// resetDetailDescriptionInput();
+	};
+
+	const cancelEditHandler = (event: React.FormEvent) => {
+		event.preventDefault();
+		console.log("cancel clicked");
 	};
 
 	return (
@@ -108,16 +134,16 @@ function NewFeedbackForm() {
 
 				<form className="feedbackForm-form" onSubmit={submitFormHandler}>
 					<div className="feedbackForm-form__icon">
-						{!editForm ? (
+						{!editState ? (
 							<img src={NewFeedbackIcon} alt="New feedback display" />
 						) : (
 							<img src={EditFeedbackIcon} alt="Edit feedback display" />
 						)}
 					</div>
 					<h2 className="feedbackForm-form__heading">
-						{!editForm
+						{!editState
 							? "create new feedback"
-							: `Editing 'Add a dark theme option'`}
+							: `Editing '${editContent.title}'`}
 					</h2>
 
 					<FormInput
@@ -130,7 +156,7 @@ function NewFeedbackForm() {
 						control="input"
 						onChange={titleChangeHandler}
 						onBlur={titleBlurHanlder}
-						value={titleValue}
+						value={!editState ? titleValue : editTitleValue}
 						inputClassName={titleClass}
 						inputValueError={titleHasError}
 					/>
@@ -144,13 +170,13 @@ function NewFeedbackForm() {
 						onSelectItemHandler={onSelectItemHandler}
 					/>
 
-					{editForm && (
+					{editState && (
 						<EditInputSelect
 							labelHtmlFor="updateStatus"
 							labelTitle="update status"
 							labelDescription="Change feedback state"
 							activeText={activeTextEdit}
-							activeClick={activeClick}
+							activeClick={editActiveClick}
 							onSelectItemHandler={editSelectItemHandler}
 						/>
 					)}
@@ -164,19 +190,23 @@ function NewFeedbackForm() {
 						id="details"
 						onChange={detailDescriptionChangeHandler}
 						onBlur={detailDescriptionBlurHanlder}
-						value={detailDescriptionValue}
+						value={!editState ? detailDescriptionValue : editDescriptionValue}
 						inputClassName={descriptionClass}
 						textAreaError={detailsDescriptionHasError}
 					/>
 
 					<div className="feedbackForm-form__btns">
-						{editForm && (
+						{editState && (
 							<div className="feedbackForm-form__btns--delete">
 								<Button btnText="Delete" btnNumber="4" />
 							</div>
 						)}
 						<div className="feedbackForm-form__btns--actions">
-							<Button btnText="Cancel" btnNumber="3" />
+							<Button
+								btnText="Cancel"
+								btnNumber="3"
+								onClick={cancelEditHandler}
+							/>
 							<Button btnText="Add Feedback" btnNumber="1" />
 						</div>
 					</div>

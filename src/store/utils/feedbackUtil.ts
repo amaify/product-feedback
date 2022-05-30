@@ -88,6 +88,27 @@ export const addNewProductFeedback = (
 	};
 };
 
+export const editProductFeedback = (
+	userData: any,
+	navigate: any,
+	token: string,
+	productId: string
+) => {
+	return (dispatch: any) => {
+		fetch(`http://localhost:8080/feedback/edit-feedback/${productId}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + token,
+			},
+			body: JSON.stringify(userData),
+		})
+			.then((response) => response.json())
+			.then((responseData) => console.log(responseData))
+			.catch((error) => console.log(error));
+	};
+};
+
 export const upvoteIncrement = (productId: string, upvoteNumber: number) => {
 	let data = {
 		upvotes: upvoteNumber,

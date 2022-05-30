@@ -1,17 +1,17 @@
-import { CommentReplies } from "../../type";
+import { CommentReplies, FeedbackProps } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
 
-interface ProductFeedbacksData {
-	_id: string;
-	id: number;
-	title: string;
-	category: string;
-	upvotes: number;
-	status: string;
-	description: string;
-	comments: string[];
-	creator: string;
-}
+// interface ProductFeedbacksData {
+// 	_id: string;
+// 	id: number;
+// 	title: string;
+// 	category: string;
+// 	upvotes: number;
+// 	status: string;
+// 	description: string;
+// 	comments: string[];
+// 	creator: string;
+// }
 
 // interface CommentData {
 // 	_id: string;
@@ -23,10 +23,12 @@ interface ProductFeedbacksData {
 // }
 
 type ProductFeedbackState = {
-	allFeedbacks: ProductFeedbacksData[];
-	oneFeedback: ProductFeedbacksData[];
+	allFeedbacks: FeedbackProps[];
+	oneFeedback: FeedbackProps[];
 	feedbackLoading: boolean;
 	sortText: string;
+	edit: boolean;
+	editContent: FeedbackProps[];
 };
 
 type ProductFeedbackAction = {
@@ -38,6 +40,8 @@ const initialState: ProductFeedbackState = {
 	allFeedbacks: [],
 	oneFeedback: [],
 	feedbackLoading: false,
+	edit: false,
+	editContent: [],
 	sortText: "Most Upvotes",
 };
 
@@ -68,6 +72,13 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				sortText: action.data,
+			};
+
+		case actionTypes.SET_EDIT_TO_TRUE:
+			return {
+				...state,
+				edit: true,
+				editContent: action.data,
 			};
 
 		default:

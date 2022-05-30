@@ -17,7 +17,10 @@ function AppRoutes() {
 	const isAuth = useSelector(
 		(state: RootState) => state.authenticationReducer.isAuth
 	);
-	const [state, setState] = useState(false);
+
+	const editState = useSelector(
+		(state: RootState) => state.productFeedbackReducer.edit
+	);
 
 	return (
 		<Routes>
@@ -25,7 +28,7 @@ function AppRoutes() {
 
 			<Route index element={<Layout />} />
 			<Route
-				path={state ? "/edit-feedback" : "/new-feedback"}
+				path={editState ? "/edit-feedback/:editFeedbackId" : "/new-feedback"}
 				element={
 					<ProtectedRoute redirectPath="/login" auth={!isAuth}>
 						<NewFeedbackForm />

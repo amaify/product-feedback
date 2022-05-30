@@ -26,6 +26,7 @@ const calculateRemainingTime = (expirationTime: string) => {
 export const retrieveStoredData = () => {
 	const storedToken = localStorage.getItem("token");
 	const storedFullname = localStorage.getItem("name");
+	const storedUserId = localStorage.getItem("userId");
 	const storedExpirationTime = localStorage.getItem("expirationTime");
 
 	let remainingTime: any;
@@ -44,6 +45,7 @@ export const retrieveStoredData = () => {
 	return {
 		token: storedToken,
 		name: storedFullname,
+		userId: storedUserId,
 		duration: remainingTime,
 	};
 };
@@ -83,6 +85,7 @@ export const LoginUser = (userData: UserData, navigate: any) => {
 					dispatch(loginUser(responseData));
 					localStorage.setItem("token", responseData.token);
 					localStorage.setItem("name", responseData.fullName);
+					localStorage.setItem("userId", responseData.userId);
 					navigate("/");
 
 					const expirationTime = new Date(

@@ -7,7 +7,7 @@ interface ButtonProps {
 	icon?: {};
 	btnText: string;
 	link?: string;
-	onClick?: () => void;
+	onClick?: (e: React.FormEvent) => void;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {

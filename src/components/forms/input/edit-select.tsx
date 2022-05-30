@@ -4,15 +4,16 @@ import EditDropdown from "./editFeedback-dropdown";
 
 import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
 import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
+import { InputSelectProps } from "../../../type";
 
-interface InputSelectProps {
-	labelTitle: string;
-	labelDescription: string;
-	labelHtmlFor: string;
-	activeText: string;
-	activeClick: number;
-	onSelectItemHandler: (item: { id: number; text: string }) => void;
-}
+// interface InputSelectProps {
+// 	labelTitle: string;
+// 	labelDescription: string;
+// 	labelHtmlFor: string;
+// 	activeText: string;
+// 	activeClick: number | string;
+// 	onSelectItemHandler: (item: { id: number; text: string }) => void;
+// }
 
 function EditInputSelect(props: InputSelectProps) {
 	const [displayOptions, setDisplayOptions] = useState(false);
