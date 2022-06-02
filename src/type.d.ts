@@ -63,6 +63,7 @@ interface RootState {
 		sortText: any;
 		edit: boolean;
 		editContent: FeedbackProps;
+		getFeedbackToDelete: boolean;
 	};
 
 	commentReducer: {

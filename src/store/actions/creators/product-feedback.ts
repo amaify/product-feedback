@@ -52,3 +52,21 @@ export const setEditToTrue = (productContent: FeedbackProps) => {
 		data: productContent,
 	};
 };
+
+export const getFeedbackToDelete = () => {
+	return {
+		type: actionTypes.GET_FEEDBACK_TO_DELETE,
+	};
+};
+
+export const deleteFeedback = () => {
+	return {
+		type: actionTypes.DELETE_FEEDBACK,
+	};
+};
+
+export const cancelDelete = () => {
+	return {
+		type: actionTypes.CANCEL_DELETE,
+	};
+};

@@ -7,6 +7,7 @@ import {
 	getProductComments,
 	getCommentReplies,
 } from "../actions/creators/comments";
+import { Navigate } from "react-router";
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {
@@ -105,6 +106,30 @@ export const editProductFeedback = (
 		})
 			.then((response) => response.json())
 			.then((responseData) => console.log(responseData))
+			.catch((error) => console.log(error));
+	};
+};
+
+export const deleteProductFeedback = (
+	productId: string,
+	token: string,
+	navigate: any
+) => {
+	return (dispatch: any) => {
+		fetch(`http://localhost:8080/feedback/delete-feedback/${productId}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + token,
+			},
+		})
+			.then((response) => response.json())
+			.then((responseData) => {
+				if (responseData.statusCode === 201) {
+					console.log(responseData.message);
+					navigate("/");
+				}
+			})
 			.catch((error) => console.log(error));
 	};
 };

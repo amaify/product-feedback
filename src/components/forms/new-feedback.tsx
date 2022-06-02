@@ -6,6 +6,8 @@ import InputSelect from "./input/select";
 import EditInputSelect from "./input/edit-select";
 // import FormInput from "./input/input";
 import FormInput from "../input/input";
+import Modal from "../modal/modal";
+import Backdrop from "../backdrop/backdrop";
 
 import useInput from "../../hooks/use-input";
 
@@ -18,6 +20,7 @@ import {
 	editProductFeedback,
 } from "../../store/utils/feedbackUtil";
 import { RootState } from "../../type";
+import { getFeedbackToDelete } from "../../store/actions/creators/product-feedback";
 
 function NewFeedbackForm() {
 	const navigate = useNavigate();
@@ -33,6 +36,10 @@ function NewFeedbackForm() {
 
 	const editContent = useSelector(
 		(state: RootState) => state.productFeedbackReducer.editContent
+	);
+
+	const feedbackToDelete = useSelector(
+		(state: RootState) => state.productFeedbackReducer.getFeedbackToDelete
 	);
 
 	let {
@@ -122,6 +129,12 @@ function NewFeedbackForm() {
 		console.log("cancel clicked");
 	};
 
+	const deleteFeedbackHandler = (event: React.FormEvent) => {
+		event.preventDefault();
+
+		dispatch(getFeedbackToDelete());
+	};
+
 	return (
 		<section className="feedbackForm">
 			<div className="feedbackForm-content">
@@ -198,7 +211,11 @@ function NewFeedbackForm() {
 					<div className="feedbackForm-form__btns">
 						{editState && (
 							<div className="feedbackForm-form__btns--delete">
-								<Button btnText="Delete" btnNumber="4" />
+								<Button
+									btnText="Delete"
+									btnNumber="4"
+									onClick={deleteFeedbackHandler}
+								/>
 							</div>
 						)}
 						<div className="feedbackForm-form__btns--actions">
@@ -212,6 +229,10 @@ function NewFeedbackForm() {
 					</div>
 				</form>
 			</div>
+			{feedbackToDelete && (
+				<Modal id={editContent._id} title={editContent.title} />
+			)}
+			{feedbackToDelete && <Backdrop />}
 		</section>
 	);
 }

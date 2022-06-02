@@ -435,6 +435,7 @@ html {
 
 .feedbackForm {
   padding: 0 0 10em 0;
+  position: relative;
 }
 
 .feedbackForm-content {
@@ -663,6 +664,65 @@ html {
   position: absolute;
   top: 15px;
   right: 0;
+}
+
+.modal {
+  background: #ffffff;
+  width: 40%;
+  padding: 3em;
+  border-radius: 0.8em;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.modal-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-line-pack: justify;
+      align-content: space-between;
+}
+
+.modal-content__heading {
+  color: #3a4374;
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 35px;
+  margin-bottom: 0.8em;
+}
+
+.modal-content__text {
+  color: #647196;
+  font-size: 1.8em;
+  font-weight: 400;
+  line-height: 23px;
+  margin-bottom: 1.5em;
+}
+
+.modal-content__btn button:focus {
+  outline: 2px solid #f49f85;
+}
+
+.modal-content__btn button:first-child {
+  margin-right: 1em;
+}
+
+.backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1;
 }
 
 .wrapper {

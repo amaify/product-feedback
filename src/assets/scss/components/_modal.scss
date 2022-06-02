@@ -1,0 +1,56 @@
+.modal {
+	background: $color-white;
+	width: 40%;
+	// height: 250px;
+	padding: 3em;
+	border-radius: 0.8em;
+
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+
+	&-content {
+		display: flex;
+		flex-direction: column;
+		align-content: space-between;
+
+		&__heading {
+			color: $color-darkerBlue;
+			font-size: 3em;
+			font-weight: 700;
+			line-height: 35px;
+			margin-bottom: 0.8em;
+		}
+
+		&__text {
+			color: $color-grey;
+			font-size: 1.8em;
+			font-weight: 400;
+			line-height: 23px;
+			margin-bottom: 1.5em;
+		}
+
+		&__btn {
+			& button {
+				&:focus {
+					outline: 2px solid $color-orange;
+				}
+				&:first-child {
+					margin-right: 1em;
+				}
+			}
+		}
+	}
+}
+
+.backdrop {
+	background: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	z-index: 1;
+}

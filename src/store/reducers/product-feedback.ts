@@ -29,6 +29,7 @@ type ProductFeedbackState = {
 	sortText: string;
 	edit: boolean;
 	editContent: FeedbackProps[];
+	getFeedbackToDelete: boolean;
 };
 
 type ProductFeedbackAction = {
@@ -43,6 +44,7 @@ const initialState: ProductFeedbackState = {
 	edit: false,
 	editContent: [],
 	sortText: "Most Upvotes",
+	getFeedbackToDelete: false,
 };
 
 export const productFeedbackReducer = (
@@ -79,6 +81,24 @@ export const productFeedbackReducer = (
 				...state,
 				edit: true,
 				editContent: action.data,
+			};
+
+		case actionTypes.GET_FEEDBACK_TO_DELETE:
+			return {
+				...state,
+				getFeedbackToDelete: true,
+			};
+
+		case actionTypes.CANCEL_DELETE:
+			return {
+				...state,
+				getFeedbackToDelete: false,
+			};
+
+		case actionTypes.DELETE_FEEDBACK:
+			return {
+				...state,
+				getFeedbackToDelete: false,
 			};
 
 		default:
