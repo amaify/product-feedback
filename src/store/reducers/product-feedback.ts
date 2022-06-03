@@ -24,12 +24,16 @@ import * as actionTypes from "../actions/actionTypes";
 
 type ProductFeedbackState = {
 	allFeedbacks: FeedbackProps[];
+	plannedRoadmap: FeedbackProps[];
+	inProgressRoadmap: FeedbackProps[];
+	liveRoadmap: FeedbackProps[];
 	oneFeedback: FeedbackProps[];
 	feedbackLoading: boolean;
 	sortText: string;
 	edit: boolean;
 	editContent: FeedbackProps[];
 	getFeedbackToDelete: boolean;
+	sortFeature: string;
 };
 
 type ProductFeedbackAction = {
@@ -40,10 +44,14 @@ type ProductFeedbackAction = {
 const initialState: ProductFeedbackState = {
 	allFeedbacks: [],
 	oneFeedback: [],
+	plannedRoadmap: [],
+	inProgressRoadmap: [],
+	liveRoadmap: [],
 	feedbackLoading: false,
 	edit: false,
 	editContent: [],
 	sortText: "Most Upvotes",
+	sortFeature: "All",
 	getFeedbackToDelete: false,
 };
 
@@ -53,9 +61,24 @@ export const productFeedbackReducer = (
 ) => {
 	switch (action.type) {
 		case actionTypes.GET_PRODUCT_FEEDBACK:
+			const allProductFeedback = action.data;
+			let filteredProductFeedback = [...allProductFeedback];
+			let plannedFeedback = filteredProductFeedback.filter(
+				(prodFeed) => prodFeed.status.toLowerCase() === "planned"
+			);
+			let inProgressFeedback = filteredProductFeedback.filter(
+				(prodFeed) => prodFeed.status === "In-Progress"
+			);
+			let liveFeedback = filteredProductFeedback.filter(
+				(prodFeed) => prodFeed.status.toLowerCase() === "live"
+			);
+
 			return {
 				...state,
 				allFeedbacks: action.data,
+				plannedRoadmap: plannedFeedback,
+				inProgressRoadmap: inProgressFeedback,
+				liveRoadmap: liveFeedback,
 			};
 
 		case actionTypes.GET_ONE_PRODUCT_FEEDBACK:
@@ -74,6 +97,12 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				sortText: action.data,
+			};
+
+		case actionTypes.FILTER_BY_FEATURES:
+			return {
+				...state,
+				sortFeature: action.data,
 			};
 
 		case actionTypes.SET_EDIT_TO_TRUE:

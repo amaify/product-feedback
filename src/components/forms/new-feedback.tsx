@@ -101,7 +101,7 @@ function NewFeedbackForm() {
 				category: activeText,
 			};
 
-			// dispatch(addNewProductFeedback(formData, navigate, userToken));
+			dispatch(addNewProductFeedback(formData, navigate, userToken));
 			resetTitleInput();
 			resetDetailDescriptionInput();
 		} else {

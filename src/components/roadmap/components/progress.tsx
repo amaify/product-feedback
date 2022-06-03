@@ -1,48 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Upvotes from "../../upvotes/upvotes";
 
-import { ArrayOfRoadmaps } from "../../../type";
+import { RootState, FeedbackProps } from "../../../type";
 
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
-const RoadmapItems: ArrayOfRoadmaps[] = [
-	{
-		id: 0,
-		roadmapType: "In Progress",
-		title: "One-click portfolio generation",
-		text: "Add ability to create professional looking portfolio from profile.",
-		feature: "Feature",
-		upvotes: 62,
-		comments: 1,
-	},
-	{
-		id: 1,
-		roadmapType: "In Progress",
-		title: "Bookmark challenges",
-		text: "Be able to bookmark challenges to take later on.",
-		feature: "Feature",
-		upvotes: 31,
-		comments: 1,
-	},
-	{
-		id: 2,
-		roadmapType: "In Progress",
-		title: "Animated solution screenshots",
-		text: `Screenshots of solutions with animations don't display correctly.`,
-		feature: "Feature",
-		upvotes: 9,
-		comments: 0,
-	},
-];
+interface ReduxState {
+	inProgressRoadmap: FeedbackProps[];
+}
 
-function ProgressComponent() {
+function ProgressComponent({ inProgressRoadmap }: ReduxState) {
 	return (
 		<div className="roadmap-components">
 			<div className="roadmap-components__heading">
 				<h2 className="roadmap-components__heading--header">
-					<span>In-Progress</span> <span>(3)</span>
+					<span>In-Progress</span> <span>({inProgressRoadmap.length})</span>
 				</h2>
 				<p className="roadmap-components__heading--description">
 					Currently being developed
@@ -50,33 +25,39 @@ function ProgressComponent() {
 			</div>
 
 			<div className="roadmap-components__cards" id="planned">
-				{RoadmapItems.map((items) => (
+				{inProgressRoadmap.map((items) => (
 					<div
 						className="roadmap-components__card"
 						id="progress"
-						key={items.id}
+						key={items._id}
 					>
-						<Link to={{ pathname: `/feedback-details/${items.id}` }}>
-							<p className="roadmap-components__card--type">
-								{items.roadmapType}
-							</p>
+						<Link
+							to={{ pathname: `/feedback-details/${items._id}` }}
+							state={items}
+						>
+							<p className="roadmap-components__card--type">{items.status}</p>
 							<h2 className="roadmap-components__card--heading">
 								{items.title}
 							</h2>
-							<p className="roadmap-components__card--text">{items.text}</p>
+							<p className="roadmap-components__card--text">
+								{items.description}
+							</p>
 						</Link>
-						<p className="roadmap-components__card--feature">{items.feature}</p>
+						<p className="roadmap-components__card--feature">
+							{items.category}
+						</p>
 
 						<div className="roadmap-components__card--reactions">
 							<Upvotes
 								divClassName="roadmap-components__card--reactions-upvote"
 								upvoteNumbers={items.upvotes}
+								productId={items._id}
 							/>
 
 							<div className="roadmap-components__card--reactions-comments">
 								<img src={CommentsIcon} alt="Comments of people" />
-								<p id={items.comments === 0 ? "no-comment" : ""}>
-									{items.comments}
+								<p id={items.comments.length === 0 ? "no-comment" : ""}>
+									{items.comments.length}
 								</p>
 							</div>
 						</div>
@@ -87,4 +68,10 @@ function ProgressComponent() {
 	);
 }
 
-export default ProgressComponent;
+const mapStateToProps = (state: RootState) => {
+	return {
+		inProgressRoadmap: state.productFeedbackReducer.inProgressRoadmap,
+	};
+};
+
+export default connect(mapStateToProps)(ProgressComponent);

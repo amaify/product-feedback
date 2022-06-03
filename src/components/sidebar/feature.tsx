@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { filterByFeatures } from "../../store/actions/creators/product-feedback";
 import { ListOfArray } from "../../utils/model";
 
 const listItems: ListOfArray[] = [
@@ -11,10 +13,13 @@ const listItems: ListOfArray[] = [
 ];
 
 function Feature() {
+	const dispatch = useDispatch();
 	const [activeFeature, setActiveFeature] = useState(0);
 
 	const setActiveFeatureHandler = (item: { id: number; text: string }) => {
 		setActiveFeature(item.id);
+
+		dispatch(filterByFeatures(item.text));
 	};
 
 	return (

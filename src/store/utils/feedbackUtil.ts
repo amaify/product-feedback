@@ -105,7 +105,13 @@ export const editProductFeedback = (
 			body: JSON.stringify(userData),
 		})
 			.then((response) => response.json())
-			.then((responseData) => console.log(responseData))
+			.then((responseData) => {
+				if (responseData.statusCode === 201) {
+					console.log(responseData.message);
+					navigate("/");
+					dispatch(getFeedbacks());
+				}
+			})
 			.catch((error) => console.log(error));
 	};
 };

@@ -1,7 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FeedbackProps, RootState } from "../../type";
 
-function Roadmap() {
+interface ReduxState {
+	plannedRoadmap: FeedbackProps[];
+	inProgressRoadmap: FeedbackProps[];
+	liveRoadmap: FeedbackProps[];
+}
+
+function Roadmap({
+	plannedRoadmap,
+	inProgressRoadmap,
+	liveRoadmap,
+}: ReduxState) {
 	return (
 		<div className="sidebar-roadmap">
 			<div className="sidebar-roadmap__heading">
@@ -12,19 +24,27 @@ function Roadmap() {
 			<ul className="sidebar-roadmap__items">
 				<li className="sidebar-roadmap__items--list" id="planned">
 					<span>Planned</span>
-					<span>0</span>
+					<span>{plannedRoadmap.length}</span>
 				</li>
 				<li className="sidebar-roadmap__items--list" id="in-progress">
 					<span>In-Progress</span>
-					<span>0</span>
+					<span>{inProgressRoadmap.length}</span>
 				</li>
 				<li className="sidebar-roadmap__items--list" id="live">
 					<span>Live</span>
-					<span>0</span>
+					<span>{liveRoadmap.length}</span>
 				</li>
 			</ul>
 		</div>
 	);
 }
 
-export default Roadmap;
+const mapStateToProps = (state: RootState) => {
+	return {
+		plannedRoadmap: state.productFeedbackReducer.plannedRoadmap,
+		inProgressRoadmap: state.productFeedbackReducer.inProgressRoadmap,
+		liveRoadmap: state.productFeedbackReducer.liveRoadmap,
+	};
+};
+
+export default connect(mapStateToProps)(Roadmap);

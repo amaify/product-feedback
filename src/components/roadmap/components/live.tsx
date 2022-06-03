@@ -1,30 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Upvotes from "../../upvotes/upvotes";
 
-import { ArrayOfRoadmaps } from "../../../type";
+import { RootState, FeedbackProps } from "../../../type";
 
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
-const RoadmapItems: ArrayOfRoadmaps[] = [
-	{
-		id: 0,
-		roadmapType: "Live",
-		title: "Add micro-interactions",
-		text: "Small animations at specific points can add delight.",
-		feature: "Enhancement",
-		upvotes: 71,
-		comments: 2,
-	},
-];
+interface ReduxState {
+	liveRoadmap: FeedbackProps[];
+}
 
-function LiveComponent() {
+function LiveComponent({ liveRoadmap }: ReduxState) {
 	return (
 		<div className="roadmap-components">
 			<div className="roadmap-components__heading">
 				<h2 className="roadmap-components__heading--header">
-					<span>Live</span> <span>(1)</span>
+					<span>Live</span> <span>({liveRoadmap.length})</span>
 				</h2>
 				<p className="roadmap-components__heading--description">
 					Released Features
@@ -32,29 +25,35 @@ function LiveComponent() {
 			</div>
 
 			<div className="roadmap-components__cards" id="planned">
-				{RoadmapItems.map((items) => (
-					<div className="roadmap-components__card" id="live" key={items.id}>
-						<Link to={{ pathname: `/feedback-details/${items.id}` }}>
-							<p className="roadmap-components__card--type">
-								{items.roadmapType}
-							</p>
+				{liveRoadmap.map((items) => (
+					<div className="roadmap-components__card" id="live" key={items._id}>
+						<Link
+							to={{ pathname: `/feedback-details/${items._id}` }}
+							state={items}
+						>
+							<p className="roadmap-components__card--type">{items.status}</p>
 							<h2 className="roadmap-components__card--heading">
 								{items.title}
 							</h2>
-							<p className="roadmap-components__card--text">{items.text}</p>
+							<p className="roadmap-components__card--text">
+								{items.description}
+							</p>
 						</Link>
-						<p className="roadmap-components__card--feature">{items.feature}</p>
+						<p className="roadmap-components__card--feature">
+							{items.category}
+						</p>
 
 						<div className="roadmap-components__card--reactions">
 							<Upvotes
 								divClassName="roadmap-components__card--reactions-upvote"
 								upvoteNumbers={items.upvotes}
+								productId={items._id}
 							/>
 
 							<div className="roadmap-components__card--reactions-comments">
 								<img src={CommentsIcon} alt="Comments of people" />
-								<p id={items.comments === 0 ? "no-comment" : ""}>
-									{items.comments}
+								<p id={items.comments.length === 0 ? "no-comment" : ""}>
+									{items.comments.length}
 								</p>
 							</div>
 						</div>
@@ -65,4 +64,10 @@ function LiveComponent() {
 	);
 }
 
-export default LiveComponent;
+const mapStateToProps = (state: RootState) => {
+	return {
+		liveRoadmap: state.productFeedbackReducer.liveRoadmap,
+	};
+};
+
+export default connect(mapStateToProps)(LiveComponent);

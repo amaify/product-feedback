@@ -6,16 +6,6 @@ declare global {
 	}
 }
 
-interface ArrayOfRoadmaps {
-	id: number;
-	roadmapType: string;
-	title: string;
-	text: string;
-	feature: string;
-	upvotes: number;
-	comments: number;
-}
-
 interface UpvoteProps {
 	divClassName: string;
 	upvoteNumbers: number;
@@ -58,9 +48,13 @@ interface CommentReplies {
 interface RootState {
 	productFeedbackReducer: {
 		allFeedbacks: FeedbackProps[];
+		plannedRoadmap: FeedbackProps[];
+		inProgressRoadmap: FeedbackProps[];
+		liveRoadmap: FeedbackProps[];
 		oneFeedback: FeedbackProps;
 		feedbackLoading: boolean;
-		sortText: any;
+		sortText: string;
+		sortFeature: string;
 		edit: boolean;
 		editContent: FeedbackProps;
 		getFeedbackToDelete: boolean;

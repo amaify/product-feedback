@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import { RootState } from "../../../type";
+import { FeedbackProps, RootState } from "../../../type";
 import { Link } from "react-router-dom";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
-// import Upvotes from "./components/upvote";
 import Upvotes from "../../upvotes/upvotes";
 
-function Feedback() {
-	const prodFeedbacks = useSelector(
-		(state: RootState) => state.productFeedbackReducer.allFeedbacks
-	);
-	const sortText = useSelector(
-		(state: RootState) => state.productFeedbackReducer.sortText
-	);
+interface StateProps {
+	prodFeedbacks: FeedbackProps[];
+	sortText: string;
+	sortFeature: string;
+}
 
-	let sortedFeedbacks = [...prodFeedbacks];
+function Feedback(props: StateProps) {
+	let sortedFeedbacks = [...props.prodFeedbacks];
 
-	switch (sortText) {
+	switch (props.sortText) {
 		case "Most Upvotes":
 			sortedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => b.upvotes - a.upvotes
@@ -46,6 +44,46 @@ function Feedback() {
 			sortedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => a.upvotes - b.upvotes
 			);
+			break;
+	}
+
+	switch (props.sortFeature) {
+		case "All":
+			sortedFeedbacks = sortedFeedbacks;
+			break;
+
+		case "UI":
+			sortedFeedbacks = sortedFeedbacks.filter(
+				(sorted) => sorted.category === "UI"
+			);
+			break;
+
+		case "UX":
+			sortedFeedbacks = sortedFeedbacks.filter(
+				(sorted) => sorted.category === "UX"
+			);
+			break;
+
+		case "Bug":
+			sortedFeedbacks = sortedFeedbacks.filter(
+				(sorted) => sorted.category === "Bug"
+			);
+			break;
+
+		case "Enhancement":
+			sortedFeedbacks = sortedFeedbacks.filter(
+				(sorted) => sorted.category === "Enhancement"
+			);
+			break;
+
+		case "Feature":
+			sortedFeedbacks = sortedFeedbacks.filter(
+				(sorted) => sorted.category === "Feature"
+			);
+			break;
+
+		default:
+			sortedFeedbacks = sortedFeedbacks;
 			break;
 	}
 
@@ -79,4 +117,12 @@ function Feedback() {
 	);
 }
 
-export default Feedback;
+const mapStateToProps = (state: RootState) => {
+	return {
+		prodFeedbacks: state.productFeedbackReducer.allFeedbacks,
+		sortText: state.productFeedbackReducer.sortText,
+		sortFeature: state.productFeedbackReducer.sortFeature,
+	};
+};
+
+export default connect(mapStateToProps)(Feedback);

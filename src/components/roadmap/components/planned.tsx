@@ -1,38 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import Upvotes from "../../upvotes/upvotes";
 
-import { ArrayOfRoadmaps } from "../../../type";
+import { FeedbackProps, RootState } from "../../../type";
 
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
-const RoadmapItems: ArrayOfRoadmaps[] = [
-	{
-		id: 0,
-		roadmapType: "Planned",
-		title: "More comprehensive reports",
-		text: "It would be great to see a more detailed breakdown of solutions.",
-		feature: "Feature",
-		upvotes: 123,
-		comments: 2,
-	},
-	{
-		id: 1,
-		roadmapType: "Planned",
-		title: "Learning paths",
-		text: "Sequenced projects for different goals to help people improve.",
-		feature: "Feature",
-		upvotes: 28,
-		comments: 1,
-	},
-];
+interface ReduxState {
+	plannedRoadmap: FeedbackProps[];
+}
 
-function PlannedComponent() {
+function PlannedComponent({ plannedRoadmap }: ReduxState) {
 	return (
 		<div className="roadmap-components">
 			<div className="roadmap-components__heading">
 				<h2 className="roadmap-components__heading--header">
-					<span>Planned</span> <span>(2)</span>
+					<span>Planned</span> <span>({plannedRoadmap.length})</span>
 				</h2>
 				<p className="roadmap-components__heading--description">
 					Ideas prioritized for research
@@ -40,29 +24,39 @@ function PlannedComponent() {
 			</div>
 
 			<div className="roadmap-components__cards" id="planned">
-				{RoadmapItems.map((items) => (
-					<div className="roadmap-components__card" id="planned" key={items.id}>
-						<Link to={{ pathname: `/feedback-details/${items.id}` }}>
-							<p className="roadmap-components__card--type">
-								{items.roadmapType}
-							</p>
+				{plannedRoadmap.map((items) => (
+					<div
+						className="roadmap-components__card"
+						id="planned"
+						key={items._id}
+					>
+						<Link
+							to={{ pathname: `/feedback-details/${items._id}` }}
+							state={items}
+						>
+							<p className="roadmap-components__card--type">{items.status}</p>
 							<h2 className="roadmap-components__card--heading">
 								{items.title}
 							</h2>
-							<p className="roadmap-components__card--text">{items.text}</p>
+							<p className="roadmap-components__card--text">
+								{items.description}
+							</p>
 						</Link>
-						<p className="roadmap-components__card--feature">{items.feature}</p>
+						<p className="roadmap-components__card--feature">
+							{items.category}
+						</p>
 
 						<div className="roadmap-components__card--reactions">
 							<Upvotes
 								divClassName="roadmap-components__card--reactions-upvote"
 								upvoteNumbers={items.upvotes}
+								productId={items._id}
 							/>
 
 							<div className="roadmap-components__card--reactions-comments">
 								<img src={CommentsIcon} alt="Comments of people" />
-								<p id={items.comments === 0 ? "no-comment" : ""}>
-									{items.comments}
+								<p id={items.comments.length === 0 ? "no-comment" : ""}>
+									{items.comments.length}
 								</p>
 							</div>
 						</div>
@@ -73,4 +67,10 @@ function PlannedComponent() {
 	);
 }
 
-export default PlannedComponent;
+const mapStateToProps = (state: RootState) => {
+	return {
+		plannedRoadmap: state.productFeedbackReducer.plannedRoadmap,
+	};
+};
+
+export default connect(mapStateToProps)(PlannedComponent);

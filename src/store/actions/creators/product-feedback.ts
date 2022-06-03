@@ -40,6 +40,13 @@ export const sortFeedback = (sortText: string) => {
 	};
 };
 
+export const filterByFeatures = (filterFeature: string) => {
+	return {
+		type: actionTypes.FILTER_BY_FEATURES,
+		data: filterFeature,
+	};
+};
+
 export const incrementUpvote = () => {
 	return {
 		type: actionTypes.INCREASE_UPVOTE,
