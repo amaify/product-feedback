@@ -34,7 +34,7 @@ function ReplyComment(props: ReplyCommentProps) {
 			<form onSubmit={props.submitFormHandler}>
 				<FormInput
 					control="textarea"
-					name="replyComment"
+					name="content"
 					id="reply-comment"
 					inputClassName={userInputClassname}
 					value={props.value}

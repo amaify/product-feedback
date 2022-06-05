@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
+import truncateText from "../../../utils/truncate";
 import { FeedbackProps, RootState } from "../../../type";
 import { Link } from "react-router-dom";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
@@ -48,9 +49,9 @@ function Feedback(props: StateProps) {
 	}
 
 	switch (props.sortFeature) {
-		case "All":
-			sortedFeedbacks = sortedFeedbacks;
-			break;
+		// case "All":
+		// 	sortedFeedbacks = sortedFeedbacks;
+		// 	break;
 
 		case "UI":
 			sortedFeedbacks = sortedFeedbacks.filter(
@@ -102,7 +103,9 @@ function Feedback(props: StateProps) {
 						className="feedback-contents"
 					>
 						<h2 className="feedback-contents__heading">{feed.title}</h2>
-						<p className="feedback-contents__text">{feed.description}</p>
+						<p className="feedback-contents__text">
+							{truncateText(feed.description, 150, true)}
+						</p>
 						<p className="feedback-contents__feature">{feed.category}</p>
 					</Link>
 					<div className="feedback-comments">

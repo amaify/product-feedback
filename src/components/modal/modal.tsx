@@ -31,23 +31,25 @@ function Modal(props: deleteContent) {
 	return (
 		<div className="modal">
 			<div className="modal-content">
-				<h1 className="modal-content__heading">Confirm Deletion</h1>
-				<p className="modal-content__text">
-					Are you sure you want to delete Product feedback "{props.title}-
-					{props.id}"? This action cannot be undone.
-				</p>
-				<div className="modal-content__btn">
-					<Button
-						btnNumber="3"
-						btnText="Cancel"
-						onClick={cancelDeleteHandler}
-					/>
-					<Button
-						btnNumber="4"
-						btnText="Delete"
-						onClick={deleteProductFeedbackHandler}
-					/>
-				</div>
+				<>
+					<h1 className="modal-content__heading">Confirm Deletion</h1>
+					<p className="modal-content__text">
+						Are you sure you want to delete Product feedback "{props.title}-
+						{props.id}"? This action cannot be undone.
+					</p>
+					<div className="modal-content__btn">
+						<Button
+							btnNumber="3"
+							btnText="Cancel"
+							onClick={cancelDeleteHandler}
+						/>
+						<Button
+							btnNumber="4"
+							btnText="Delete"
+							onClick={deleteProductFeedbackHandler}
+						/>
+					</div>
+				</>
 			</div>
 		</div>
 	);

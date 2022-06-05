@@ -1,11 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch, connect } from "react-redux";
 
 import useInput from "../../../../hooks/use-input";
 import FormInput from "../../../input/input";
 import Button from "../../../button/button";
 
-function AddComment() {
+import { RootState } from "../../../../type";
+import { addComment } from "../../../../store/utils/commentUtil";
+
+interface Props {
+	product: any;
+	userToken: string;
+}
+
+function AddComment({ product, userToken }: Props) {
 	let isValid = false;
+	const dispatch = useDispatch();
 
 	const {
 		value,
@@ -27,8 +37,9 @@ function AddComment() {
 			return;
 		}
 
-		const commentInput: { input: string } = { input: value };
+		const commentInput: { content: string } = { content: value };
 		console.log(commentInput);
+		dispatch(addComment(product._id, userToken, commentInput));
 		resetUserInput();
 	};
 
@@ -50,7 +61,7 @@ function AddComment() {
 			<form onSubmit={submitFormHandler}>
 				<FormInput
 					control="textarea"
-					name="userComment"
+					name="content"
 					id="add-comment"
 					placeholder="Type your comment here"
 					onChange={commentChangeHandler}
@@ -74,4 +85,10 @@ function AddComment() {
 	);
 }
 
-export default AddComment;
+const mapStateToProps = (state: RootState) => {
+	return {
+		userToken: state.authenticationReducer.token,
+	};
+};
+
+export default connect(mapStateToProps)(AddComment);

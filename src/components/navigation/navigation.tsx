@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 
 import NavigationSort from "./sort/navigation-sort";
 import Button from "../button/button";
@@ -10,23 +10,17 @@ import IconPlus from "../../assets/images/shared/icon-plus.svg";
 import IconUser from "../../assets/images/shared/icon-user.svg";
 import IconLogout from "../../assets/images/shared/icon-logout.svg";
 
-import { RootState } from "../../type";
+import { FeedbackProps, RootState } from "../../type";
 import { LogoutUser } from "../../store/utils/authentication";
 
-function Navigation() {
+interface ReduxState {
+	allFeedbacks: FeedbackProps[];
+	isAuth: boolean;
+	userName: string;
+}
+
+function Navigation({ allFeedbacks, isAuth, userName }: ReduxState) {
 	const dispatch = useDispatch();
-
-	const allFeedbacks = useSelector(
-		(state: RootState) => state.productFeedbackReducer.allFeedbacks
-	);
-
-	const isAuth = useSelector(
-		(state: RootState) => state.authenticationReducer.isAuth
-	);
-
-	const userName = useSelector(
-		(state: RootState) => state.authenticationReducer.name
-	);
 
 	const logoutHandler = () => {
 		dispatch(LogoutUser());
@@ -68,4 +62,12 @@ function Navigation() {
 	);
 }
 
-export default Navigation;
+const mapStateToProps = (state: RootState) => {
+	return {
+		allFeedbacks: state.productFeedbackReducer.allFeedbacks,
+		isAuth: state.authenticationReducer.isAuth,
+		userName: state.authenticationReducer.name,
+	};
+};
+
+export default connect(mapStateToProps)(Navigation);

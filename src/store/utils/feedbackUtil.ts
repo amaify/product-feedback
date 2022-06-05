@@ -7,7 +7,6 @@ import {
 	getProductComments,
 	getCommentReplies,
 } from "../actions/creators/comments";
-import { Navigate } from "react-router";
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {
@@ -37,29 +36,29 @@ export const getOneFeedback = (productId: string) => {
 			})
 			.catch((error) => console.log(error));
 
-		fetch(`http://localhost:8080/feedback/comments/${productId}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => response.json())
-			.then((responseData) => {
-				dispatch(getProductComments(responseData.data));
-			})
-			.catch((error) => console.log(error));
+		// fetch(`http://localhost:8080/feedback/comments/${productId}`, {
+		// 	method: "GET",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// })
+		// 	.then((response) => response.json())
+		// 	.then((responseData) => {
+		// 		dispatch(getProductComments(responseData.data));
+		// 	})
+		// 	.catch((error) => console.log(error));
 
-		fetch("http://localhost:8080/feedback/commentReply", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => response.json())
-			.then((responseData) => {
-				dispatch(getCommentReplies(responseData.data));
-			})
-			.catch((error) => console.log(error));
+		// fetch("http://localhost:8080/feedback/commentReply", {
+		// 	method: "GET",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// })
+		// 	.then((response) => response.json())
+		// 	.then((responseData) => {
+		// 		dispatch(getCommentReplies(responseData.data));
+		// 	})
+		// 	.catch((error) => console.log(error));
 	};
 };
 

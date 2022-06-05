@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/button";
 import InputSelect from "./input/select";
@@ -19,28 +19,24 @@ import {
 	addNewProductFeedback,
 	editProductFeedback,
 } from "../../store/utils/feedbackUtil";
-import { RootState } from "../../type";
+import { FeedbackProps, RootState } from "../../type";
 import { getFeedbackToDelete } from "../../store/actions/creators/product-feedback";
 
-function NewFeedbackForm() {
+interface ReduxState {
+	userToken: string;
+	editState: boolean;
+	editContent: FeedbackProps;
+	feedbackToDelete: boolean;
+}
+
+function NewFeedbackForm({
+	userToken,
+	editState,
+	editContent,
+	feedbackToDelete,
+}: ReduxState) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
-	const userToken = useSelector(
-		(state: RootState) => state.authenticationReducer.token
-	);
-
-	const editState = useSelector(
-		(state: RootState) => state.productFeedbackReducer.edit
-	);
-
-	const editContent = useSelector(
-		(state: RootState) => state.productFeedbackReducer.editContent
-	);
-
-	const feedbackToDelete = useSelector(
-		(state: RootState) => state.productFeedbackReducer.getFeedbackToDelete
-	);
 
 	let {
 		hasError: titleHasError,
@@ -237,4 +233,13 @@ function NewFeedbackForm() {
 	);
 }
 
-export default NewFeedbackForm;
+const mapStateToProps = (state: RootState) => {
+	return {
+		userToken: state.authenticationReducer.token,
+		editState: state.productFeedbackReducer.edit,
+		editContent: state.productFeedbackReducer.editContent,
+		feedbackToDelete: state.productFeedbackReducer.getFeedbackToDelete,
+	};
+};
+
+export default connect(mapStateToProps)(NewFeedbackForm);

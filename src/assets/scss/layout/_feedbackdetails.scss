@@ -63,7 +63,7 @@
 //CSS CODE FOR THE COMMENT COMPONENTS
 .comments {
 	background: $color-white;
-	padding: 2.4em 3.2em 4em 3.2em;
+	padding: 2.4em 3.2em 1em 3.2em;
 	border-radius: 10px;
 	margin-bottom: 2.4em;
 
@@ -107,7 +107,7 @@
 		&__replies {
 			display: flex;
 			padding-left: 4.5em;
-			margin-bottom: 2.5em;
+			margin-bottom: 0.5em;
 
 			& button {
 				padding: 1.25em 1.5em 1.15em 1.5em;

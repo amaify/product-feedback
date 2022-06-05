@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
-import { RootState, FeedbackProps } from "../../../type";
+import { RootState, FeedbackProps, FeedbackComment } from "../../../type";
 
 import ArrowLeft from "../../../assets/images/shared/icon-arrow-left.svg";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
@@ -15,8 +15,16 @@ import Comments from "./components/comment";
 import AddComment from "./components/add-comment";
 import { getOneFeedback } from "../../../store/utils/feedbackUtil";
 import { setEditToTrue } from "../../../store/actions/creators/product-feedback";
+import { getComments, getReplies } from "../../../store/utils/commentUtil";
 
-function FeedbackDetails() {
+interface StateProps {
+	feedback: FeedbackProps;
+	isAuth: boolean;
+	userId: string;
+	comments: any;
+}
+
+function FeedbackDetails({ feedback, isAuth, userId, comments }: StateProps) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -25,22 +33,11 @@ function FeedbackDetails() {
 
 	useEffect(() => {
 		dispatch(getOneFeedback(`${prod._id}`));
+		if (prod.comments.length >= 0) {
+			dispatch(getComments(`${prod._id}`));
+		}
+		dispatch(getReplies());
 	}, []);
-
-	const feedback = useSelector(
-		(state: RootState) => state.productFeedbackReducer.oneFeedback
-	);
-	const comments = useSelector(
-		(state: RootState) => state.commentReducer.feedbackComments
-	);
-
-	const isAuth = useSelector(
-		(state: RootState) => state.authenticationReducer.isAuth
-	);
-
-	const userId = useSelector(
-		(state: RootState) => state.authenticationReducer.userId
-	);
 
 	console.log(prod.upvotes);
 
@@ -62,13 +59,6 @@ function FeedbackDetails() {
 							<span>go back</span>
 						</p>
 
-						{/* {isAuth && (
-							<Button
-								btnNumber="2"
-								btnText="Edit Feedback"
-								onClick={editButtonHandler}
-							/>
-						)} */}
 						{isAuth ? (
 							userId === feedback.creator ? (
 								<Button
@@ -107,10 +97,19 @@ function FeedbackDetails() {
 				</div>
 
 				<Comments />
-				{isAuth && <AddComment />}
+				{isAuth && <AddComment product={prod} />}
 			</div>
 		</section>
 	);
 }
 
-export default FeedbackDetails;
+const mapStateToProps = (state: RootState) => {
+	return {
+		feedback: state.productFeedbackReducer.oneFeedback,
+		isAuth: state.authenticationReducer.isAuth,
+		userId: state.authenticationReducer.userId,
+		comments: state.commentReducer.feedbackComments,
+	};
+};
+
+export default connect(mapStateToProps)(FeedbackDetails);
