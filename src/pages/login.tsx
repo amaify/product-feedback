@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { Link } from "react-router-dom";
 import FormInput from "../components/input/input";
 import useInput from "../hooks/use-input";
@@ -8,8 +8,13 @@ import Button from "../components/button/button";
 
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { LoginUser } from "../store/utils/authentication";
+import { RootState } from "../type";
 
-function Login() {
+interface Props {
+	authLoading: boolean;
+}
+
+function Login({ authLoading }: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -95,7 +100,10 @@ function Login() {
 						id="password"
 					/>
 
-					<Button btnText="Login" btnNumber="1" />
+					<Button
+						btnText={!authLoading ? "Login" : "Logging In..."}
+						btnNumber="1"
+					/>
 
 					<div className="login-contents__form-links">
 						<Link to="/register">register</Link>
@@ -107,4 +115,10 @@ function Login() {
 	);
 }
 
-export default Login;
+const mapStateToProps = (state: RootState) => {
+	return {
+		authLoading: state.authenticationReducer.authLoading,
+	};
+};
+
+export default connect(mapStateToProps)(Login);

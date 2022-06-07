@@ -1,5 +1,6 @@
 import { json } from "stream/consumers";
 import {
+	authLoading,
 	loginUser,
 	logoutUser,
 	registerUser,
@@ -72,6 +73,7 @@ export const RegisterNewuser = (userData: UserData, navigate: any) => {
 
 export const LoginUser = (userData: UserData, navigate: any) => {
 	return (dispatch: any) => {
+		dispatch(authLoading());
 		fetch("http://localhost:8080/auth/login", {
 			method: "POST",
 			headers: {

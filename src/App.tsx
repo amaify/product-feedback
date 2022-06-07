@@ -10,9 +10,9 @@ import { getFeedbacks } from "./store/utils/feedbackUtil";
 const App: React.FC = () => {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getFeedbacks());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(getFeedbacks());
+	// }, []);
 
 	return (
 		<main className="wrapper">

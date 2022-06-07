@@ -18,6 +18,7 @@ type AuthenticationState = {
 	name: string | null;
 	userId: string | null;
 	isAuth: boolean;
+	authLoading: boolean;
 };
 
 type ProductFeedbackAction = {
@@ -30,6 +31,7 @@ const initialState: AuthenticationState = {
 	isAuth: !!initialToken || false,
 	userId: userId || "",
 	name: userName || "",
+	authLoading: false,
 };
 
 export const authenticationReducer = (
@@ -40,7 +42,8 @@ export const authenticationReducer = (
 		case actionTypes.REGISTER_NEW_USER:
 			return {
 				...state,
-				feedbackComments: action.data,
+				// feedbackComments: action.data,
+				authLoading: false,
 			};
 
 		case actionTypes.LOGIN_USER:
@@ -50,6 +53,7 @@ export const authenticationReducer = (
 				name: action.data.fullName,
 				userId: action.data.userId,
 				isAuth: !!action.data.token,
+				authLoading: false,
 			};
 
 		case actionTypes.LOGOUT_USER:
@@ -58,6 +62,12 @@ export const authenticationReducer = (
 				token: null,
 				name: "",
 				isAuth: false,
+			};
+
+		case actionTypes.AUTH_LOADING:
+			return {
+				...state,
+				authLoading: true,
 			};
 
 		default:

@@ -31,6 +31,7 @@ interface FeedbackComment {
 	replies: string[];
 	creatorName: string;
 	creatorUsername: number;
+	creatorAvatar: string;
 	productFeedback: string;
 	creator: string;
 }
@@ -41,6 +42,7 @@ interface CommentReplies {
 	replyingTo: string;
 	creatorName: string;
 	creatorUsername: string;
+	creatorAvatar: string;
 	linkedComment: string;
 	creator: string;
 }
@@ -70,6 +72,7 @@ interface RootState {
 		name: string;
 		userId: string;
 		isAuth: boolean;
+		authLoading: boolean;
 	};
 }
 

@@ -1,12 +1,14 @@
 import {
 	getProductFeedback,
 	getOneProductFeedback,
+	feedbackLoading,
 } from "../actions/creators/product-feedback";
 
 import {
 	getProductComments,
 	getCommentReplies,
 } from "../actions/creators/comments";
+import { authLoading } from "../actions/creators/authentication";
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {
@@ -68,6 +70,7 @@ export const addNewProductFeedback = (
 	token: string
 ) => {
 	return (dispatch: any) => {
+		dispatch(feedbackLoading());
 		fetch("http://localhost:8080/feedback/new-feedback", {
 			method: "POST",
 			headers: {

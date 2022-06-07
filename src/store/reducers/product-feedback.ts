@@ -79,6 +79,7 @@ export const productFeedbackReducer = (
 				plannedRoadmap: plannedFeedback,
 				inProgressRoadmap: inProgressFeedback,
 				liveRoadmap: liveFeedback,
+				feedbackLoading: false,
 			};
 
 		case actionTypes.GET_ONE_PRODUCT_FEEDBACK:
@@ -128,6 +129,12 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				getFeedbackToDelete: false,
+			};
+
+		case actionTypes.FEEFBACK_LOADING:
+			return {
+				...state,
+				feedbackLoading: true,
 			};
 
 		default:

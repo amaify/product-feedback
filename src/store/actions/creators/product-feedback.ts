@@ -77,3 +77,9 @@ export const cancelDelete = () => {
 		type: actionTypes.CANCEL_DELETE,
 	};
 };
+
+export const feedbackLoading = () => {
+	return {
+		type: actionTypes.FEEFBACK_LOADING,
+	};
+};

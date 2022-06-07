@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import truncateText from "../../../utils/truncate";
 import { FeedbackProps, RootState } from "../../../type";
 import { Link } from "react-router-dom";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 
 import Upvotes from "../../upvotes/upvotes";
+import { getFeedbacks } from "../../../store/utils/feedbackUtil";
 
 interface StateProps {
 	prodFeedbacks: FeedbackProps[];

@@ -5,6 +5,7 @@ import { useSelector, connect, useDispatch } from "react-redux";
 import ElijahImg from "../../../../assets/images/user-images/image-elijah.jpg";
 import JamesImg from "../../../../assets/images/user-images/image-james.jpg";
 import AnneImg from "../../../../assets/images/user-images/image-anne.jpg";
+import NoImage from "../../../../assets/images/no-logo.jpg";
 import RyanImg from "../../../../assets/images/user-images/image-ryan.jpg";
 import ReplyComment from "./reply-comment";
 import { CommentReplies, FeedbackComment, RootState } from "../../../../type";
@@ -107,7 +108,12 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 							>
 								<div className="comments-comment__parent">
 									<div className="comments-comment__img">
-										<img src={ElijahImg} alt="A person named Elijah" />
+										<img
+											src={
+												!comment.creatorAvatar ? NoImage : comment.creatorAvatar
+											}
+											alt="A person named Elijah"
+										/>
 									</div>
 
 									<div className="comments-comment__contents">
@@ -162,7 +168,12 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 															: "comments-comment__img"
 													}
 												>
-													<img src={AnneImg} alt="A person named Elijah" />
+													<img
+														src={
+															!reps.creatorAvatar ? NoImage : reps.creatorAvatar
+														}
+														alt="A person named Elijah"
+													/>
 												</div>
 
 												<div className="comments-comment__contents">

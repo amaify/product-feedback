@@ -22,11 +22,12 @@ import {
 import { FeedbackProps, RootState } from "../../type";
 import { getFeedbackToDelete } from "../../store/actions/creators/product-feedback";
 
-interface ReduxState {
+interface Props {
 	userToken: string;
 	editState: boolean;
 	editContent: FeedbackProps;
 	feedbackToDelete: boolean;
+	feedbackLoading: boolean;
 }
 
 function NewFeedbackForm({
@@ -34,7 +35,8 @@ function NewFeedbackForm({
 	editState,
 	editContent,
 	feedbackToDelete,
-}: ReduxState) {
+	feedbackLoading,
+}: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -220,7 +222,10 @@ function NewFeedbackForm({
 								btnNumber="3"
 								onClick={cancelEditHandler}
 							/>
-							<Button btnText="Add Feedback" btnNumber="1" />
+							<Button
+								btnText={!feedbackLoading ? "Add Feedback" : "Adding...."}
+								btnNumber="1"
+							/>
 						</div>
 					</div>
 				</form>
@@ -239,6 +244,7 @@ const mapStateToProps = (state: RootState) => {
 		editState: state.productFeedbackReducer.edit,
 		editContent: state.productFeedbackReducer.editContent,
 		feedbackToDelete: state.productFeedbackReducer.getFeedbackToDelete,
+		feedbackLoading: state.productFeedbackReducer.feedbackLoading,
 	};
 };
 

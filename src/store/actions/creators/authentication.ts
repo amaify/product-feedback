@@ -23,3 +23,9 @@ export const logoutUser = () => {
 		type: actionTypes.LOGOUT_USER,
 	};
 };
+
+export const authLoading = () => {
+	return {
+		type: actionTypes.AUTH_LOADING,
+	};
+};

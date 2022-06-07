@@ -212,6 +212,7 @@ html {
   font-weight: 700;
   background: #ad1fea;
   color: #f2f4fe;
+  min-width: 2em;
 }
 
 .button-1:hover {
