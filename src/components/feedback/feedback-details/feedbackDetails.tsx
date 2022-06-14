@@ -36,10 +36,8 @@ function FeedbackDetails({ feedback, isAuth, userId, comments }: StateProps) {
 		if (prod.comments.length >= 0) {
 			dispatch(getComments(`${prod._id}`));
 		}
-		dispatch(getReplies());
+		dispatch(getReplies(prod._id));
 	}, []);
-
-	console.log(prod.upvotes);
 
 	const editButtonHandler = () => {
 		dispatch(setEditToTrue(feedback));

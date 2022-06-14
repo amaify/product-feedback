@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useInput from "../../../../hooks/use-input";
+import { useParams } from "react-router";
 import { useSelector, connect, useDispatch } from "react-redux";
 
 import ElijahImg from "../../../../assets/images/user-images/image-elijah.jpg";
@@ -23,6 +24,9 @@ interface Props {
 
 function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 	const dispatch = useDispatch();
+	const commentId = useParams();
+
+	let prodId = commentId.feedbackID;
 
 	const [reply, setReply] = useState<string>("");
 	const [commentCount, setCommentCount] = useState<number | string>(0);
@@ -61,7 +65,7 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 
 		const replyInput: { content: string } = { content: value };
 		console.log(value);
-		dispatch(replyToComment(reply, userToken, replyInput));
+		dispatch(replyToComment(reply, userToken, replyInput, prodId));
 
 		resetUserInput();
 		setReply("");
@@ -77,7 +81,7 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 
 		const replyInput: { content: string } = { content: value };
 		console.log(value);
-		dispatch(replyToReply(reply, userToken, replyInput));
+		dispatch(replyToReply(reply, userToken, replyInput, prodId));
 
 		resetUserInput();
 		setReply("");
@@ -156,66 +160,72 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 										)}
 									</div>
 								</div>
-
-								{commentReplies.map((reps) => {
-									if (comment._id === reps.linkedComment) {
-										return (
-											<div className="comments-comment__replies" key={reps._id}>
-												<div
-													className={
-														commentReplies.length > 0
-															? "comments-comment__img comments-comment__img--line"
-															: "comments-comment__img"
-													}
-												>
-													<img
-														src={
-															!reps.creatorAvatar ? NoImage : reps.creatorAvatar
-														}
-														alt="A person named Elijah"
-													/>
-												</div>
-
-												<div className="comments-comment__contents">
-													<p className="comments-comment__contents--name">
-														{reps.creatorName}{" "}
-													</p>
-													<p className="comments-comment__contents--username">
-														<span>@</span>
-														<span>{reps.creatorUsername}</span>
-													</p>
-													<p className="comments-comment__contents--comment">
-														<span>@</span>
-														<span>{reps.replyingTo}</span> {reps.content}
-													</p>
-
-													{isAuth && (
-														<p
-															className="comments-comment__contents--replyBtn"
-															onClick={() => replyToggleHandler(reps._id)}
+								{commentReplies === undefined
+									? ""
+									: commentReplies.map((reps) => {
+											if (comment._id === reps.linkedComment) {
+												return (
+													<div
+														className="comments-comment__replies"
+														key={reps._id}
+													>
+														<div
+															className={
+																commentReplies.length > 0
+																	? "comments-comment__img comments-comment__img--line"
+																	: "comments-comment__img"
+															}
 														>
-															Reply
-														</p>
-													)}
+															<img
+																src={
+																	!reps.creatorAvatar
+																		? NoImage
+																		: reps.creatorAvatar
+																}
+																alt="A person named Elijah"
+															/>
+														</div>
 
-													{reply === reps._id ? (
-														<ReplyComment
-															commentNumber={commentCount}
-															submitFormHandler={submitReplyToReplyHandler}
-															onChangeHandler={inputChangeHandler}
-															onBlur={inputBlurHandler}
-															hasError={hasError}
-															isValueValid={isValueValid}
-															value={value}
-														/>
-													) : (
-														""
-													)}
-												</div>
-											</div>
-										);
-									}
-								})}
+														<div className="comments-comment__contents">
+															<p className="comments-comment__contents--name">
+																{reps.creatorName}{" "}
+															</p>
+															<p className="comments-comment__contents--username">
+																<span>@</span>
+																<span>{reps.creatorUsername}</span>
+															</p>
+															<p className="comments-comment__contents--comment">
+																<span>@</span>
+																<span>{reps.replyingTo}</span> {reps.content}
+															</p>
+
+															{isAuth && (
+																<p
+																	className="comments-comment__contents--replyBtn"
+																	onClick={() => replyToggleHandler(reps._id)}
+																>
+																	Reply
+																</p>
+															)}
+
+															{reply === reps._id ? (
+																<ReplyComment
+																	commentNumber={commentCount}
+																	submitFormHandler={submitReplyToReplyHandler}
+																	onChangeHandler={inputChangeHandler}
+																	onBlur={inputBlurHandler}
+																	hasError={hasError}
+																	isValueValid={isValueValid}
+																	value={value}
+																/>
+															) : (
+																""
+															)}
+														</div>
+													</div>
+												);
+											}
+									  })}
 							</div>
 					  ))
 					: ""}

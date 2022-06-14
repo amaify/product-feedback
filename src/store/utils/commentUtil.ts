@@ -24,9 +24,9 @@ export const getComments = (productId: string) => {
 	};
 };
 
-export const getReplies = () => {
+export const getReplies = (commentId: string | undefined) => {
 	return (dispatch: any) => {
-		fetch("http://localhost:8080/feedback/commentReply", {
+		fetch(`http://localhost:8080/feedback/commentReply/${commentId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -34,6 +34,9 @@ export const getReplies = () => {
 		})
 			.then((response) => response.json())
 			.then((responseData) => {
+				if (responseData.statusCode === 400) {
+					return "";
+				}
 				dispatch(getCommentReplies(responseData.data));
 			})
 			.catch((error) => console.log(error));
@@ -68,10 +71,11 @@ export const addComment = (
 export const replyToComment = (
 	commentId: string,
 	userToken: string,
-	inputValue: { content: string }
+	inputValue: { content: string },
+	prodId: string | undefined
 ) => {
 	return (dispatch: any) => {
-		fetch(`http://localhost:8080/feedback/replies/${commentId}`, {
+		fetch(`http://localhost:8080/feedback/replies/${prodId}/${commentId}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -83,7 +87,7 @@ export const replyToComment = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					console.log(responseData);
-					dispatch(getReplies());
+					dispatch(getReplies(commentId));
 				}
 			})
 			.catch((error) => console.log(error));
@@ -93,22 +97,26 @@ export const replyToComment = (
 export const replyToReply = (
 	replyId: string,
 	userToken: string,
-	inputValue: { content: string }
+	inputValue: { content: string },
+	commentId: string | undefined
 ) => {
 	return (dispatch: any) => {
-		fetch(`http://localhost:8080/feedback/reply-reply/${replyId}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${userToken}`,
-			},
-			body: JSON.stringify(inputValue),
-		})
+		fetch(
+			`http://localhost:8080/feedback/reply-reply/${commentId}/${replyId}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${userToken}`,
+				},
+				body: JSON.stringify(inputValue),
+			}
+		)
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					console.log(responseData);
-					dispatch(getReplies());
+					dispatch(getReplies(commentId));
 				}
 			})
 			.catch((error) => console.log(error));
