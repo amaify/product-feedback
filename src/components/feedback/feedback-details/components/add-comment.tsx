@@ -11,9 +11,10 @@ import { addComment } from "../../../../store/utils/commentUtil";
 interface Props {
 	product: any;
 	userToken: string;
+	addCommentLoading: boolean;
 }
 
-function AddComment({ product, userToken }: Props) {
+function AddComment({ product, userToken, addCommentLoading }: Props) {
 	let isValid = false;
 	const dispatch = useDispatch();
 
@@ -78,7 +79,10 @@ function AddComment({ product, userToken }: Props) {
 						<span>{charLeftText}</span>
 					</p>
 
-					<Button btnNumber="1" btnText="Post Comment" />
+					<Button
+						btnNumber="1"
+						btnText={addCommentLoading ? "Posting..." : "Post Comment"}
+					/>
 				</div>
 			</form>
 		</div>
@@ -88,6 +92,7 @@ function AddComment({ product, userToken }: Props) {
 const mapStateToProps = (state: RootState) => {
 	return {
 		userToken: state.authenticationReducer.token,
+		addCommentLoading: state.commentReducer.addCommentLoading,
 	};
 };
 

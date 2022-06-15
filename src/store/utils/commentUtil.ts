@@ -6,6 +6,7 @@ import {
 import {
 	getProductComments,
 	getCommentReplies,
+	addCommentLoading,
 } from "../actions/creators/comments";
 
 export const getComments = (productId: string) => {
@@ -49,6 +50,7 @@ export const addComment = (
 	inputValue: { content: string }
 ) => {
 	return (dispatch: any) => {
+		dispatch(addCommentLoading());
 		fetch(`http://localhost:8080/feedback/new-comment/${productFeedbackId}`, {
 			method: "POST",
 			headers: {
@@ -75,6 +77,7 @@ export const replyToComment = (
 	prodId: string | undefined
 ) => {
 	return (dispatch: any) => {
+		dispatch(addCommentLoading());
 		fetch(`http://localhost:8080/feedback/replies/${prodId}/${commentId}`, {
 			method: "POST",
 			headers: {
@@ -87,7 +90,7 @@ export const replyToComment = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					console.log(responseData);
-					dispatch(getReplies(commentId));
+					dispatch(getReplies(prodId));
 				}
 			})
 			.catch((error) => console.log(error));
@@ -101,6 +104,7 @@ export const replyToReply = (
 	commentId: string | undefined
 ) => {
 	return (dispatch: any) => {
+		dispatch(addCommentLoading());
 		fetch(
 			`http://localhost:8080/feedback/reply-reply/${commentId}/${replyId}`,
 			{

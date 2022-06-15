@@ -65,6 +65,7 @@ interface RootState {
 	commentReducer: {
 		feedbackComments: FeedbackComment[];
 		commentReplies: CommentReplies[];
+		addCommentLoading: boolean;
 	};
 
 	authenticationReducer: {
@@ -73,6 +74,10 @@ interface RootState {
 		userId: string;
 		isAuth: boolean;
 		authLoading: boolean;
+		error: string;
+		isError: boolean;
+		registrationSuccess: boolean;
+		authMessage: string;
 	};
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,8 +9,14 @@ import Button from "../components/button/button";
 
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { RegisterNewuser } from "../store/utils/authentication";
+import { RootState } from "../type";
 
-function Register() {
+interface Props {
+	authLoading: boolean;
+	error: string;
+}
+
+function Register({ authLoading, error }: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -98,6 +105,7 @@ function Register() {
 				</p>
 
 				<form className="register-contents__form" onSubmit={formSubmitHandler}>
+					{error !== "" ? <p className="error-message">{error}</p> : ""}
 					<h1 className="register-contents__form-heading">Register New User</h1>
 					<FormInput
 						control="input"
@@ -158,7 +166,10 @@ function Register() {
 						id="password"
 					/>
 
-					<Button btnText="Register" btnNumber="1" />
+					<Button
+						btnText={authLoading ? "Registering..." : "Register"}
+						btnNumber="1"
+					/>
 
 					<div className="register-contents__form-links">
 						<p id="register-links">
@@ -174,4 +185,11 @@ function Register() {
 	);
 }
 
-export default Register;
+const mapStateToProps = (state: RootState) => {
+	return {
+		authLoading: state.authenticationReducer.authLoading,
+		error: state.authenticationReducer.error,
+	};
+};
+
+export default connect(mapStateToProps)(Register);

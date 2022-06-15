@@ -9,12 +9,17 @@ import Button from "../components/button/button";
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { LoginUser } from "../store/utils/authentication";
 import { RootState } from "../type";
+import { removeAuthError } from "../store/actions/creators/authentication";
+
+import { FlashMessage } from "../utils/flash-message";
 
 interface Props {
 	authLoading: boolean;
+	error: string;
+	registrationSuccess: boolean;
 }
 
-function Login({ authLoading }: Props) {
+function Login({ authLoading, error, registrationSuccess }: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -61,6 +66,9 @@ function Login({ authLoading }: Props) {
 
 	return (
 		<section className="login">
+			{registrationSuccess && (
+				<FlashMessage status="success" text="User successfully registered!" />
+			)}
 			<div className="login-contents">
 				<p onClick={() => navigate(-1)}>
 					<span>
@@ -70,6 +78,7 @@ function Login({ authLoading }: Props) {
 				</p>
 
 				<form className="login-contents__form" onSubmit={formSubmitHandler}>
+					{error !== "" ? <p className="error-message">{error}</p> : ""}
 					<h1 className="login-contents__form-heading">Login</h1>
 					<FormInput
 						control="input"
@@ -118,6 +127,8 @@ function Login({ authLoading }: Props) {
 const mapStateToProps = (state: RootState) => {
 	return {
 		authLoading: state.authenticationReducer.authLoading,
+		registrationSuccess: state.authenticationReducer.registrationSuccess,
+		error: state.authenticationReducer.error,
 	};
 };
 

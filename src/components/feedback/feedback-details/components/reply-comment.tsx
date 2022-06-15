@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import FormInput from "../../../input/input";
 import Button from "../../../button/button";
+import { RootState } from "../../../../type";
 
 interface ReplyCommentProps {
 	commentNumber: string | number;
@@ -16,6 +18,7 @@ interface ReplyCommentProps {
 	isValueValid?: boolean;
 	resetInput?: () => void;
 	value?: string;
+	addCommentLoading: boolean;
 }
 
 function ReplyComment(props: ReplyCommentProps) {
@@ -43,10 +46,19 @@ function ReplyComment(props: ReplyCommentProps) {
 					textAreaError={props.hasError}
 					maxLength={250}
 				/>
-				<Button btnNumber="1" btnText="Post Reply" />
+				<Button
+					btnNumber="1"
+					btnText={props.addCommentLoading ? "Posting..." : "Post Reply"}
+				/>
 			</form>
 		</div>
 	);
 }
 
-export default ReplyComment;
+const mapStateToProps = (state: RootState) => {
+	return {
+		addCommentLoading: state.commentReducer.addCommentLoading,
+	};
+};
+
+export default connect(mapStateToProps)(ReplyComment);

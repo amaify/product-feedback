@@ -25,6 +25,7 @@ interface CommentData {
 type CommentState = {
 	feedbackComments: CommentData[];
 	commentReplies: CommentReplies[];
+	addCommentLoading: boolean;
 };
 
 type ProductFeedbackAction = {
@@ -35,6 +36,7 @@ type ProductFeedbackAction = {
 const initialState: CommentState = {
 	feedbackComments: [],
 	commentReplies: [],
+	addCommentLoading: false,
 };
 
 export const commentReducer = (
@@ -46,12 +48,20 @@ export const commentReducer = (
 			return {
 				...state,
 				feedbackComments: action.data,
+				addCommentLoading: false,
 			};
 
 		case actionTypes.GET_COMMENT_REPLIES:
 			return {
 				...state,
 				commentReplies: action.data,
+				addCommentLoading: false,
+			};
+
+		case actionTypes.ADD_COMMENT_LOADING:
+			return {
+				...state,
+				addCommentLoading: true,
 			};
 
 		default:

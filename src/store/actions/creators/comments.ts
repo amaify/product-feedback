@@ -26,3 +26,9 @@ export const getCommentReplies = (commentReplies: CommentReplies[]) => {
 		data: commentReplies,
 	};
 };
+
+export const addCommentLoading = () => {
+	return {
+		type: actionTypes.ADD_COMMENT_LOADING,
+	};
+};

@@ -1060,7 +1060,7 @@ html {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 3.2em;
+  margin-bottom: 3em;
 }
 
 .comments-comment__replies {
@@ -1068,7 +1068,7 @@ html {
   display: -ms-flexbox;
   display: flex;
   padding-left: 4.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 2em;
 }
 
 .comments-comment__replies button {
@@ -1089,6 +1089,10 @@ html {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+.comments-comment__more:last-child {
+  margin-bottom: 0;
 }
 
 .comments-comment__img {
@@ -1159,10 +1163,6 @@ html {
   font-weight: 700;
 }
 
-.comments-comment__contents--comment:not(:last-child) {
-  margin-bottom: 1.8em;
-}
-
 .comments-comment__contents--replyBtn {
   font-size: 1.3em;
   font-weight: 600;
@@ -1188,7 +1188,7 @@ html {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  margin-bottom: 2.5em;
+  margin-top: 2.4em;
 }
 
 .comments-comment__contents--replyComment-more {
@@ -1202,10 +1202,21 @@ html {
 
 .comments-comment__contents--replyComment form {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
-.comments-comment__contents--replyComment form div {
-  width: 99% !important;
+.comments-comment__contents--replyComment form > div {
+  margin-bottom: 0;
+}
+
+.comments-comment__contents--replyComment form button {
+  padding: 0.8em 0.5em 0.8em 0.5em;
+  width: 20%;
 }
 
 .addcomment {
@@ -1526,6 +1537,7 @@ html {
 .forgotpassword-contents {
   width: 40%;
   margin: 0 auto;
+  position: relative;
 }
 
 .login-contents > p,
@@ -1664,5 +1676,33 @@ html {
 .register-contents__form-links a:first-child,
 .forgotpassword-contents__form-links a:first-child {
   margin-right: auto;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.8em;
+  color: #d73737;
+}
+
+.flash {
+  position: absolute;
+  top: 4%;
+  left: 3%;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+}
+
+.flash-success {
+  background: #327432;
+}
+
+.flash-error {
+  background: #d73737;
+}
+
+.flash-text {
+  color: #ffffff;
+  font-size: 2.5em;
+  line-height: 32px;
 }
 /*# sourceMappingURL=main.css.map */
