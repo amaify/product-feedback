@@ -78,7 +78,7 @@ export const RegisterNewuser = (userData: UserData, navigate: any) => {
 				dispatch(registerUser());
 				navigate("/login");
 
-				setTimeout(() => dispatch(registrationSuccess()), 5000);
+				setTimeout(() => dispatch(registrationSuccess()), 6000);
 				console.log(responseData);
 			})
 			.catch((error) => console.log(error.message));

@@ -67,7 +67,12 @@ function Login({ authLoading, error, registrationSuccess }: Props) {
 	return (
 		<section className="login">
 			{registrationSuccess && (
-				<FlashMessage status="success" text="User successfully registered!" />
+				<FlashMessage
+					status="success"
+					text="User successfully registered!"
+					delay={6000}
+					flashType="auth"
+				/>
 			)}
 			<div className="login-contents">
 				<p onClick={() => navigate(-1)}>

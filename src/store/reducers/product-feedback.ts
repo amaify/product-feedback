@@ -34,6 +34,8 @@ type ProductFeedbackState = {
 	editContent: FeedbackProps[];
 	getFeedbackToDelete: boolean;
 	sortFeature: string;
+	upvoteError: boolean;
+	upvoteErrorMessage: string;
 };
 
 type ProductFeedbackAction = {
@@ -53,6 +55,8 @@ const initialState: ProductFeedbackState = {
 	sortText: "Most Upvotes",
 	sortFeature: "All",
 	getFeedbackToDelete: false,
+	upvoteError: false,
+	upvoteErrorMessage: "",
 };
 
 export const productFeedbackReducer = (
@@ -80,6 +84,21 @@ export const productFeedbackReducer = (
 				inProgressRoadmap: inProgressFeedback,
 				liveRoadmap: liveFeedback,
 				feedbackLoading: false,
+			};
+
+		// case actionTypes.INCREASE_UPVOTE:
+		// 	return {
+		// 		...state,
+		// 		upvoteNumber: action.data,
+		// 		upvoteLoading: false,
+		// 		upvoted: true,
+		// 	};
+
+		case actionTypes.UPVOTE_ERROR:
+			return {
+				...state,
+				upvoteError: true,
+				upvoteErrorMessage: action.data,
 			};
 
 		case actionTypes.GET_ONE_PRODUCT_FEEDBACK:
@@ -135,6 +154,12 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				feedbackLoading: true,
+			};
+
+		case actionTypes.RESET_FEEDBACK_STATE:
+			return {
+				...state,
+				upvoteError: false,
 			};
 
 		default:

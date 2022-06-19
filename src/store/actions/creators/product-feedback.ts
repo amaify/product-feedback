@@ -47,11 +47,19 @@ export const filterByFeatures = (filterFeature: string) => {
 	};
 };
 
-export const incrementUpvote = () => {
+export const upvoteError = (errorMessage: string) => {
 	return {
-		type: actionTypes.INCREASE_UPVOTE,
+		type: actionTypes.UPVOTE_ERROR,
+		data: errorMessage,
 	};
 };
+
+// export const incrementUpvote = (upvoteNumber: number) => {
+// 	return {
+// 		type: actionTypes.INCREASE_UPVOTE,
+// 		data: upvoteNumber,
+// 	};
+// };
 
 export const setEditToTrue = (productContent: FeedbackProps) => {
 	return {
@@ -81,5 +89,11 @@ export const cancelDelete = () => {
 export const feedbackLoading = () => {
 	return {
 		type: actionTypes.FEEFBACK_LOADING,
+	};
+};
+
+export const resetFeedbackState = () => {
+	return {
+		type: actionTypes.RESET_FEEDBACK_STATE,
 	};
 };

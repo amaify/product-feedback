@@ -429,7 +429,7 @@ html {
 }
 
 .navigation-authentication img {
-  width: 100%;
+  width: auto;
   height: auto;
   display: block;
 }
@@ -743,18 +743,13 @@ html {
 }
 
 .layout-sidebar {
-  width: 15%;
-  position: fixed;
-  top: 9.4em;
-  left: 16.5em;
+  width: 18%;
+  position: relative;
   z-index: 1;
 }
 
 .layout-main {
   width: 80%;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .emptyFeedback {
@@ -1685,11 +1680,38 @@ html {
 }
 
 .flash {
+  padding: 0.5em 0.7em;
+  border-radius: 4px;
+  width: 15%;
+  text-align: center;
+  z-index: 2;
+  -webkit-animation-name: slideRight;
+          animation-name: slideRight;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.flash-auth {
   position: absolute;
   top: 4%;
   left: 3%;
-  padding: 0.5em 1em;
-  border-radius: 4px;
+}
+
+.flash-auth p {
+  font-size: 1.5em;
+}
+
+.flash-feedback {
+  position: fixed;
+  top: 5px;
+  left: 10px;
+}
+
+.flash-feedback p {
+  font-size: 1.3em;
+  line-height: 1.3em;
 }
 
 .flash-success {
@@ -1702,7 +1724,29 @@ html {
 
 .flash-text {
   color: #ffffff;
-  font-size: 2.5em;
   line-height: 32px;
+  margin-bottom: 0.3em;
+}
+
+@-webkit-keyframes slideRight {
+  from {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  to {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+  to {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
 }
 /*# sourceMappingURL=main.css.map */

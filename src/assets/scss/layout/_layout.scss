@@ -15,19 +15,21 @@
 	position: relative;
 
 	&-sidebar {
-		width: 15%;
-		position: fixed;
-		top: 9.4em;
-		left: 16.5em;
+		width: 18%;
+		// position: fixed;
+		// top: 9.4em;
+		// left: 16.5em;
+		position: relative;
 
 		z-index: 1;
 	}
 
 	&-main {
 		width: 80%;
-		position: absolute;
-		top: 0;
-		right: 0;
+
+		// position: absolute;
+		// top: 0;
+		// right: 0;
 		// height: 100%;
 	}
 }

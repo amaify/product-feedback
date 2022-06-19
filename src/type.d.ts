@@ -6,12 +6,6 @@ declare global {
 	}
 }
 
-interface UpvoteProps {
-	divClassName: string;
-	upvoteNumbers: number;
-	productId?: any;
-}
-
 interface FeedbackProps {
 	_id: string;
 	id: number;
@@ -60,6 +54,8 @@ interface RootState {
 		edit: boolean;
 		editContent: FeedbackProps;
 		getFeedbackToDelete: boolean;
+		upvoteError: boolean;
+		upvoteErrorMessage: string;
 	};
 
 	commentReducer: {
