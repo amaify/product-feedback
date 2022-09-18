@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { useNavigate } from "react-router";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { RootState, FeedbackProps, FeedbackComment } from "../../../type";
 
@@ -28,15 +28,17 @@ function FeedbackDetails({ feedback, isAuth, userId, comments }: StateProps) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const params = useParams();
 
+	const { feedbackID } = params;
 	const prod: any = location.state;
 
 	useEffect(() => {
-		dispatch(getOneFeedback(`${prod._id}`));
+		dispatch(getOneFeedback(`${feedbackID}`));
 		if (prod.comments.length >= 0) {
-			dispatch(getComments(`${prod._id}`));
+			dispatch(getComments(`${feedbackID}`));
 		}
-		dispatch(getReplies(prod._id));
+		dispatch(getReplies(feedbackID));
 	}, []);
 
 	const editButtonHandler = () => {
@@ -87,15 +89,13 @@ function FeedbackDetails({ feedback, isAuth, userId, comments }: StateProps) {
 							<div className="feedback-comments__img">
 								<img src={CommentsIcon} alt="Comments description" />
 							</div>
-							<p>
-								{feedback.comments === undefined ? 0 : feedback.comments.length}
-							</p>
+							<p>{comments === undefined ? 0 : comments.length}</p>
 						</div>
 					</div>
 				</div>
 
 				<Comments />
-				{isAuth && <AddComment product={prod} />}
+				{isAuth && <AddComment />}
 			</div>
 		</section>
 	);

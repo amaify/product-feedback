@@ -45,7 +45,7 @@ export const getReplies = (commentId: string | undefined) => {
 };
 
 export const addComment = (
-	productFeedbackId: string,
+	productFeedbackId: string | undefined,
 	userToken: string,
 	inputValue: { content: string }
 ) => {
@@ -63,7 +63,7 @@ export const addComment = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					console.log(responseData);
-					dispatch(getComments(productFeedbackId));
+					dispatch(getComments(productFeedbackId ? productFeedbackId : ""));
 				}
 			})
 			.catch((error) => console.log(error.message));

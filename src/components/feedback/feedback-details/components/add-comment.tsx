@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, connect } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import useInput from "../../../../hooks/use-input";
 import FormInput from "../../../input/input";
@@ -7,16 +8,19 @@ import Button from "../../../button/button";
 
 import { RootState } from "../../../../type";
 import { addComment } from "../../../../store/utils/commentUtil";
+import { getOneFeedback } from "../../../../store/utils/feedbackUtil";
 
 interface Props {
-	product: any;
 	userToken: string;
 	addCommentLoading: boolean;
 }
 
-function AddComment({ product, userToken, addCommentLoading }: Props) {
+function AddComment({ userToken, addCommentLoading }: Props) {
 	let isValid = false;
 	const dispatch = useDispatch();
+	const params = useParams();
+
+	const { feedbackID } = params;
 
 	const {
 		value,
@@ -40,7 +44,7 @@ function AddComment({ product, userToken, addCommentLoading }: Props) {
 
 		const commentInput: { content: string } = { content: value };
 		console.log(commentInput);
-		dispatch(addComment(product._id, userToken, commentInput));
+		dispatch(addComment(feedbackID, userToken, commentInput));
 		resetUserInput();
 	};
 
