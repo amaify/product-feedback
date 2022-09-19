@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../button/button";
 import InputSelect from "./input/select";
 import EditInputSelect from "./input/edit-select";
-// import FormInput from "./input/input";
 import FormInput from "../input/input";
 import Modal from "../modal/modal";
 import Backdrop from "../backdrop/backdrop";
-
 import useInput from "../../hooks/use-input";
-
 import LeftArrow from "../../assets/images/shared/icon-arrow-left.svg";
-import ArrowDown from "../../assets/images/shared/icon-arrow-down.svg";
 import NewFeedbackIcon from "../../assets/images/shared/icon-new-feedback.svg";
 import EditFeedbackIcon from "../../assets/images/shared/icon-edit-feedback.svg";
 import {
 	addNewProductFeedback,
 	editProductFeedback,
+	getOneFeedback,
 } from "../../store/utils/feedbackUtil";
 import { FeedbackProps, RootState } from "../../type";
 import { getFeedbackToDelete } from "../../store/actions/creators/product-feedback";
@@ -32,13 +29,22 @@ interface Props {
 
 function NewFeedbackForm({
 	userToken,
-	editState,
 	editContent,
 	feedbackToDelete,
+	editState,
 	feedbackLoading,
 }: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const params = useParams();
+
+	const productFeedbackID = params.editFeedbackId;
+
+	useEffect(() => {
+		if (productFeedbackID) {
+			dispatch(getOneFeedback(productFeedbackID));
+		}
+	}, [productFeedbackID]);
 
 	let {
 		hasError: titleHasError,
@@ -56,7 +62,7 @@ function NewFeedbackForm({
 		resetUserInput: resetTitleInput,
 		value: titleValue,
 		editValue: editTitleValue,
-	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value: string) => value?.trim() !== "" && value?.length >= 5);
 
 	let {
 		hasError: detailsDescriptionHasError,
@@ -66,7 +72,7 @@ function NewFeedbackForm({
 		resetUserInput: resetDetailDescriptionInput,
 		value: detailDescriptionValue,
 		editDescription: editDescriptionValue,
-	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value: string) => value?.trim() !== "" && value?.length >= 5);
 
 	let isValid = false;
 
@@ -110,26 +116,19 @@ function NewFeedbackForm({
 				updateStatus: activeTextEdit,
 			};
 
-			// dispatch(addNewProductFeedback(formData, navigate, userToken));
 			dispatch(
 				editProductFeedback(formData, navigate, userToken, editContent._id)
 			);
 		}
-
-		console.log(formData);
-		// dispatch(addNewProductFeedback(formData, navigate, userToken));
-		// resetTitleInput();
-		// resetDetailDescriptionInput();
 	};
 
 	const cancelEditHandler = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("cancel clicked");
+		navigate(-1);
 	};
 
 	const deleteFeedbackHandler = (event: React.FormEvent) => {
 		event.preventDefault();
-
 		dispatch(getFeedbackToDelete());
 	};
 
@@ -222,10 +221,20 @@ function NewFeedbackForm({
 								btnNumber="3"
 								onClick={cancelEditHandler}
 							/>
-							<Button
-								btnText={!feedbackLoading ? "Add Feedback" : "Adding...."}
-								btnNumber="1"
-							/>
+
+							{!editState ? (
+								<Button
+									btnText={!feedbackLoading ? "Add Feedback" : "Adding...."}
+									btnNumber="1"
+								/>
+							) : (
+								<Button
+									btnText={
+										!feedbackLoading ? "Update Feedback" : "Updating...."
+									}
+									btnNumber="1"
+								/>
+							)}
 						</div>
 					</div>
 				</form>
@@ -242,7 +251,7 @@ const mapStateToProps = (state: RootState) => {
 	return {
 		userToken: state.authenticationReducer.token,
 		editState: state.productFeedbackReducer.edit,
-		editContent: state.productFeedbackReducer.editContent,
+		editContent: state.productFeedbackReducer.oneFeedback,
 		feedbackToDelete: state.productFeedbackReducer.getFeedbackToDelete,
 		feedbackLoading: state.productFeedbackReducer.feedbackLoading,
 	};

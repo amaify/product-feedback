@@ -54,3 +54,27 @@
 	position: fixed;
 	z-index: 1;
 }
+
+.loader {
+	width: 100%;
+	height: 35rem;
+	position: absolute;
+
+	&-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.1rem;
+		position: absolute;
+		top: 85%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	&-heading {
+		font-size: 2rem;
+		font-weight: 500;
+		color: $color-grey;
+		letter-spacing: 0.5rem;
+	}
+}

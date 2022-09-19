@@ -1,39 +1,29 @@
-import { CommentReplies, FeedbackProps } from "../../type";
+import { FeedbackProps } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
+import { retrieveStoredData } from "../utils/authentication";
 
-// interface ProductFeedbacksData {
-// 	_id: string;
-// 	id: number;
-// 	title: string;
-// 	category: string;
-// 	upvotes: number;
-// 	status: string;
-// 	description: string;
-// 	comments: string[];
-// 	creator: string;
-// }
+const storedData = retrieveStoredData();
 
-// interface CommentData {
-// 	_id: string;
-// 	id: number;
-// 	content: string;
-// 	replies: [];
-// 	creator: string;
-// 	productFeedback: string;
-// }
+let editFeedback;
+
+if (storedData?.editFeedback) {
+	editFeedback = storedData.editFeedback;
+}
 
 type ProductFeedbackState = {
 	allFeedbacks: FeedbackProps[];
 	plannedRoadmap: FeedbackProps[];
 	inProgressRoadmap: FeedbackProps[];
 	liveRoadmap: FeedbackProps[];
-	oneFeedback: FeedbackProps[];
+	oneFeedback: FeedbackProps | undefined;
 	feedbackLoading: boolean;
 	sortText: string;
 	edit: boolean;
 	editContent: FeedbackProps[];
 	getFeedbackToDelete: boolean;
 	sortFeature: string;
+	error: boolean;
+	errorMessage: string;
 	upvoteError: boolean;
 	upvoteErrorMessage: string;
 };
@@ -45,18 +35,20 @@ type ProductFeedbackAction = {
 
 const initialState: ProductFeedbackState = {
 	allFeedbacks: [],
-	oneFeedback: [],
+	oneFeedback: undefined,
 	plannedRoadmap: [],
 	inProgressRoadmap: [],
 	liveRoadmap: [],
 	feedbackLoading: false,
-	edit: false,
+	edit: false || editFeedback === "false" ? false : true,
 	editContent: [],
 	sortText: "Most Upvotes",
 	sortFeature: "All",
 	getFeedbackToDelete: false,
 	upvoteError: false,
 	upvoteErrorMessage: "",
+	error: false,
+	errorMessage: "",
 };
 
 export const productFeedbackReducer = (
@@ -84,15 +76,10 @@ export const productFeedbackReducer = (
 				inProgressRoadmap: inProgressFeedback,
 				liveRoadmap: liveFeedback,
 				feedbackLoading: false,
+				edit: false,
+				error: false,
+				errorMessage: "",
 			};
-
-		// case actionTypes.INCREASE_UPVOTE:
-		// 	return {
-		// 		...state,
-		// 		upvoteNumber: action.data,
-		// 		upvoteLoading: false,
-		// 		upvoted: true,
-		// 	};
 
 		case actionTypes.UPVOTE_ERROR:
 			return {
@@ -105,6 +92,7 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				oneFeedback: action.data,
+				feedbackLoading: false,
 			};
 
 		case actionTypes.ADD_NEW_FEEDBACK:
@@ -126,10 +114,10 @@ export const productFeedbackReducer = (
 			};
 
 		case actionTypes.SET_EDIT_TO_TRUE:
+			localStorage.setItem("editFeedback", "true");
 			return {
 				...state,
 				edit: true,
-				editContent: action.data,
 			};
 
 		case actionTypes.GET_FEEDBACK_TO_DELETE:
@@ -154,12 +142,22 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				feedbackLoading: true,
+				error: false,
+				errorMessage: "",
 			};
 
 		case actionTypes.RESET_FEEDBACK_STATE:
 			return {
 				...state,
 				upvoteError: false,
+			};
+
+		case actionTypes.GET_FEEDBACK_ERROR:
+			return {
+				...state,
+				error: true,
+				feedbackLoading: false,
+				errorMessage: action.data,
 			};
 
 		default:

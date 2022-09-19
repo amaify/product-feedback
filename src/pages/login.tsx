@@ -29,7 +29,7 @@ function Login({ authLoading, error, registrationSuccess }: Props) {
 		value: emailValue,
 		isValueValid: emailValueIsValid,
 		hasError: emailHasError,
-	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value: string) => value?.trim() !== "" && value?.length >= 5);
 
 	let {
 		inputBlurHandler: passwordBlurHandler,
@@ -37,7 +37,7 @@ function Login({ authLoading, error, registrationSuccess }: Props) {
 		value: passwordValue,
 		hasError: passwordHasError,
 		isValueValid: passwordValueIsValid,
-	} = useInput((value: string) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value: string) => value?.trim() !== "" && value?.length >= 5);
 
 	let isValid = false;
 

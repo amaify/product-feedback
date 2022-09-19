@@ -2,19 +2,13 @@ import {
 	getProductFeedback,
 	getOneProductFeedback,
 	feedbackLoading,
-	// incrementUpvote,
-	// upvoteLoading,
-	// resetState,
+	deleteFeedback,
+	getFeedbackError,
 } from "../actions/creators/product-feedback";
-
-import {
-	getProductComments,
-	getCommentReplies,
-} from "../actions/creators/comments";
-import { authLoading } from "../actions/creators/authentication";
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {
+		dispatch(feedbackLoading());
 		fetch("http://localhost:8080/feedback/feedbacks", {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -23,12 +17,15 @@ export const getFeedbacks = () => {
 			.then((responseData) => {
 				dispatch(getProductFeedback(responseData.data));
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				dispatch(getFeedbackError(error.message));
+			});
 	};
 };
 
 export const getOneFeedback = (productId: string) => {
 	return (dispatch: any) => {
+		dispatch(feedbackLoading());
 		fetch(`http://localhost:8080/feedback/product-feedback/${productId}`, {
 			method: "GET",
 			headers: {
@@ -40,30 +37,6 @@ export const getOneFeedback = (productId: string) => {
 				dispatch(getOneProductFeedback(responseData.data));
 			})
 			.catch((error) => console.log(error));
-
-		// fetch(`http://localhost:8080/feedback/comments/${productId}`, {
-		// 	method: "GET",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// })
-		// 	.then((response) => response.json())
-		// 	.then((responseData) => {
-		// 		dispatch(getProductComments(responseData.data));
-		// 	})
-		// 	.catch((error) => console.log(error));
-
-		// fetch("http://localhost:8080/feedback/commentReply", {
-		// 	method: "GET",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// })
-		// 	.then((response) => response.json())
-		// 	.then((responseData) => {
-		// 		dispatch(getCommentReplies(responseData.data));
-		// 	})
-		// 	.catch((error) => console.log(error));
 	};
 };
 
@@ -85,7 +58,6 @@ export const addNewProductFeedback = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData);
 					navigate("/");
 					dispatch(getFeedbacks());
 				}
@@ -101,6 +73,7 @@ export const editProductFeedback = (
 	productId: string
 ) => {
 	return (dispatch: any) => {
+		dispatch(feedbackLoading());
 		fetch(`http://localhost:8080/feedback/edit-feedback/${productId}`, {
 			method: "PUT",
 			headers: {
@@ -112,7 +85,6 @@ export const editProductFeedback = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData.message);
 					navigate("/");
 					dispatch(getFeedbacks());
 				}
@@ -138,42 +110,10 @@ export const deleteProductFeedback = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					console.log(responseData.message);
+					dispatch(deleteFeedback());
 					navigate("/");
 				}
 			})
 			.catch((error) => console.log(error));
 	};
 };
-
-// export const upvoteIncrement = (
-// 	productId: string,
-// 	upvoteNumber: number | any
-// ) => {
-// 	let data = {
-// 		upvotes: upvoteNumber,
-// 	};
-
-// 	return (dispatch: any) => {
-// 		dispatch(upvoteLoading());
-// 		fetch(`http://localhost:8080/feedback/upvoting/${productId}`, {
-// 			method: "PUT",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 			body: JSON.stringify(data),
-// 		})
-// 			.then((response) => response.json())
-// 			.then((responseData) => {
-// 				if (responseData.statusCode !== 201) {
-// 					console.log("An error occured");
-// 				}
-// 				// console.log(responseData.data.upvotes);
-// 				dispatch(incrementUpvote(responseData.data.upvotes));
-
-// 				setTimeout(() => {
-// 					return dispatch(resetState());
-// 				}, 10000);
-// 			})
-// 			.catch((error) => console.log(error));
-// 	};
-// };

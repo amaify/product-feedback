@@ -56,6 +56,8 @@ interface RootState {
 		getFeedbackToDelete: boolean;
 		upvoteError: boolean;
 		upvoteErrorMessage: string;
+		error: boolean;
+		errorMessage: string;
 	};
 
 	commentReducer: {

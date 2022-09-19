@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../type";
 
 type FormInputsType = {
 	userInputValue: string;
-	category: string;
-	updateStatus: string;
+	category?: string;
+	updateStatus?: string;
 	userDescriptionValue?: string;
 };
 
 function useInput(validateValue: (value: string) => boolean) {
-	const editState = useSelector(
-		(state: RootState) => state.productFeedbackReducer.edit
-	);
-	const editContent = useSelector(
-		(state: RootState) => state.productFeedbackReducer.editContent
-	);
+	// const editState = useSelector(
+	// 	(state: RootState) => state.productFeedbackReducer.edit
+	// );
+	// const editContent = useSelector(
+	// 	(state: RootState) => state.productFeedbackReducer?.oneFeedback
+	// );
+
+	const data = useSelector((state: RootState) => {
+		return {
+			editState: state.productFeedbackReducer.edit,
+			editContent: state.productFeedbackReducer?.oneFeedback
+		}
+	})
+
+	const {editState, editContent} = data
 
 	const [enteredValue, setEnteredValue] = useState<FormInputsType>({
 		userInputValue: "",
@@ -24,10 +33,8 @@ function useInput(validateValue: (value: string) => boolean) {
 	});
 
 	const [editEnteredValue, setEditEnteredValue] = useState<FormInputsType>({
-		userInputValue: !editState ? "" : editContent.title,
-		userDescriptionValue: editState ? editContent.description : "",
-		category: "",
-		updateStatus: "",
+		userInputValue: !editState ? "" : editContent?.title,
+		userDescriptionValue: editState ? editContent?.description : "",
 	});
 
 	const [isTouched, setIsTouched] = useState<boolean>(false);
@@ -37,14 +44,26 @@ function useInput(validateValue: (value: string) => boolean) {
 	const [activeClick, setActiveClick] = useState(!editState ? 0 : NaN);
 	const [editActiveClick, setEditActiveClick] = useState(NaN);
 	const [activeText, setActiveText] = useState(
-		!editState ? "Feature" : editContent.category
+		!editState ? "Feature" : editContent?.category
 	);
 	const [activeTextEdit, setActiveTextEdit] = useState(
-		!editState ? "Suggestion" : editContent.status
+		!editState ? "Suggestion" : editContent?.status
 	);
 
+	useEffect(() => {
+		if (editState) {
+			setEditEnteredValue({
+				userInputValue: !editState ? "" : editContent?.title,
+				userDescriptionValue: editState ? editContent?.description : "",
+			});
+
+			setActiveText(editContent?.category);
+			setActiveTextEdit(editContent?.status);
+		}
+	}, [editState]);
+
 	const valueIsValid = validateValue(
-		!editState ? enteredValue.userInputValue : editEnteredValue.userInputValue
+		!editState ? enteredValue.userInputValue : editEnteredValue?.userInputValue
 	);
 	const hasError = !valueIsValid && isTouched;
 
@@ -111,8 +130,8 @@ function useInput(validateValue: (value: string) => boolean) {
 
 	return {
 		value: enteredValue.userInputValue,
-		editValue: editEnteredValue.userInputValue,
-		editDescription: editEnteredValue.userDescriptionValue,
+		editValue: editContent && editEnteredValue?.userInputValue,
+		editDescription: editContent && editEnteredValue?.userDescriptionValue,
 		category: enteredValue.category,
 		updateStatus: enteredValue.updateStatus,
 		touched: isTouched,

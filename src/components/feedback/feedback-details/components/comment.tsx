@@ -9,7 +9,12 @@ import AnneImg from "../../../../assets/images/user-images/image-anne.jpg";
 import NoImage from "../../../../assets/images/no-logo.jpg";
 import RyanImg from "../../../../assets/images/user-images/image-ryan.jpg";
 import ReplyComment from "./reply-comment";
-import { CommentReplies, FeedbackComment, RootState } from "../../../../type";
+import {
+	CommentReplies,
+	FeedbackComment,
+	FeedbackProps,
+	RootState,
+} from "../../../../type";
 import {
 	replyToComment,
 	replyToReply,
@@ -18,25 +23,35 @@ import {
 interface Props {
 	userToken: string;
 	isAuth: boolean;
+	addCommentLoading: boolean;
 	comments: FeedbackComment[];
 	commentReplies: CommentReplies[];
+	feedbackDetails: FeedbackProps;
 }
 
-function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
+function Comments({
+	userToken,
+	isAuth,
+	comments,
+	commentReplies,
+	feedbackDetails,
+	addCommentLoading,
+}: Props) {
 	const dispatch = useDispatch();
 	const commentId = useParams();
 
 	let prodId = commentId.feedbackID;
 
 	const [reply, setReply] = useState<string>("");
-	const [commentCount, setCommentCount] = useState<number | string>(0);
-	const [replies, setReplies] = useState(0);
+	const [showReply, setShowReply] = useState(false);
 
 	useEffect(() => {
-		comments !== undefined
-			? setCommentCount(comments.length)
-			: setCommentCount(0);
-	}, []);
+		if (!addCommentLoading) {
+			setReply("");
+			setShowReply(false);
+		}
+		localStorage.setItem("editFeedback", "false");
+	}, [addCommentLoading]);
 
 	const {
 		value,
@@ -45,14 +60,16 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 		resetUserInput,
 		hasError,
 		isValueValid,
-	} = useInput((value) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value) => value?.trim() !== "" && value?.length >= 5);
 
 	let isValid = false;
 
 	if (isValueValid) isValid = true;
 
 	const replyToggleHandler = (id: string) => {
+		setShowReply(!showReply);
 		setReply(id);
+		if (showReply === false) resetUserInput();
 	};
 
 	const submitFormHandler = (event: React.FormEvent) => {
@@ -66,9 +83,6 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 		const replyInput: { content: string } = { content: value };
 		console.log(value);
 		dispatch(replyToComment(reply, userToken, replyInput, prodId));
-
-		resetUserInput();
-		setReply("");
 	};
 
 	const submitReplyToReplyHandler = (event: React.FormEvent) => {
@@ -80,18 +94,17 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 		}
 
 		const replyInput: { content: string } = { content: value };
-		console.log(value);
 		dispatch(replyToReply(reply, userToken, replyInput, prodId));
-
-		resetUserInput();
-		setReply("");
 	};
 
 	return (
 		<div className="comments">
 			{comments !== undefined ? (
 				<h2 className="comments-heading">
-					<span>{comments.length}</span> <span>Comments</span>
+					<span>{feedbackDetails?.comments?.length}</span>{" "}
+					<span>
+						{feedbackDetails?.comments?.length > 1 ? "Comments" : "Comment"}
+					</span>
 				</h2>
 			) : (
 				<h2 className="comments-heading">
@@ -130,7 +143,7 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 										</p>
 										<p
 											className={`${
-												commentCount > 0
+												feedbackDetails?.comments?.length > 0
 													? "comments-comment__contents--comment comments-comment__contents--comment-more"
 													: "comments-comment__contents--comment"
 											}`}
@@ -148,15 +161,19 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 										)}
 
 										{reply === comment._id && (
-											<ReplyComment
-												commentNumber={commentCount}
-												submitFormHandler={submitFormHandler}
-												onChangeHandler={inputChangeHandler}
-												onBlur={inputBlurHandler}
-												hasError={hasError}
-												isValueValid={isValueValid}
-												value={value}
-											/>
+											<>
+												{showReply && (
+													<ReplyComment
+														commentNumber={feedbackDetails?.comments?.length}
+														submitFormHandler={submitFormHandler}
+														onChangeHandler={inputChangeHandler}
+														onBlur={inputBlurHandler}
+														hasError={hasError}
+														isValueValid={isValueValid}
+														value={value}
+													/>
+												)}
+											</>
 										)}
 									</div>
 								</div>
@@ -209,15 +226,23 @@ function Comments({ userToken, isAuth, comments, commentReplies }: Props) {
 															)}
 
 															{reply === reps._id ? (
-																<ReplyComment
-																	commentNumber={commentCount}
-																	submitFormHandler={submitReplyToReplyHandler}
-																	onChangeHandler={inputChangeHandler}
-																	onBlur={inputBlurHandler}
-																	hasError={hasError}
-																	isValueValid={isValueValid}
-																	value={value}
-																/>
+																<>
+																	{showReply && (
+																		<ReplyComment
+																			commentNumber={
+																				feedbackDetails?.comments?.length
+																			}
+																			submitFormHandler={
+																				submitReplyToReplyHandler
+																			}
+																			onChangeHandler={inputChangeHandler}
+																			onBlur={inputBlurHandler}
+																			hasError={hasError}
+																			isValueValid={isValueValid}
+																			value={value}
+																		/>
+																	)}
+																</>
 															) : (
 																""
 															)}
@@ -240,6 +265,7 @@ const mapStateToProps = (state: RootState) => {
 		isAuth: state.authenticationReducer.isAuth,
 		comments: state.commentReducer.feedbackComments,
 		commentReplies: state.commentReducer.commentReplies,
+		addCommentLoading: state.commentReducer.addCommentLoading,
 	};
 };
 

@@ -28,7 +28,15 @@ function AppRoutes() {
 
 			<Route index element={<Layout />} />
 			<Route
-				path={editState ? "/edit-feedback/:editFeedbackId" : "/new-feedback"}
+				path={"/new-feedback"}
+				element={
+					<ProtectedRoute redirectPath="/login" auth={!isAuth}>
+						<NewFeedbackForm />
+					</ProtectedRoute>
+				}
+			/>
+			<Route
+				path={"/edit-feedback/:editFeedbackId"}
 				element={
 					<ProtectedRoute redirectPath="/login" auth={!isAuth}>
 						<NewFeedbackForm />

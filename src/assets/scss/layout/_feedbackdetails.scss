@@ -1,5 +1,6 @@
 .feedbackdetails {
 	width: 100%;
+	position: relative;
 	padding: 0 0 10em 0;
 
 	&-contents {
@@ -242,10 +243,6 @@
 				& span {
 					color: $color-alpha;
 					font-weight: 700;
-				}
-
-				&:not(:last-child) {
-					// margin-bottom: 1.8em;
 				}
 			}
 

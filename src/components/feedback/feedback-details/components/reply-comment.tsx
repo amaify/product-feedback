@@ -7,6 +7,10 @@ import { RootState } from "../../../../type";
 
 interface ReplyCommentProps {
 	commentNumber: string | number;
+	hasError?: boolean;
+	isValueValid?: boolean;
+	value?: string;
+	addCommentLoading: boolean;
 	submitFormHandler?: (event: React.FormEvent) => void;
 	onChangeHandler?: (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -14,11 +18,7 @@ interface ReplyCommentProps {
 	onBlur?: (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => void;
-	hasError?: boolean;
-	isValueValid?: boolean;
 	resetInput?: () => void;
-	value?: string;
-	addCommentLoading: boolean;
 }
 
 function ReplyComment(props: ReplyCommentProps) {

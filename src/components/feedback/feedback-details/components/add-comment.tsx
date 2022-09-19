@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -8,7 +8,6 @@ import Button from "../../../button/button";
 
 import { RootState } from "../../../../type";
 import { addComment } from "../../../../store/utils/commentUtil";
-import { getOneFeedback } from "../../../../store/utils/feedbackUtil";
 
 interface Props {
 	userToken: string;
@@ -30,7 +29,7 @@ function AddComment({ userToken, addCommentLoading }: Props) {
 		hasError,
 		isValueValid,
 		charactersLeft,
-	} = useInput((value) => value.trim() !== "" && value.length >= 5);
+	} = useInput((value) => value?.trim() !== "" && value?.length >= 5);
 
 	if (isValueValid) isValid = true;
 

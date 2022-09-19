@@ -1,4 +1,4 @@
-import { CommentReplies, FeedbackProps } from "../../../type";
+import { FeedbackProps } from "../../../type";
 import * as actionTypes from "../actionTypes";
 
 export const getProductFeedback = (productFeedbacks: FeedbackProps[]) => {
@@ -42,13 +42,6 @@ export const upvoteError = (errorMessage: string) => {
 	};
 };
 
-// export const incrementUpvote = (upvoteNumber: number) => {
-// 	return {
-// 		type: actionTypes.INCREASE_UPVOTE,
-// 		data: upvoteNumber,
-// 	};
-// };
-
 export const setEditToTrue = (productContent: FeedbackProps) => {
 	return {
 		type: actionTypes.SET_EDIT_TO_TRUE,
@@ -83,5 +76,12 @@ export const feedbackLoading = () => {
 export const resetFeedbackState = () => {
 	return {
 		type: actionTypes.RESET_FEEDBACK_STATE,
+	};
+};
+
+export const getFeedbackError = (errMessage: string) => {
+	return {
+		type: actionTypes.GET_FEEDBACK_ERROR,
+		data: errMessage,
 	};
 };

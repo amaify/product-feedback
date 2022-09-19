@@ -33,6 +33,7 @@ export const retrieveStoredData = () => {
 	const storedFullname = localStorage.getItem("name");
 	const storedUserId = localStorage.getItem("userId");
 	const storedExpirationTime = localStorage.getItem("expirationTime");
+	const editFeedback = localStorage.getItem("editFeedback");
 
 	let remainingTime: any;
 
@@ -51,6 +52,7 @@ export const retrieveStoredData = () => {
 		token: storedToken,
 		name: storedFullname,
 		userId: storedUserId,
+		editFeedback: editFeedback,
 		duration: remainingTime,
 	};
 };
