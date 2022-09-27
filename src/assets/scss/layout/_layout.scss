@@ -1,35 +1,51 @@
 .wrapper {
 	position: relative;
-	padding: 9.4em 16.5em;
+	padding: 0;
 	width: 100%;
 	height: 100vh;
-	// overflow-y: scroll;
+
+	@include responsive_layout(bp-xs) {
+		// position: relative;
+		padding: 9.4em 16.5em;
+		// width: 100%;
+		// height: 100vh;
+	}
 }
 
 .layout {
-	// padding: 9.4em 16.5em;
 	display: flex;
-	gap: 3em;
+	flex-direction: column;
+	gap: 0;
 	width: 100%;
-
 	position: relative;
 
 	&-sidebar {
-		width: 18%;
-		// position: fixed;
-		// top: 9.4em;
-		// left: 16.5em;
+		width: 100%;
 		position: relative;
-
 		z-index: 1;
+		// display: none;
 	}
 
 	&-main {
-		width: 80%;
+		width: 100%;
+	}
 
-		// position: absolute;
-		// top: 0;
-		// right: 0;
-		// height: 100%;
+	@include responsive_layout(bp-xs) {
+		display: flex;
+		flex-direction: row;
+		gap: 3em;
+		width: 100%;
+
+		position: relative;
+
+		&-sidebar {
+			width: 18%;
+			position: relative;
+			z-index: 1;
+		}
+
+		&-main {
+			width: 80%;
+		}
 	}
 }

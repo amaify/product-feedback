@@ -9,3 +9,29 @@
 		}
 	}
 }
+
+@mixin responsive_layout($bp) {
+	@if ($bp == bp-xs) {
+		@media only screen and (min-width: 400px) {
+			@content;
+		}
+	}
+
+	@if ($bp == bp-sm) {
+		@media only screen and (min-width: 600px) {
+			@content;
+		}
+	}
+
+	@if ($bp == bp-md) {
+		@media only screen and (min-width: 835px) {
+			@content;
+		}
+	}
+
+	@if ($bp == bp-lg) {
+		@media only screen and (min-width: 1250px) {
+			@content;
+		}
+	}
+}

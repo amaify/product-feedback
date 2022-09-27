@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import useInput from "../../../../hooks/use-input";
 import { useParams } from "react-router";
-import { useSelector, connect, useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
-import ElijahImg from "../../../../assets/images/user-images/image-elijah.jpg";
-import JamesImg from "../../../../assets/images/user-images/image-james.jpg";
-import AnneImg from "../../../../assets/images/user-images/image-anne.jpg";
 import NoImage from "../../../../assets/images/no-logo.jpg";
-import RyanImg from "../../../../assets/images/user-images/image-ryan.jpg";
 import ReplyComment from "./reply-comment";
 import {
 	CommentReplies,
@@ -101,10 +97,8 @@ function Comments({
 		<div className="comments">
 			{comments !== undefined ? (
 				<h2 className="comments-heading">
-					<span>{feedbackDetails?.comments?.length}</span>{" "}
-					<span>
-						{feedbackDetails?.comments?.length > 1 ? "Comments" : "Comment"}
-					</span>
+					<span>{comments?.length}</span>{" "}
+					<span>{comments?.length > 1 ? "Comments" : "Comment"}</span>
 				</h2>
 			) : (
 				<h2 className="comments-heading">
@@ -132,7 +126,6 @@ function Comments({
 											alt="A person named Elijah"
 										/>
 									</div>
-
 									<div className="comments-comment__contents">
 										<p className="comments-comment__contents--name">
 											{comment.creatorName}
@@ -178,10 +171,10 @@ function Comments({
 									</div>
 								</div>
 								{commentReplies === undefined
-									? ""
-									: commentReplies.map((reps) => {
-											if (comment._id === reps.linkedComment) {
-												return (
+									? null
+									: commentReplies.map(
+											(reps) =>
+												comment._id === reps.linkedComment && (
 													<div
 														className="comments-comment__replies"
 														key={reps._id}
@@ -248,9 +241,8 @@ function Comments({
 															)}
 														</div>
 													</div>
-												);
-											}
-									  })}
+												)
+									  )}
 							</div>
 					  ))
 					: ""}

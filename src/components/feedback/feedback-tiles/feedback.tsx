@@ -5,6 +5,8 @@ import { FeedbackProps, RootState } from "../../../type";
 import { FlashMessage } from "../../../utils/flash-message";
 import { Link } from "react-router-dom";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
+import FeedbackTilesDesktop from "./components/DesktopFeedbackTiles";
+import FeedbackTilesMobile from "./components/MobileFeedbackTiles";
 
 import Upvotes from "../../upvotes/upvotes";
 import {
@@ -106,34 +108,6 @@ function Feedback(props: StateProps) {
 					flashType="feedback"
 				/>
 			)}
-			{/* {sortedFeedbacks.map((feed) => (
-				<div className="feedback-wrapper" key={feed._id}>
-					<Upvotes
-						divClassName="feedback-upvote"
-						upvoteNumbers={feed.upvotes}
-						productId={feed._id}
-					/>
-
-					<Link
-						to={{ pathname: `/feedback-details/${feed._id}` }}
-						state={feed}
-						className="feedback-contents"
-					>
-						<h2 className="feedback-contents__heading">{feed.title}</h2>
-						<p className="feedback-contents__text">
-							{truncateText(feed.description, 150, true)}
-						</p>
-						<p className="feedback-contents__feature">{feed.category}</p>
-					</Link>
-					<div className="feedback-comments">
-						<div className="feedback-comments__img">
-							<img src={CommentsIcon} alt="Comments description" />
-						</div>
-						<p>{feed.comments.length}</p>
-					</div>
-				</div>
-				
-			))} */}
 			{Array.isArray(sortedFeedbacks) && !sortedFeedbacks.length ? (
 				<h1 style={{ fontSize: "2em", color: "#373f68", textAlign: "center" }}>
 					<span style={{ display: "block" }}>
@@ -142,33 +116,10 @@ function Feedback(props: StateProps) {
 					<span>Select another option!</span>
 				</h1>
 			) : (
-				sortedFeedbacks.map((feed) => (
-					<div className="feedback-wrapper" key={feed._id}>
-						<Upvotes
-							divClassName="feedback-upvote"
-							upvoteNumbers={feed.upvotes}
-							productId={feed._id}
-						/>
-
-						<Link
-							to={{ pathname: `/feedback-details/${feed._id}` }}
-							state={feed}
-							className="feedback-contents"
-						>
-							<h2 className="feedback-contents__heading">{feed.title}</h2>
-							<p className="feedback-contents__text">
-								{truncateText(feed.description, 150, true)}
-							</p>
-							<p className="feedback-contents__feature">{feed.category}</p>
-						</Link>
-						<div className="feedback-comments">
-							<div className="feedback-comments__img">
-								<img src={CommentsIcon} alt="Comments description" />
-							</div>
-							<p>{feed.comments.length}</p>
-						</div>
-					</div>
-				))
+				<>
+					<FeedbackTilesMobile sortedFeedback={sortedFeedbacks} />
+					<FeedbackTilesDesktop sortedFeedback={sortedFeedbacks} />
+				</>
 			)}
 		</section>
 	);

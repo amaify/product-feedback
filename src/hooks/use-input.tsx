@@ -10,21 +10,14 @@ type FormInputsType = {
 };
 
 function useInput(validateValue: (value: string) => boolean) {
-	// const editState = useSelector(
-	// 	(state: RootState) => state.productFeedbackReducer.edit
-	// );
-	// const editContent = useSelector(
-	// 	(state: RootState) => state.productFeedbackReducer?.oneFeedback
-	// );
-
 	const data = useSelector((state: RootState) => {
 		return {
 			editState: state.productFeedbackReducer.edit,
-			editContent: state.productFeedbackReducer?.oneFeedback
-		}
-	})
+			editContent: state.productFeedbackReducer.oneFeedback,
+		};
+	});
 
-	const {editState, editContent} = data
+	const { editState, editContent } = data;
 
 	const [enteredValue, setEnteredValue] = useState<FormInputsType>({
 		userInputValue: "",
@@ -60,7 +53,7 @@ function useInput(validateValue: (value: string) => boolean) {
 			setActiveText(editContent?.category);
 			setActiveTextEdit(editContent?.status);
 		}
-	}, [editState]);
+	}, [editContent, editState]);
 
 	const valueIsValid = validateValue(
 		!editState ? enteredValue.userInputValue : editEnteredValue?.userInputValue

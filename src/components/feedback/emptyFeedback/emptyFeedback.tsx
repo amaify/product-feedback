@@ -19,7 +19,7 @@ function EmptyFeedback() {
 					<p className="emptyFeedback-content__texts--description">
 						<span>
 							Got a suggestion? Found a bug that needs to be squashed?
-						</span>
+						</span>{" "}
 						<span>We love hearing about new ideas to improve our app.</span>
 					</p>
 				</div>

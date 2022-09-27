@@ -1,8 +1,8 @@
 //Main Navigation
 .navigation {
 	background: $color-darkBlue;
-	border-radius: 10px;
-	padding: 1.4em 1.6em 1.4em 2.4em;
+	border-radius: 0;
+	padding: 1.4em 1.4em 1.4em 1.4em;
 	margin-bottom: 2.4em;
 
 	display: flex;
@@ -14,6 +14,7 @@
 		align-items: center;
 		width: auto;
 		margin-right: 3.8rem;
+		display: none;
 
 		&__img {
 			width: 15%;
@@ -44,6 +45,55 @@
 		text-transform: capitalize;
 		color: $color-white;
 		margin-right: 2.5em;
+		display: none;
+	}
+
+	@include responsive_layout(bp-xs) {
+		background: $color-darkBlue;
+		border-radius: 10px;
+		padding: 1.4em 1.6em 1.4em 2.4em;
+		margin-bottom: 2.4em;
+
+		display: flex;
+		width: 100%;
+		align-items: center;
+
+		&-suggestion {
+			display: flex;
+			align-items: center;
+			width: auto;
+			margin-right: 3.8rem;
+
+			&__img {
+				width: 15%;
+				margin-right: 1.6em;
+
+				& img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+
+			& p {
+				font-size: 1.8em;
+				font-weight: 700;
+				line-height: 26px;
+				color: $color-white;
+			}
+
+			&__number {
+				margin-right: 0.5em;
+			}
+		}
+
+		&-username {
+			font-size: 1.8em;
+			font-weight: 500;
+			text-transform: capitalize;
+			color: $color-white;
+			margin-right: 2.5em;
+		}
 	}
 }
 
@@ -55,8 +105,8 @@
 	position: relative;
 
 	&__text {
-		font-size: 1.4em;
-		line-height: 20px;
+		font-size: 1.3em;
+		line-height: 19px;
 		color: $color-background;
 		margin-right: 0.9em;
 		transition: all 0.3s ease-in-out;
@@ -77,6 +127,7 @@
 		position: absolute;
 		top: 6.5em;
 		left: 0;
+		z-index: 2;
 
 		background: $color-white;
 		border-radius: 10px;
@@ -131,18 +182,118 @@
 			visibility: hidden;
 		}
 	}
+
+	@include responsive_layout(bp-xs) {
+		display: flex;
+		margin-right: auto;
+		align-items: center;
+		position: relative;
+
+		&__text {
+			font-size: 1.4em;
+			line-height: 20px;
+			color: $color-background;
+			margin-right: 0.9em;
+			transition: all 0.3s ease-in-out;
+
+			& span {
+				text-transform: capitalize;
+				font-weight: 700;
+			}
+
+			&:hover {
+				cursor: pointer;
+				color: $color-background;
+				opacity: 0.75;
+			}
+		}
+
+		&__dropdown {
+			position: absolute;
+			top: 6.5em;
+			left: 0;
+			z-index: 2;
+
+			background: $color-white;
+			border-radius: 10px;
+			width: 25.5em;
+			box-shadow: 0px 10px 40px -7px rgba(55, 63, 104, 0.350492);
+			opacity: 1;
+			visibility: visible;
+
+			&--items {
+				list-style: none;
+			}
+
+			&--item {
+				display: flex;
+				padding: 1.2em 2em;
+				font-size: 1.6em;
+				line-height: 23px;
+				font-weight: normal;
+				color: $color-grey;
+				position: relative;
+
+				& span:first-child {
+					margin-right: auto;
+				}
+
+				&:hover {
+					color: $color-alpha;
+					cursor: pointer;
+				}
+
+				&:not(:last-child) {
+					&::after {
+						content: "";
+						width: 100%;
+						height: 1px;
+						background: $color-darkerBlue;
+						opacity: 0.15;
+
+						position: absolute;
+						bottom: 0;
+						left: 0;
+					}
+				}
+
+				&.active {
+					color: $color-alpha;
+				}
+			}
+
+			&.hide-dropdown {
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
+	}
 }
 
 //NAVIGATION AUTHENTICATION
 .navigation-authentication {
-	min-width: 50px;
+	min-width: 35px;
 	height: 100%;
 	margin-right: 2.5rem;
 	cursor: pointer;
+	display: none;
 
 	& img {
 		width: auto;
 		height: auto;
 		display: block;
+	}
+
+	@include responsive_layout(bp-xs) {
+		min-width: 50px;
+		height: 100%;
+		margin-right: 2.5rem;
+		cursor: pointer;
+
+		& img {
+			width: auto;
+			height: auto;
+			display: block;
+		}
 	}
 }

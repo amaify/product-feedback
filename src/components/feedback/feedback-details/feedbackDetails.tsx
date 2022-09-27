@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { RootState, FeedbackProps, FeedbackComment } from "../../../type";
+import { RootState } from "../../../type";
 
 import ArrowLeft from "../../../assets/images/shared/icon-arrow-left.svg";
 import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";

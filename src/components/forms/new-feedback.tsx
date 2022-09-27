@@ -44,12 +44,10 @@ function NewFeedbackForm({
 		if (productFeedbackID) {
 			dispatch(getOneFeedback(productFeedbackID));
 		}
-	}, [productFeedbackID]);
+	}, [productFeedbackID, dispatch]);
 
 	let {
 		hasError: titleHasError,
-		category,
-		updateStatus,
 		inputBlurHandler: titleBlurHanlder,
 		inputChangeHandler: titleChangeHandler,
 		isValueValid: titleIsValid,
@@ -153,7 +151,7 @@ function NewFeedbackForm({
 					<h2 className="feedbackForm-form__heading">
 						{!editState
 							? "create new feedback"
-							: `Editing '${editContent.title}'`}
+							: `Editing '${editContent?.title}'`}
 					</h2>
 
 					<FormInput
@@ -240,7 +238,7 @@ function NewFeedbackForm({
 				</form>
 			</div>
 			{feedbackToDelete && (
-				<Modal id={editContent._id} title={editContent.title} />
+				<Modal id={editContent?._id} title={editContent?.title} />
 			)}
 			{feedbackToDelete && <Backdrop />}
 		</section>
