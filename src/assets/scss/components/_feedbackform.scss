@@ -58,7 +58,17 @@
 			position: relative;
 
 			&:not(:last-child) {
-				margin-bottom: 2.4em;
+				margin-bottom: 1.5em;
+			}
+
+			@include responsive_layout(bp-xs) {
+				display: flex;
+				flex-direction: column;
+				position: relative;
+
+				&:not(:last-child) {
+					margin-bottom: 2.4em;
+				}
 			}
 
 			& label {
@@ -85,20 +95,39 @@
 			textarea {
 				border: none;
 				outline: none;
-				padding: 1.3em 1.5em;
+				padding: 1em 1.2em;
 				background: $color-background-light;
 				border-radius: 5px;
 				width: 100%;
 
 				color: $color-darkerBlue;
-				font-size: 1.5em;
+				font-size: 1.3em;
 				font-weight: normal;
 				line-height: 22px;
 				font-family: "Jost", sans-serif;
 
-				&:hover,
 				&:focus {
 					outline: 1px solid $color-blue;
+				}
+
+				@include responsive_layout(bp-xs) {
+					border: none;
+					outline: none;
+					padding: 1.3em 1.5em;
+					background: $color-background-light;
+					border-radius: 5px;
+					width: 100%;
+
+					color: $color-darkerBlue;
+					font-size: 1.5em;
+					font-weight: normal;
+					line-height: 22px;
+					font-family: "Jost", sans-serif;
+
+					&:hover,
+					&:focus {
+						outline: 1px solid $color-blue;
+					}
 				}
 			}
 

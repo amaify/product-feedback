@@ -17,6 +17,8 @@ import { getOneFeedback } from "../../../store/utils/feedbackUtil";
 import { setEditToTrue } from "../../../store/actions/creators/product-feedback";
 import { getComments, getReplies } from "../../../store/utils/commentUtil";
 import { Loader } from "../../loading/loading";
+import FeedbackTilesDesktop from "../feedback-tiles/components/DesktopFeedbackTiles";
+import FeedbackTilesMobile from "../feedback-tiles/components/MobileFeedbackTiles";
 
 function FeedbackDetails() {
 	const navigate = useNavigate();
@@ -51,7 +53,7 @@ function FeedbackDetails() {
 	return (
 		<section className="feedbackdetails">
 			{feedbackLoading && <Loader />}
-			{!feedbackLoading && (
+			{!feedbackLoading && feedback && (
 				<div className="feedbackdetails-contents">
 					<div className="feedbackdetails-contents__feedback">
 						<div className="feedbackdetails-contents__controls">
@@ -73,30 +75,16 @@ function FeedbackDetails() {
 							) : null}
 						</div>
 
-						<div className="feedbackdetails-contents__feedback--text">
-							<Upvotes
-								divClassName="feedback-upvote"
-								upvoteNumbers={feedback?.upvotes}
-								productId={feedback?._id}
+						<>
+							<FeedbackTilesMobile
+								sortedFeedback={feedback}
+								detailsPage={true}
 							/>
-							<div className="feedback-contents">
-								<h2 className="feedback-contents__heading">
-									{feedback?.title}
-								</h2>
-								<p className="feedback-contents__text">
-									{feedback?.description}
-								</p>
-								<p className="feedback-contents__feature">
-									{feedback?.category}
-								</p>
-							</div>
-							<div className="feedback-comments">
-								<div className="feedback-comments__img">
-									<img src={CommentsIcon} alt="Comments description" />
-								</div>
-								<p>{comments === undefined ? 0 : comments.length}</p>
-							</div>
-						</div>
+							<FeedbackTilesDesktop
+								sortedFeedback={feedback}
+								detailsPage={true}
+							/>
+						</>
 					</div>
 
 					<Comments feedbackDetails={feedback} />

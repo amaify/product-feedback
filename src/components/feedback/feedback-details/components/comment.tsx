@@ -118,31 +118,26 @@ function Comments({
 								key={comment._id}
 							>
 								<div className="comments-comment__parent">
-									<div className="comments-comment__img">
-										<img
-											src={
-												!comment.creatorAvatar ? NoImage : comment.creatorAvatar
-											}
-											alt="A person named Elijah"
-										/>
-									</div>
-									<div className="comments-comment__contents">
-										<p className="comments-comment__contents--name">
-											{comment.creatorName}
-										</p>
-										<p className="comments-comment__contents--username">
-											<span>@</span>
-											<span>{comment.creatorUsername}</span>
-										</p>
-										<p
-											className={`${
-												feedbackDetails?.comments?.length > 0
-													? "comments-comment__contents--comment comments-comment__contents--comment-more"
-													: "comments-comment__contents--comment"
-											}`}
-										>
-											{comment.content}
-										</p>
+									<div className="comments-comment__parent--heading">
+										<div className="comments-comment__img">
+											<img
+												src={
+													!comment.creatorAvatar
+														? NoImage
+														: comment.creatorAvatar
+												}
+												alt="A photograph of a person"
+											/>
+										</div>
+										<div className="comments-comment__parent--userdetails">
+											<p className="comments-comment__contents--name">
+												{comment.creatorName}
+											</p>
+											<p className="comments-comment__contents--username">
+												<span>@</span>
+												<span>{comment.creatorUsername}</span>
+											</p>
+										</div>
 
 										{isAuth && (
 											<p
@@ -152,6 +147,17 @@ function Comments({
 												Reply
 											</p>
 										)}
+									</div>
+									<div className="comments-comment__contents">
+										<p
+											className={`${
+												feedbackDetails?.comments?.length > 0
+													? "comments-comment__contents--comment comments-comment__contents--comment-more"
+													: "comments-comment__contents--comment"
+											}`}
+										>
+											{comment.content}
+										</p>
 
 										{reply === comment._id && (
 											<>
@@ -179,35 +185,33 @@ function Comments({
 														className="comments-comment__replies"
 														key={reps._id}
 													>
-														<div
-															className={
-																commentReplies.length > 0
-																	? "comments-comment__img comments-comment__img--line"
-																	: "comments-comment__img"
-															}
-														>
-															<img
-																src={
-																	!reps.creatorAvatar
-																		? NoImage
-																		: reps.creatorAvatar
+														<div className="comments-comment__replies--heading">
+															<div
+																className={
+																	commentReplies.length > 0
+																		? "comments-comment__img comments-comment__img--line"
+																		: "comments-comment__img"
 																}
-																alt="A person named Elijah"
-															/>
-														</div>
+															>
+																<img
+																	src={
+																		!reps.creatorAvatar
+																			? NoImage
+																			: reps.creatorAvatar
+																	}
+																	alt="Photograph of a human being"
+																/>
+															</div>
 
-														<div className="comments-comment__contents">
-															<p className="comments-comment__contents--name">
-																{reps.creatorName}{" "}
-															</p>
-															<p className="comments-comment__contents--username">
-																<span>@</span>
-																<span>{reps.creatorUsername}</span>
-															</p>
-															<p className="comments-comment__contents--comment">
-																<span>@</span>
-																<span>{reps.replyingTo}</span> {reps.content}
-															</p>
+															<div className="comments-comment__replies--userdetails">
+																<p className="comments-comment__contents--name">
+																	{reps.creatorName}{" "}
+																</p>
+																<p className="comments-comment__contents--username">
+																	<span>@</span>
+																	<span>{reps.creatorUsername}</span>
+																</p>
+															</div>
 
 															{isAuth && (
 																<p
@@ -217,6 +221,29 @@ function Comments({
 																	Reply
 																</p>
 															)}
+														</div>
+
+														<div className="comments-comment__contents">
+															{/* <p className="comments-comment__contents--name">
+																{reps.creatorName}{" "}
+															</p>
+															<p className="comments-comment__contents--username">
+																<span>@</span>
+																<span>{reps.creatorUsername}</span>
+															</p> */}
+															<p className="comments-comment__contents--comment">
+																<span>@</span>
+																<span>{reps.replyingTo}</span> {reps.content}
+															</p>
+
+															{/* {isAuth && (
+																<p
+																	className="comments-comment__contents--replyBtn"
+																	onClick={() => replyToggleHandler(reps._id)}
+																>
+																	Reply
+																</p>
+															)} */}
 
 															{reply === reps._id ? (
 																<>

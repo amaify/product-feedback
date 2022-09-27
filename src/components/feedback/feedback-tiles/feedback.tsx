@@ -1,102 +1,59 @@
-import React, { useEffect, useRef } from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import truncateText from "../../../utils/truncate";
+import { connect } from "react-redux";
 import { FeedbackProps, RootState } from "../../../type";
 import { FlashMessage } from "../../../utils/flash-message";
-import { Link } from "react-router-dom";
-import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
 import FeedbackTilesDesktop from "./components/DesktopFeedbackTiles";
 import FeedbackTilesMobile from "./components/MobileFeedbackTiles";
-
-import Upvotes from "../../upvotes/upvotes";
-import {
-	getFeedbacks,
-	// upvoteIncrement,
-} from "../../../store/utils/feedbackUtil";
 
 interface StateProps {
 	prodFeedbacks: FeedbackProps[];
 	sortText: string;
-	sortFeature: string;
+	sortCategory: string;
 	upvoteError: boolean;
 	upvoteErrorMessage: string;
 }
 
 function Feedback(props: StateProps) {
 	let sortedFeedbacks = [...props.prodFeedbacks];
-	const dispatch = useDispatch();
+	const { sortCategory } = props;
+
+	let renderedFeedbacks;
 
 	switch (props.sortText) {
 		case "Most Upvotes":
-			sortedFeedbacks = sortedFeedbacks.sort(
+			renderedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => b.upvotes - a.upvotes
 			);
 			break;
 
 		case "Least Upvotes":
-			sortedFeedbacks = sortedFeedbacks.sort(
+			renderedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => a.upvotes - b.upvotes
 			);
 			break;
 
 		case "Most Comments":
-			sortedFeedbacks = sortedFeedbacks.sort(
+			renderedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => b.comments.length - a.comments.length
 			);
 			break;
 
 		case "Least Comments":
-			sortedFeedbacks = sortedFeedbacks.sort(
+			renderedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => a.comments.length - b.comments.length
 			);
 			break;
 
 		default:
-			sortedFeedbacks = sortedFeedbacks.sort(
+			renderedFeedbacks = sortedFeedbacks.sort(
 				(a: any, b: any) => a.upvotes - b.upvotes
 			);
 			break;
 	}
 
-	switch (props.sortFeature) {
-		// case "All":
-		// 	sortedFeedbacks = sortedFeedbacks;
-		// 	break;
-
-		case "UI":
-			sortedFeedbacks = sortedFeedbacks.filter(
-				(sorted) => sorted.category === "UI"
-			);
-			break;
-
-		case "UX":
-			sortedFeedbacks = sortedFeedbacks.filter(
-				(sorted) => sorted.category === "UX"
-			);
-			break;
-
-		case "Bug":
-			sortedFeedbacks = sortedFeedbacks.filter(
-				(sorted) => sorted.category === "Bug"
-			);
-			break;
-
-		case "Enhancement":
-			sortedFeedbacks = sortedFeedbacks.filter(
-				(sorted) => sorted.category === "Enhancement"
-			);
-			break;
-
-		case "Feature":
-			sortedFeedbacks = sortedFeedbacks.filter(
-				(sorted) => sorted.category === "Feature"
-			);
-			break;
-
-		default:
-			sortedFeedbacks = sortedFeedbacks;
-			break;
-	}
+	renderedFeedbacks = sortedFeedbacks.filter(
+		(feedback) => feedback.category === sortCategory
+	);
+	if (sortCategory === "All") renderedFeedbacks = sortedFeedbacks;
 
 	return (
 		<section className="feedback">
@@ -108,7 +65,7 @@ function Feedback(props: StateProps) {
 					flashType="feedback"
 				/>
 			)}
-			{Array.isArray(sortedFeedbacks) && !sortedFeedbacks.length ? (
+			{Array.isArray(renderedFeedbacks) && !renderedFeedbacks.length ? (
 				<h1 style={{ fontSize: "2em", color: "#373f68", textAlign: "center" }}>
 					<span style={{ display: "block" }}>
 						Ooopss... Nothing to see here!
@@ -117,8 +74,18 @@ function Feedback(props: StateProps) {
 				</h1>
 			) : (
 				<>
-					<FeedbackTilesMobile sortedFeedback={sortedFeedbacks} />
-					<FeedbackTilesDesktop sortedFeedback={sortedFeedbacks} />
+					{renderedFeedbacks?.map((feedback) => (
+						<div key={feedback._id}>
+							<FeedbackTilesMobile
+								sortedFeedback={feedback}
+								detailsPage={false}
+							/>
+							<FeedbackTilesDesktop
+								sortedFeedback={feedback}
+								detailsPage={false}
+							/>
+						</div>
+					))}
 				</>
 			)}
 		</section>
@@ -129,7 +96,7 @@ const mapStateToProps = (state: RootState) => {
 	return {
 		prodFeedbacks: state.productFeedbackReducer.allFeedbacks,
 		sortText: state.productFeedbackReducer.sortText,
-		sortFeature: state.productFeedbackReducer.sortFeature,
+		sortCategory: state.productFeedbackReducer.sortFeature,
 		upvoteError: state.productFeedbackReducer.upvoteError,
 		upvoteErrorMessage: state.productFeedbackReducer.upvoteErrorMessage,
 	};
