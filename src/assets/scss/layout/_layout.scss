@@ -4,11 +4,8 @@
 	width: 100%;
 	height: 100vh;
 
-	@include responsive_layout(bp-xs) {
-		// position: relative;
+	@include responsive_layout(bp-sm) {
 		padding: 9.4em 16.5em;
-		// width: 100%;
-		// height: 100vh;
 	}
 }
 
@@ -23,25 +20,23 @@
 		width: 100%;
 		position: relative;
 		z-index: 1;
-		// display: none;
 	}
 
 	&-main {
 		width: 100%;
 	}
 
-	@include responsive_layout(bp-xs) {
-		display: flex;
+	@include responsive_layout(bp-sm) {
+		// display: flex;
 		flex-direction: row;
 		gap: 3em;
 		width: 100%;
-
-		position: relative;
+		// position: relative;
 
 		&-sidebar {
 			width: 18%;
-			position: relative;
-			z-index: 1;
+			// position: relative;
+			// z-index: 1;
 		}
 
 		&-main {

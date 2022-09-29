@@ -85,3 +85,9 @@ export const getFeedbackError = (errMessage: string) => {
 		data: errMessage,
 	};
 };
+
+export const showSidePanel = () => {
+	return {
+		type: actionTypes.SHOW_SIDEPANEL,
+	};
+};

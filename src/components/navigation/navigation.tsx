@@ -1,10 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 
 import NavigationSort from "./sort/navigation-sort";
 import Button from "../button/button";
-import ProgressBar from "../progress-bar/progress-bar";
 
 import IconSuggestion from "../../assets/images/suggestions/icon-suggestions.svg";
 import IconPlus from "../../assets/images/shared/icon-plus.svg";

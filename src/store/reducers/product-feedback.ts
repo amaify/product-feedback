@@ -26,6 +26,7 @@ type ProductFeedbackState = {
 	errorMessage: string;
 	upvoteError: boolean;
 	upvoteErrorMessage: string;
+	showSidePanel: boolean;
 };
 
 type ProductFeedbackAction = {
@@ -49,6 +50,7 @@ const initialState: ProductFeedbackState = {
 	upvoteErrorMessage: "",
 	error: false,
 	errorMessage: "",
+	showSidePanel: false,
 };
 
 export const productFeedbackReducer = (
@@ -158,6 +160,12 @@ export const productFeedbackReducer = (
 				error: true,
 				feedbackLoading: false,
 				errorMessage: action.data,
+			};
+
+		case actionTypes.SHOW_SIDEPANEL:
+			return {
+				...state,
+				showSidePanel: !state.showSidePanel,
 			};
 
 		default:
