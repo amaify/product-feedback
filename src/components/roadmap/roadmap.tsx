@@ -1,66 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "../button/button";
 import ArrowLeft from "../../assets/images/shared/icon-arrow-left.svg";
 import PlusIcon from "../../assets/images/shared/icon-plus.svg";
 import { getFeedbacks } from "../../store/utils/feedbackUtil";
 import { clsx } from "clsx";
-import { RootState } from "../../type";
-import RoadMap from "./components/SharedRoadMap";
-
-interface MobileNavLink {
-	title: string;
-	roadMapLength: number;
-}
+import Utility from "./components/utility";
 
 function Roadmap() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { navLinks, roadMapInProgress, roadMapLive, roadMapPlanned } =
+		Utility();
 
-	const storeState = useSelector((state: RootState) => ({
-		plannedRoadMap: state.productFeedbackReducer.plannedRoadmap,
-		inProgressRoadMap: state.productFeedbackReducer.inProgressRoadmap,
-		liveRoadMap: state.productFeedbackReducer.liveRoadmap,
-	}));
-
-	const { plannedRoadMap, inProgressRoadMap, liveRoadMap } = storeState;
-
-	const mobileNavLinkOptions: MobileNavLink[] = [
-		{ title: "Planned", roadMapLength: plannedRoadMap?.length ?? 0 },
-		{ title: "In-Progress", roadMapLength: inProgressRoadMap?.length ?? 0 },
-		{ title: "Live", roadMapLength: liveRoadMap?.length ?? 0 },
-	];
-
-	const [selectedTab, setSelectedTab] = useState(mobileNavLinkOptions[0].title);
+	const [selectedTab, setSelectedTab] = useState(navLinks[0].title);
 
 	useEffect(() => {
 		dispatch(getFeedbacks());
 	}, [dispatch]);
-
-	const roadMapPlanned = (
-		<RoadMap
-			roadMapTitle="Planned"
-			roadMapSubTitle="Ideas prioritized for research"
-			parentItem={plannedRoadMap}
-		/>
-	);
-
-	const roadMapInProgress = (
-		<RoadMap
-			roadMapTitle="In-Progress"
-			roadMapSubTitle="Currently being developed"
-			parentItem={inProgressRoadMap}
-		/>
-	);
-
-	const roadMapLive = (
-		<RoadMap
-			roadMapTitle="Live"
-			roadMapSubTitle="Released Features"
-			parentItem={liveRoadMap}
-		/>
-	);
 
 	return (
 		<section className="roadmap">
@@ -83,7 +41,7 @@ function Roadmap() {
 			</div>
 			<div className="roadmap-mobile__nav">
 				<ul>
-					{mobileNavLinkOptions.map((link) => (
+					{navLinks.map((link) => (
 						<li
 							key={link.title}
 							id={link.title.toLowerCase()}
