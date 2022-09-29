@@ -2,6 +2,7 @@
 	background: $color-white;
 	padding: 0;
 	border-radius: 10px;
+	margin-bottom: 10em;
 
 	&-content {
 		width: 100%;
@@ -12,9 +13,8 @@
 		padding: 4.6em 2.5em 4.6em 2.5em;
 
 		&__img {
-			width: 40%;
+			width: 10em;
 			margin-bottom: 4em;
-			// margin: 0 auto 4em auto;
 
 			& img {
 				width: 100%;
@@ -27,24 +27,22 @@
 			&--heading {
 				font-size: 1.8em;
 				line-height: 26px;
+				margin-bottom: 0.4em;
 				font-weight: 700;
 				color: $color-darkerBlue;
-				margin-bottom: 0.4em;
 			}
 
 			&--description {
 				font-size: 1.3em;
-				font-weight: 400;
 				line-height: 19px;
 				margin-bottom: 2em;
+				font-weight: 400;
 			}
 		}
 	}
 
-	@include responsive_layout(bp-xs) {
-		background: $color-white;
-		padding: 11.1em 20.6em 11em 20.9em;
-		border-radius: 10px;
+	@include responsive_layout(bp-sm) {
+		padding: 11.1em 10em 11em 10em;
 
 		&-content {
 			width: 100%;
@@ -52,28 +50,18 @@
 			text-align: center;
 
 			&__img {
-				width: 20%;
 				margin: 0 auto 5.3em auto;
-
-				& img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-				}
 			}
 
 			&__texts {
 				&--heading {
 					font-size: 2.4em;
 					line-height: 35px;
-					font-weight: 700;
-					color: $color-darkerBlue;
 					margin-bottom: 1em;
 				}
 
 				&--description {
 					font-size: 1.6em;
-					font-weight: 400;
 					line-height: 23px;
 					margin-bottom: 4.2em;
 
@@ -83,5 +71,9 @@
 				}
 			}
 		}
+	}
+
+	@include responsive_layout(bp-md) {
+		padding: 11.1em 20.6em 11em 20.9em;
 	}
 }

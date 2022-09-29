@@ -12,25 +12,31 @@
 
 @mixin responsive_layout($bp) {
 	@if ($bp == bp-xs) {
-		@media only screen and (min-width: 350px) {
+		@media only screen and (min-width: 500px) {
 			@content;
 		}
 	}
 
 	@if ($bp == bp-sm) {
-		@media only screen and (min-width: 600px) {
+		@media only screen and (min-width: 760px) {
 			@content;
 		}
 	}
 
 	@if ($bp == bp-md) {
-		@media only screen and (min-width: 835px) {
+		@media only screen and (min-width: 1050px) {
 			@content;
 		}
 	}
 
 	@if ($bp == bp-lg) {
-		@media only screen and (min-width: 1250px) {
+		@media only screen and (min-width: 1500px) {
+			@content;
+		}
+	}
+
+	@if ($bp == bp-xl) {
+		@media only screen and (min-width: 1800px) {
 			@content;
 		}
 	}

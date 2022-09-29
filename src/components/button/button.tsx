@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 			className={`button button-${props.btnNumber} button-${props.btnNumber}__${props.responsive}`}
 			onClick={props.onClick}
 		>
-			{props.icon && <span className="button-icon">{props.icon}</span>}
+			{props.icon && <span className="button-icon">&#43;</span>}
 			<span>{props.btnText}</span>
 		</button>
 	) : (
@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 			to={props.link}
 			className={`button button-${props.btnNumber} button-${props.btnNumber}__${props.responsive}`}
 		>
-			{props.icon && <span className="button-icon">{props.icon}</span>}
+			{props.icon && <span className="button-icon">&#43;</span>}
 			<span>{props.btnText}</span>
 		</Link>
 	);

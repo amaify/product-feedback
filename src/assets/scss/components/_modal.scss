@@ -1,7 +1,6 @@
 .modal {
 	background: $color-white;
-	width: 40%;
-	// height: 250px;
+	width: 90%;
 	padding: 3em;
 	border-radius: 0.8em;
 
@@ -18,30 +17,70 @@
 
 		&__heading {
 			color: $color-darkerBlue;
-			font-size: 3em;
+			font-size: 2em;
 			font-weight: 700;
-			line-height: 35px;
+			line-height: 19px;
 			margin-bottom: 0.8em;
 		}
 
 		&__text {
 			color: $color-grey;
-			font-size: 1.8em;
+			font-size: 1.5em;
 			font-weight: 400;
 			line-height: 23px;
 			margin-bottom: 1.5em;
 		}
 
 		&__btn {
+			display: flex;
+			flex-direction: column;
+
 			& button {
+				width: 100%;
+
 				&:focus {
 					outline: 2px solid $color-orange;
 				}
 				&:first-child {
-					margin-right: 1em;
+					margin-right: 0;
+					margin-bottom: 1em;
 				}
 			}
 		}
+	}
+
+	@include responsive_layout(bp-sm) {
+		width: 80%;
+
+		&-content {
+			&__heading {
+				font-size: 3em;
+				line-height: 35px;
+			}
+
+			&__text {
+				font-size: 1.8em;
+				line-height: 23px;
+			}
+
+			&__btn {
+				flex-direction: row;
+				width: 50%;
+
+				& button {
+					&:focus {
+						outline: 2px solid $color-orange;
+					}
+					&:first-child {
+						margin-right: 1em;
+					}
+				}
+			}
+		}
+	}
+
+	@include responsive_layout(bp-md) {
+		width: 40%;
 	}
 }
 

@@ -5,6 +5,18 @@
 	height: 100vh;
 
 	@include responsive_layout(bp-sm) {
+		padding: 5.6em 3.9em;
+	}
+
+	@include responsive_layout(bp-md) {
+		padding: 9.4em 2em;
+	}
+
+	@include responsive_layout(bp-lg) {
+		padding: 9.4em 5em;
+	}
+
+	@include responsive_layout(bp-xl) {
 		padding: 9.4em 16.5em;
 	}
 }
@@ -14,6 +26,7 @@
 	flex-direction: column;
 	gap: 0;
 	width: 100%;
+	height: 100%;
 	position: relative;
 
 	&-sidebar {
@@ -27,16 +40,36 @@
 	}
 
 	@include responsive_layout(bp-sm) {
-		// display: flex;
+		flex-direction: column;
+		gap: 3em;
+		width: 100%;
+
+		&-sidebar {
+			width: 100%;
+		}
+
+		&-main {
+			width: 100%;
+		}
+	}
+
+	@include responsive_layout(bp-md) {
 		flex-direction: row;
 		gap: 3em;
 		width: 100%;
-		// position: relative;
 
 		&-sidebar {
+			width: 25%;
+		}
+
+		&-main {
+			width: 75%;
+		}
+	}
+
+	@include responsive_layout(bp-lg) {
+		&-sidebar {
 			width: 18%;
-			// position: relative;
-			// z-index: 1;
 		}
 
 		&-main {

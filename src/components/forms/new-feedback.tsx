@@ -142,11 +142,10 @@ function NewFeedbackForm({
 
 				<form className="feedbackForm-form" onSubmit={submitFormHandler}>
 					<div className="feedbackForm-form__icon">
-						{!editState ? (
-							<img src={NewFeedbackIcon} alt="New feedback display" />
-						) : (
-							<img src={EditFeedbackIcon} alt="Edit feedback display" />
-						)}
+						<img
+							src={!editState ? NewFeedbackIcon : EditFeedbackIcon}
+							alt="Form Icon"
+						/>
 					</div>
 					<h2 className="feedbackForm-form__heading">
 						{!editState
@@ -204,16 +203,16 @@ function NewFeedbackForm({
 					/>
 
 					<div className="feedbackForm-form__btns">
-						{editState && (
-							<div className="feedbackForm-form__btns--delete">
+						<div className="feedbackForm-form__btns--actions">
+							{editState && (
+								// <div className="feedbackForm-form__btns--delete">
 								<Button
 									btnText="Delete"
 									btnNumber="4"
 									onClick={deleteFeedbackHandler}
 								/>
-							</div>
-						)}
-						<div className="feedbackForm-form__btns--actions">
+							)}
+
 							<Button
 								btnText="Cancel"
 								btnNumber="3"
@@ -227,9 +226,7 @@ function NewFeedbackForm({
 								/>
 							) : (
 								<Button
-									btnText={
-										!feedbackLoading ? "Update Feedback" : "Updating...."
-									}
+									btnText={!feedbackLoading ? "Save Changes" : "Saving...."}
 									btnNumber="1"
 								/>
 							)}

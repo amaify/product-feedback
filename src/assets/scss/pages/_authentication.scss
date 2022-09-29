@@ -2,8 +2,9 @@
 .register,
 .forgotpassword {
 	&-contents {
-		width: 40%;
-		margin: 0 auto;
+		width: 100%;
+		margin: 0;
+		padding: 3em 2em;
 		position: relative;
 
 		& > p {
@@ -18,7 +19,6 @@
 
 			& span:first-child {
 				display: inline-block;
-				// vertical-align: top;
 				margin-right: 1.5em;
 				min-width: 1%;
 
@@ -28,21 +28,16 @@
 					display: block;
 				}
 			}
-
-			&:hover {
-				text-decoration: underline;
-				cursor: pointer;
-			}
 		}
 
 		&__form {
 			background: $color-white;
 			width: 100%;
-			padding: 3rem;
+			padding: 1.5em;
 
 			&-heading {
-				font-size: 2.4rem;
-				line-height: 32px;
+				font-size: 1.6rem;
+				line-height: 19px;
 				font-weight: 700;
 				margin-bottom: 2rem;
 			}
@@ -70,15 +65,14 @@
 
 				& input {
 					width: 100%;
-
 					border: none;
 					outline: none;
-					padding: 1.3em 1.5em;
+					padding: 0.7em 1em;
 					background: #f7f8fd;
 					border-radius: 5px;
 					width: 100%;
 					color: #3a4374;
-					font-size: 1.5em;
+					font-size: 1.3em;
 					font-weight: normal;
 					line-height: 22px;
 					font-family: "Jost", sans-serif;
@@ -90,7 +84,7 @@
 				display: flex;
 
 				& #register-links {
-					font-size: 1.7em;
+					font-size: 1.4em;
 
 					& span:first-child {
 						margin-right: 0.4em;
@@ -103,10 +97,70 @@
 
 				& a {
 					text-transform: capitalize;
-					font-size: 1.7em;
+					font-size: 1.4em;
 
 					&:first-child {
 						margin-right: auto;
+					}
+				}
+			}
+		}
+	}
+
+	@include responsive_layout(bp-sm) {
+		&-contents {
+			width: 40%;
+			margin: 0 auto;
+			padding: 0;
+
+			& > p {
+				font-size: 1.4em;
+				line-height: 20px;
+				margin-bottom: 2.4rem;
+
+				& span:first-child {
+					margin-right: 1.5em;
+					min-width: 1%;
+				}
+
+				&:hover {
+					text-decoration: underline;
+					cursor: pointer;
+				}
+			}
+
+			&__form {
+				width: 100%;
+				padding: 3rem;
+
+				&-heading {
+					font-size: 2.4rem;
+					line-height: 32px;
+					font-weight: 700;
+					margin-bottom: 2rem;
+				}
+
+				&-input {
+					margin-bottom: 2.4rem;
+					// position: relative;
+
+					& .error-text__input {
+						top: 0;
+					}
+
+					& input {
+						padding: 1.3em 1.5em;
+						font-size: 1.5em;
+					}
+				}
+
+				&-links {
+					& #register-links {
+						font-size: 1.7em;
+					}
+
+					& a {
+						font-size: 1.7em;
 					}
 				}
 			}
@@ -121,16 +175,28 @@
 }
 
 .flash {
-	padding: 0.5em 0.7em;
+	padding: 0.7em 0.7em;
 	border-radius: 4px;
 
-	width: 15%;
+	width: 80%;
 	text-align: center;
 	z-index: 2;
 
 	animation-name: slideRight;
 	animation-duration: 0.4s;
 	animation-fill-mode: forwards;
+
+	@include responsive_layout(bp-sm) {
+		width: 50%;
+	}
+
+	@include responsive_layout(bp-md) {
+		width: 30%;
+	}
+
+	@include responsive_layout(bp-lg) {
+		width: 15%;
+	}
 
 	&-auth {
 		position: absolute;
@@ -148,8 +214,8 @@
 		left: 10px;
 
 		& p {
-			font-size: 1.3em;
-			line-height: 1.3em;
+			font-size: 1.4em;
+			line-height: 19px;
 		}
 	}
 
@@ -163,7 +229,6 @@
 
 	&-text {
 		color: $color-white;
-
 		line-height: 32px;
 		margin-bottom: 0.3em;
 	}
