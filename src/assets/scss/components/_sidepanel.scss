@@ -1,7 +1,7 @@
 .sidepanel {
 	background-color: #f7f8fd;
 	width: 75%;
-	height: 100vh;
+	height: 100em;
 	position: absolute;
 	z-index: auto;
 	top: 11.7em;
@@ -45,7 +45,15 @@
 		visibility: visible;
 	}
 
+	@include responsive_layout(bp-xs) {
+		width: 45%;
+	}
+
 	@include responsive_layout(bp-sm) {
+		display: none;
+	}
+
+	@include responsive_layout(bp-md) {
 		display: none;
 	}
 }

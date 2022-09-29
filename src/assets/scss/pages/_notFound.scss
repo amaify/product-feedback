@@ -1,0 +1,23 @@
+.notfound {
+	width: 100%;
+	margin-top: 8em;
+	padding: 0 2em;
+	text-align: center;
+
+	& h1 {
+		margin-bottom: 2em;
+	}
+
+	&-contents {
+		background: #ffffff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 3em;
+	}
+
+	@include responsive_layout(bp-sm) {
+		width: 50%;
+		margin: 0 auto;
+	}
+}

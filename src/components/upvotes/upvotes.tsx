@@ -39,9 +39,9 @@ function Upvotes(props: UpvoteProps) {
 	);
 
 	const setActiveStateHandler = (prodId: string) => {
-		if (!isAuth) {
-			return navigate("/login");
-		}
+		// if (!isAuth) {
+		// 	return navigate("/login");
+		// }
 
 		let data = {
 			upvotes: upvoteNumber,

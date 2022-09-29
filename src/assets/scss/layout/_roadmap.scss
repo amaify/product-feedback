@@ -1,14 +1,83 @@
 .roadmap {
 	padding: 0 0 10em 0;
+	width: 100%;
+
+	&-mobile__nav {
+		padding: 2em 0 0 0;
+
+		& ul {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+
+			& li {
+				font-size: 1.3em;
+				font-weight: 700;
+				line-height: 19px;
+				color: $color-darkerBlue;
+				opacity: 0.4;
+				width: 30%;
+				position: relative;
+				text-align: center;
+			}
+
+			& .active {
+				opacity: 1;
+				&::after {
+					content: "";
+					display: block;
+					position: absolute;
+					top: 2.8em;
+					left: 0;
+					width: 100%;
+					height: 4px;
+					background: $color-alpha;
+				}
+			}
+
+			& #planned {
+				&::after {
+					background: $color-orange;
+				}
+			}
+
+			& #in-progress {
+				&::after {
+					background: $color-alpha;
+				}
+			}
+
+			& #live {
+				&::after {
+					background: $color-lightBlue;
+				}
+			}
+		}
+
+		&::after {
+			content: "";
+			display: block;
+			background: $color-line;
+			opacity: 0.4;
+			width: 100%;
+			height: 1px;
+			margin-top: 2em;
+		}
+	}
+
+	&-mobile__contents {
+		margin-top: 2.4em;
+		padding: 0 2em;
+	}
 
 	&-control {
 		background: $color-darkBlue;
-		border-radius: 10px;
+		border-radius: 0;
 
 		display: flex;
 		align-items: center;
-		padding: 2.7em 4em 2.7em 3.2em;
-		margin-bottom: 4.8em;
+		padding: 2.7em 2em 2.7em 2em;
+		margin-bottom: 0;
 
 		&__heading {
 			margin-right: auto;
@@ -16,9 +85,9 @@
 			min-width: 0;
 
 			& p {
-				font-size: 1.4em;
+				font-size: 1.3em;
 				font-weight: 700;
-				line-height: 20px;
+				line-height: 19px;
 				color: $color-white;
 				text-transform: capitalize;
 
@@ -42,22 +111,63 @@
 			}
 
 			& h2 {
-				font-size: 2.4em;
+				font-size: 1.8em;
 				font-weight: 700;
-				line-height: 34.68px;
+				line-height: 26px;
 				color: $color-white;
 			}
 		}
 	}
 
 	&-contents {
-		display: flex;
-		gap: 3em;
+		display: none;
+	}
+
+	@include responsive_layout(bp-sm) {
+		&-control {
+			border-radius: 10px;
+
+			padding: 2.7em 4em 2.7em 3.2em;
+			margin-bottom: 4.8em;
+
+			&__heading {
+				& p {
+					font-size: 1.4em;
+					font-weight: 700;
+					line-height: 20px;
+				}
+
+				& h2 {
+					font-size: 2.4em;
+					line-height: 34.68px;
+				}
+			}
+		}
+
+		&-mobile__nav {
+			display: none;
+		}
+
+		&-mobile__contents {
+			display: none;
+		}
+
+		&-contents {
+			display: flex;
+			gap: 1em;
+		}
+	}
+
+	@include responsive_layout(bp-md) {
+		&-contents {
+			display: flex;
+			gap: 3em;
+		}
 	}
 }
 
 .roadmap-components {
-	width: 32%;
+	width: 100%;
 
 	&__heading {
 		margin-bottom: 3.2em;
@@ -77,13 +187,17 @@
 		}
 	}
 
+	@include responsive_layout(bp-sm) {
+		width: 32%;
+	}
+
 	&__cards {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 
 		& #planned,
-		#progress,
+		#in-progress,
 		#live {
 			position: relative;
 
@@ -125,7 +239,7 @@
 			}
 		}
 
-		& #progress {
+		& #in-progress {
 			&::before {
 				background: $color-purple;
 			}
@@ -153,14 +267,24 @@
 	&__card {
 		background: $color-white;
 		border-radius: 5px;
-		padding: 3.2em 3.2em 3.2em 3.2em;
+		padding: 2.4em 2em 2.4em 2em;
 
 		& a {
 			text-decoration: none;
+		}
 
-			&:hover {
-				& .roadmap-components__card--heading {
-					color: $color-blue;
+		@include responsive_layout(bp-sm) {
+			padding: 3.2em 1.5em 5.2em 1.5em;
+		}
+
+		@include responsive_layout(bp-md) {
+			padding: 3.2em 3.2em 5.2em 3.2em;
+
+			& a {
+				&:hover {
+					& .roadmap-components__card--heading {
+						color: $color-blue;
+					}
 				}
 			}
 		}
@@ -190,8 +314,7 @@
 			font-weight: normal;
 			line-height: 23px;
 			color: $color-grey;
-
-			margin-bottom: 1em;
+			margin-bottom: 1.5em;
 		}
 
 		&--feature {

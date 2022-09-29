@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Layout from "../layout/layout";
@@ -14,13 +13,12 @@ import { RootState } from "../../type";
 import ProtectedRoute from "./protectedroute";
 
 function AppRoutes() {
-	const isAuth = useSelector(
-		(state: RootState) => state.authenticationReducer.isAuth
-	);
+	const storeState = useSelector((state: RootState) => ({
+		isAuth: state.authenticationReducer.isAuth,
+		editState: state.productFeedbackReducer.edit,
+	}));
 
-	const editState = useSelector(
-		(state: RootState) => state.productFeedbackReducer.edit
-	);
+	const { isAuth, editState } = storeState;
 
 	return (
 		<Routes>
@@ -28,21 +26,14 @@ function AppRoutes() {
 
 			<Route index element={<Layout />} />
 			<Route
-				path={"/new-feedback"}
+				path={!editState ? "/new-feedback" : "/edit-feedback/:editFeedbackId"}
 				element={
 					<ProtectedRoute redirectPath="/login" auth={!isAuth}>
 						<NewFeedbackForm />
 					</ProtectedRoute>
 				}
 			/>
-			<Route
-				path={"/edit-feedback/:editFeedbackId"}
-				element={
-					<ProtectedRoute redirectPath="/login" auth={!isAuth}>
-						<NewFeedbackForm />
-					</ProtectedRoute>
-				}
-			/>
+
 			<Route
 				path="/feedback-details/:feedbackID"
 				element={<FeedbackDetails />}
