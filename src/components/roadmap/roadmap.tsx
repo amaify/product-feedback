@@ -1,50 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import Button from "../button/button";
-import LiveComponent from "./components/live";
-import PlannedComponent from "./components/planned";
-import ProgressComponent from "./components/progress";
-
 import ArrowLeft from "../../assets/images/shared/icon-arrow-left.svg";
 import PlusIcon from "../../assets/images/shared/icon-plus.svg";
 import { getFeedbacks } from "../../store/utils/feedbackUtil";
 import { clsx } from "clsx";
-import { RootState } from "../../type";
-
-interface MobileNavLink {
-	title: string;
-	roadMapLength: number;
-}
+import Utility from "./components/utility";
 
 function Roadmap() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { navLinks, roadMapInProgress, roadMapLive, roadMapPlanned } =
+		Utility();
 
-	const storeState = useSelector((state: RootState) => ({
-		plannedRoadMap: state.productFeedbackReducer.plannedRoadmap,
-		inProgressRoadMap: state.productFeedbackReducer.inProgressRoadmap,
-		liveRoadMap: state.productFeedbackReducer.liveRoadmap,
-	}));
-
-	const { plannedRoadMap, inProgressRoadMap, liveRoadMap } = storeState;
-
-	const mobileNavLinkOptions: MobileNavLink[] = [
-		{ title: "Planned", roadMapLength: plannedRoadMap?.length },
-		{ title: "In-Progress", roadMapLength: inProgressRoadMap?.length },
-		{ title: "Live", roadMapLength: liveRoadMap?.length },
-	];
-
-	const [selectedTab, setSelectedTab] = useState(mobileNavLinkOptions[0].title);
+	const [selectedTab, setSelectedTab] = useState(navLinks[0].title);
 
 	useEffect(() => {
 		dispatch(getFeedbacks());
 	}, [dispatch]);
-
-	const handleSelectTab = (title: string) => {
-		setSelectedTab(title);
-	};
 
 	return (
 		<section className="roadmap">
@@ -67,11 +41,11 @@ function Roadmap() {
 			</div>
 			<div className="roadmap-mobile__nav">
 				<ul>
-					{mobileNavLinkOptions.map((link) => (
+					{navLinks.map((link) => (
 						<li
 							key={link.title}
 							id={link.title.toLowerCase()}
-							onClick={() => handleSelectTab(link.title)}
+							onClick={() => setSelectedTab(link.title)}
 							className={clsx(link.title === selectedTab && "active")}
 						>
 							<span>{link.title}</span> <span>({link.roadMapLength})</span>
@@ -80,14 +54,14 @@ function Roadmap() {
 				</ul>
 			</div>
 			<div className="roadmap-mobile__contents">
-				{selectedTab === "Planned" && <PlannedComponent />}
-				{selectedTab === "In-Progress" && <ProgressComponent />}
-				{selectedTab === "Live" && <LiveComponent />}
+				{selectedTab === "Planned" && roadMapPlanned}
+				{selectedTab === "In-Progress" && roadMapInProgress}
+				{selectedTab === "Live" && roadMapLive}
 			</div>
 			<div className="roadmap-contents">
-				<PlannedComponent />
-				<ProgressComponent />
-				<LiveComponent />
+				{roadMapPlanned}
+				{roadMapInProgress}
+				{roadMapLive}
 			</div>
 		</section>
 	);
