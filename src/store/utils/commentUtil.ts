@@ -1,9 +1,4 @@
 import {
-	getProductFeedback,
-	getOneProductFeedback,
-} from "../actions/creators/product-feedback";
-
-import {
 	getProductComments,
 	getCommentReplies,
 	addCommentLoading,
@@ -62,7 +57,6 @@ export const addComment = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData);
 					dispatch(getComments(productFeedbackId ? productFeedbackId : ""));
 				}
 			})
@@ -89,7 +83,6 @@ export const replyToComment = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData);
 					dispatch(getReplies(prodId));
 				}
 			})
@@ -119,7 +112,6 @@ export const replyToReply = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData);
 					dispatch(getReplies(commentId));
 				}
 			})

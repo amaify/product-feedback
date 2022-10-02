@@ -1,4 +1,3 @@
-import { json } from "stream/consumers";
 import {
 	authError,
 	authLoading,
@@ -73,7 +72,7 @@ export const RegisterNewuser = (userData: UserData, navigate: any) => {
 					dispatch(authError(responseData.message));
 					setTimeout(() => {
 						return dispatch(removeAuthError());
-					}, 6000);
+					}, 60000);
 					return;
 				}
 
@@ -81,9 +80,8 @@ export const RegisterNewuser = (userData: UserData, navigate: any) => {
 				navigate("/login");
 
 				setTimeout(() => dispatch(registrationSuccess()), 6000);
-				console.log(responseData);
 			})
-			.catch((error) => console.log(error.message));
+			.catch((error) => dispatch(authError(error.message)));
 	};
 };
 
@@ -103,7 +101,7 @@ export const LoginUser = (userData: UserData, navigate: any) => {
 					dispatch(authError(responseData.message));
 					setTimeout(() => {
 						return dispatch(removeAuthError());
-					}, 6000);
+					}, 60000);
 					return;
 				}
 
@@ -124,8 +122,6 @@ export const LoginUser = (userData: UserData, navigate: any) => {
 				logoutTimer = setTimeout(() => {
 					dispatch(logoutUser());
 				}, remainingTime);
-
-				console.log(responseData);
 			})
 			.catch((error) => dispatch(authError(error.message)));
 	};
@@ -160,15 +156,14 @@ export const forgotPasswordUtil = (userInput: { email: string }) => {
 					dispatch(authError(responseData.message));
 					setTimeout(() => {
 						return dispatch(removeAuthError());
-					}, 6000);
+					}, 60000);
 					return;
 				}
 				dispatch(forgotPassword(responseData.message));
 				setTimeout(() => {
 					return dispatch(removeAuthError());
 				}, 10000);
-				console.log(responseData);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => dispatch(authError(error.message)));
 	};
 };

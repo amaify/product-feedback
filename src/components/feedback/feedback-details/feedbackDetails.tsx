@@ -2,15 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
-
 import { RootState } from "../../../type";
-
 import ArrowLeft from "../../../assets/images/shared/icon-arrow-left.svg";
-import CommentsIcon from "../../../assets/images/shared/icon-comments.svg";
-
 import Button from "../../button/button";
-import Upvotes from "../../upvotes/upvotes";
-
 import Comments from "./components/comment";
 import AddComment from "./components/add-comment";
 import { getOneFeedback } from "../../../store/utils/feedbackUtil";
@@ -19,6 +13,7 @@ import { getComments, getReplies } from "../../../store/utils/commentUtil";
 import { Loader } from "../../loading/loading";
 import FeedbackTilesDesktop from "../feedback-tiles/components/DesktopFeedbackTiles";
 import FeedbackTilesMobile from "../feedback-tiles/components/MobileFeedbackTiles";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function FeedbackDetails() {
 	const navigate = useNavigate();
@@ -37,7 +32,7 @@ function FeedbackDetails() {
 		};
 	});
 
-	const { feedback, feedbackLoading, isAuth, userId, comments } = allData;
+	const { feedback, feedbackLoading, isAuth, userId } = allData;
 
 	useEffect(() => {
 		dispatch(getOneFeedback(feedbackID ?? ""));
@@ -51,47 +46,56 @@ function FeedbackDetails() {
 	};
 
 	return (
-		<section className="feedbackdetails">
-			{feedbackLoading && <Loader />}
-			{!feedbackLoading && feedback && (
-				<div className="feedbackdetails-contents">
-					<div className="feedbackdetails-contents__feedback">
-						<div className="feedbackdetails-contents__controls">
-							<p onClick={() => navigate(-1)}>
-								<span>
-									<img src={ArrowLeft} alt="Arrow facing Left" />
-								</span>
-								<span>go back</span>
-							</p>
+		<HelmetProvider>
+			<section className="feedbackdetails">
+				<Helmet>
+					<title>
+						{feedback?.title
+							? `${feedback?.title} - Product Feedback`
+							: "Product Feedback Details"}
+					</title>
+				</Helmet>
+				{feedbackLoading && <Loader />}
+				{!feedbackLoading && feedback && (
+					<div className="feedbackdetails-contents">
+						<div className="feedbackdetails-contents__feedback">
+							<div className="feedbackdetails-contents__controls">
+								<p onClick={() => navigate(-1)}>
+									<span>
+										<img src={ArrowLeft} alt="Arrow facing Left" />
+									</span>
+									<span>go back</span>
+								</p>
 
-							{isAuth ? (
-								userId === feedback?.creator ? (
-									<Button
-										btnNumber="2"
-										btnText="Edit Feedback"
-										onClick={editButtonHandler}
-									/>
-								) : null
-							) : null}
+								{isAuth ? (
+									userId === feedback?.creator ? (
+										<Button
+											btnNumber="2"
+											btnText="Edit Feedback"
+											onClick={editButtonHandler}
+										/>
+									) : null
+								) : null}
+							</div>
+
+							<>
+								<FeedbackTilesMobile
+									sortedFeedback={feedback}
+									detailsPage={true}
+								/>
+								<FeedbackTilesDesktop
+									sortedFeedback={feedback}
+									detailsPage={true}
+								/>
+							</>
 						</div>
 
-						<>
-							<FeedbackTilesMobile
-								sortedFeedback={feedback}
-								detailsPage={true}
-							/>
-							<FeedbackTilesDesktop
-								sortedFeedback={feedback}
-								detailsPage={true}
-							/>
-						</>
+						<Comments feedbackDetails={feedback} />
+						{isAuth && <AddComment />}
 					</div>
-
-					<Comments feedbackDetails={feedback} />
-					{isAuth && <AddComment />}
-				</div>
-			)}
-		</section>
+				)}
+			</section>
+		</HelmetProvider>
 	);
 }
 
