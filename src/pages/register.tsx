@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import FormInput from "../components/input/input";
 import useInput from "../hooks/use-input";
 import Button from "../components/button/button";
-
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { RegisterNewuser } from "../store/utils/authentication";
 import { RootState } from "../type";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 interface Props {
 	authLoading: boolean;
@@ -85,7 +85,6 @@ function Register({ authLoading, error }: Props) {
 			password: passwordValue,
 		};
 
-		console.log(formData);
 		dispatch(RegisterNewuser(formData, navigate));
 
 		resetNameInput();
@@ -95,93 +94,103 @@ function Register({ authLoading, error }: Props) {
 	};
 
 	return (
-		<section className="register">
-			<div className="register-contents">
-				<p onClick={() => navigate(-1)}>
-					<span>
-						<img src={ArrowLeft} alt="Arrow facing left" />
-					</span>
-					<span>go back</span>
-				</p>
+		<HelmetProvider>
+			<section className="register">
+				<Helmet>
+					<title>Register - Product Feedback</title>
+				</Helmet>
+				<div className="register-contents">
+					<p onClick={() => navigate(-1)}>
+						<span>
+							<img src={ArrowLeft} alt="Arrow facing left" />
+						</span>
+						<span>go back</span>
+					</p>
 
-				<form className="register-contents__form" onSubmit={formSubmitHandler}>
-					{error !== "" ? <p className="error-message">{error}</p> : ""}
-					<h1 className="register-contents__form-heading">Register New User</h1>
-					<FormInput
-						control="input"
-						labelHtmlFor="name"
-						labelName="Name"
-						name="name"
-						placeholder="John Doe"
-						type="text"
-						inputClassName="register-contents__form-input"
-						onChange={nameChangeHandler}
-						onBlur={nameBlurHandler}
-						value={nameValue}
-						inputValueError={nameHasError}
-						id="name"
-					/>
+					<form
+						className="register-contents__form"
+						onSubmit={formSubmitHandler}
+					>
+						{error !== "" ? <p className="error-message">{error}</p> : ""}
+						<h1 className="register-contents__form-heading">
+							Register New User
+						</h1>
+						<FormInput
+							control="input"
+							labelHtmlFor="name"
+							labelName="Name"
+							name="name"
+							placeholder="John Doe"
+							type="text"
+							inputClassName="register-contents__form-input"
+							onChange={nameChangeHandler}
+							onBlur={nameBlurHandler}
+							value={nameValue}
+							inputValueError={nameHasError}
+							id="name"
+						/>
 
-					<FormInput
-						control="input"
-						labelHtmlFor="username"
-						labelName="Username"
-						name="username"
-						placeholder="john.doe"
-						type="text"
-						inputClassName="register-contents__form-input"
-						onChange={usernmaeChangeHandler}
-						onBlur={usernameBlurHandler}
-						value={usernameValue}
-						inputValueError={usernameHasError}
-						id="username"
-					/>
+						<FormInput
+							control="input"
+							labelHtmlFor="username"
+							labelName="Username"
+							name="username"
+							placeholder="john.doe"
+							type="text"
+							inputClassName="register-contents__form-input"
+							onChange={usernmaeChangeHandler}
+							onBlur={usernameBlurHandler}
+							value={usernameValue}
+							inputValueError={usernameHasError}
+							id="username"
+						/>
 
-					<FormInput
-						control="input"
-						labelHtmlFor="email"
-						labelName="Email"
-						name="email"
-						placeholder="email@example.com"
-						type="email"
-						inputClassName="register-contents__form-input"
-						onChange={emailChangeHandler}
-						onBlur={emailBlurHandler}
-						value={emailValue}
-						inputValueError={emailHasError}
-						id="email"
-					/>
+						<FormInput
+							control="input"
+							labelHtmlFor="email"
+							labelName="Email"
+							name="email"
+							placeholder="email@example.com"
+							type="email"
+							inputClassName="register-contents__form-input"
+							onChange={emailChangeHandler}
+							onBlur={emailBlurHandler}
+							value={emailValue}
+							inputValueError={emailHasError}
+							id="email"
+						/>
 
-					<FormInput
-						control="input"
-						labelHtmlFor="password"
-						labelName="Password"
-						name="password"
-						type="password"
-						inputClassName="register-contents__form-input"
-						onChange={passwordChangeHandler}
-						onBlur={passwordBlurHandler}
-						value={passwordValue}
-						inputValueError={passwordHasError}
-						id="password"
-					/>
+						<FormInput
+							control="input"
+							labelHtmlFor="password"
+							labelName="Password"
+							name="password"
+							type="password"
+							inputClassName="register-contents__form-input"
+							onChange={passwordChangeHandler}
+							onBlur={passwordBlurHandler}
+							value={passwordValue}
+							inputValueError={passwordHasError}
+							id="password"
+						/>
 
-					<Button
-						btnText={authLoading ? "Registering..." : "Register"}
-						btnNumber="1"
-					/>
+						<Button
+							btnText={authLoading ? "Registering..." : "Register"}
+							btnNumber="1"
+						/>
 
-					<div className="register-contents__form-links">
-						<p id="register-links">
-							<span>Already have an account?</span>
-							<span>
-								<Link to="/login">login</Link>
-							</span>
-						</p>
-					</div>
-				</form>
-			</div>
-		</section>
+						<div className="register-contents__form-links">
+							<p id="register-links">
+								<span>Already have an account?</span>
+								<span>
+									<Link to="/login">login</Link>
+								</span>
+							</p>
+						</div>
+					</form>
+				</div>
+			</section>
+		</HelmetProvider>
 	);
 }
 

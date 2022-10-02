@@ -5,12 +5,11 @@ import { useDispatch } from "react-redux";
 import FormInput from "../components/input/input";
 import useInput from "../hooks/use-input";
 import Button from "../components/button/button";
-
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { connect } from "react-redux";
 import { RootState } from "../type";
 import { forgotPasswordUtil } from "../store/utils/authentication";
-import { FlashMessage } from "../utils/flash-message";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 interface Props {
 	error: string;
@@ -51,64 +50,67 @@ function ForgotPassword({ error, authLoading, authMessage }: Props) {
 
 		dispatch(forgotPasswordUtil(formData));
 		resetUserInput();
-
-		console.log(formData);
 	};
 
 	return (
-		<section className="login">
-			<div className="login-contents">
-				<p onClick={() => navigate(-1)}>
-					<span>
-						<img src={ArrowLeft} alt="Arrow facing left" />
-					</span>
-					<span>go back</span>
-				</p>
+		<HelmetProvider>
+			<section className="login">
+				<Helmet>
+					<title>Forgot Password - Product Feedback</title>
+				</Helmet>
+				<div className="login-contents">
+					<p onClick={() => navigate(-1)}>
+						<span>
+							<img src={ArrowLeft} alt="Arrow facing left" />
+						</span>
+						<span>go back</span>
+					</p>
 
-				<form
-					className="forgotpassword-contents__form"
-					onSubmit={formSubmitHandler}
-				>
-					{error !== "" ? <p className="error-message">{error}</p> : ""}
-					<h1 className="forgotpassword-contents__form-heading">
-						Forgot Password
-					</h1>
+					<form
+						className="forgotpassword-contents__form"
+						onSubmit={formSubmitHandler}
+					>
+						{error !== "" ? <p className="error-message">{error}</p> : ""}
+						<h1 className="forgotpassword-contents__form-heading">
+							Forgot Password
+						</h1>
 
-					{authMessage === "" ? (
-						<>
-							<FormInput
-								control="input"
-								labelHtmlFor="email"
-								labelName="Email"
-								name="email"
-								placeholder="email@example.com"
-								type="email"
-								inputClassName="forgotpassword-contents__form-input"
-								onChange={emailChangeHandler}
-								onBlur={emailBlurHandler}
-								value={emailValue}
-								inputValueError={emailHasError}
-								id="email"
-							/>
+						{authMessage === "" ? (
+							<>
+								<FormInput
+									control="input"
+									labelHtmlFor="email"
+									labelName="Email"
+									name="email"
+									placeholder="email@example.com"
+									type="email"
+									inputClassName="forgotpassword-contents__form-input"
+									onChange={emailChangeHandler}
+									onBlur={emailBlurHandler}
+									value={emailValue}
+									inputValueError={emailHasError}
+									id="email"
+								/>
 
-							<Button
-								btnText={authLoading ? "Submitting..." : "Reset Password"}
-								btnNumber="1"
-							/>
-						</>
-					) : (
-						<div>
-							<p style={{ fontSize: "1.5em", fontWeight: "500" }}>
-								{authMessage}
-							</p>
-							<Link to="/" style={{ fontSize: "1.2em" }}>
-								Go Home
-							</Link>
-						</div>
-					)}
-				</form>
-			</div>
-		</section>
+								<Button
+									btnText={authLoading ? "Submitting..." : "Reset Password"}
+									btnNumber="1"
+								/>
+							</>
+						) : (
+							<div>
+								<p style={{ fontSize: "1.5em", fontWeight: "500" }}>
+									{authMessage}
+								</p>
+								<Link to="/" style={{ fontSize: "1.2em" }}>
+									Go Home
+								</Link>
+							</div>
+						)}
+					</form>
+				</div>
+			</section>
+		</HelmetProvider>
 	);
 }
 

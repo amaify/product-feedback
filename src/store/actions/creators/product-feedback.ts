@@ -91,3 +91,10 @@ export const showSidePanel = () => {
 		type: actionTypes.SHOW_SIDEPANEL,
 	};
 };
+
+export const updateUpvote = (productId: string) => {
+	return {
+		type: actionTypes.UPDATE_UPVOTE,
+		data: productId,
+	};
+};

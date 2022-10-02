@@ -1,15 +1,12 @@
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
-import { Navigate, useNavigate } from "react-router";
+import { useState } from "react";
+import { useDispatch, connect } from "react-redux";
 import ArrowUp from "../../assets/images/shared/icon-arrow-up.svg";
 import ArrowUpWhite from "../../assets/images/shared/icon-arrow-up-white.svg";
-import { FlashMessage } from "../../utils/flash-message";
-import { RootState, FeedbackProps } from "../../type";
-// import { upvoteIncrement } from "../../store/utils/feedbackUtil";
-import { prettyDOM } from "@testing-library/react";
-import feedback from "../feedback/feedback-tiles/feedback";
+import { RootState } from "../../type";
+
 import {
 	resetFeedbackState,
+	updateUpvote,
 	upvoteError,
 } from "../../store/actions/creators/product-feedback";
 
@@ -29,9 +26,8 @@ interface ResponseData {
 
 function Upvotes(props: UpvoteProps) {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
-	const { divClassName, upvoteNumbers, isAuth, productId } = props;
+	const { divClassName, upvoteNumbers, productId } = props;
 
 	const [active, setActive] = useState<boolean>(false);
 	const [upvoteNumber, setUpvoteNumber] = useState<number | string>(
@@ -39,10 +35,6 @@ function Upvotes(props: UpvoteProps) {
 	);
 
 	const setActiveStateHandler = (prodId: string) => {
-		// if (!isAuth) {
-		// 	return navigate("/login");
-		// }
-
 		let data = {
 			upvotes: upvoteNumber,
 		};
@@ -71,6 +63,7 @@ function Upvotes(props: UpvoteProps) {
 
 					return;
 				}
+				dispatch(updateUpvote(productId));
 				setUpvoteNumber(responseData.data.upvotes);
 				setActive(false);
 			})

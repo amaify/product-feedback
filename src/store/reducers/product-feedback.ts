@@ -83,6 +83,16 @@ export const productFeedbackReducer = (
 				errorMessage: "",
 			};
 
+		case actionTypes.UPDATE_UPVOTE:
+			const allFeedbacks = state.allFeedbacks;
+			const productId = action.data;
+
+			const xxx = allFeedbacks.filter((feedback) => feedback._id === productId);
+			xxx[0].upvotes += 1;
+			return {
+				...state,
+			};
+
 		case actionTypes.UPVOTE_ERROR:
 			return {
 				...state,

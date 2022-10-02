@@ -18,6 +18,7 @@ import {
 } from "../../store/utils/feedbackUtil";
 import { FeedbackProps, RootState } from "../../type";
 import { getFeedbackToDelete } from "../../store/actions/creators/product-feedback";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 interface Props {
 	userToken: string;
@@ -131,114 +132,126 @@ function NewFeedbackForm({
 	};
 
 	return (
-		<section className="feedbackForm">
-			<div className="feedbackForm-content">
-				<p className="feedbackForm-content__link" onClick={() => navigate(-1)}>
-					<span>
-						<img src={LeftArrow} alt="Arrow Pointing Left" />
-					</span>
-					<span>go back</span>
-				</p>
-
-				<form className="feedbackForm-form" onSubmit={submitFormHandler}>
-					<div className="feedbackForm-form__icon">
-						<img
-							src={!editState ? NewFeedbackIcon : EditFeedbackIcon}
-							alt="Form Icon"
-						/>
-					</div>
-					<h2 className="feedbackForm-form__heading">
+		<HelmetProvider>
+			<section className="feedbackForm">
+				<Helmet>
+					<title>
 						{!editState
-							? "create new feedback"
-							: `Editing '${editContent?.title}'`}
-					</h2>
+							? "New Feedback - Product Feedback"
+							: `Editing - ${editContent?.title}`}
+					</title>
+				</Helmet>
+				<div className="feedbackForm-content">
+					<p
+						className="feedbackForm-content__link"
+						onClick={() => navigate(-1)}
+					>
+						<span>
+							<img src={LeftArrow} alt="Arrow Pointing Left" />
+						</span>
+						<span>go back</span>
+					</p>
 
-					<FormInput
-						labelHtmlFor="title"
-						labelName="feedback title"
-						labelDescription="Add a short, descriptive headling"
-						type="text"
-						name="title"
-						id="title"
-						control="input"
-						onChange={titleChangeHandler}
-						onBlur={titleBlurHanlder}
-						value={!editState ? titleValue : editTitleValue}
-						inputClassName={titleClass}
-						inputValueError={titleHasError}
-					/>
-
-					<InputSelect
-						labelHtmlFor="category"
-						labelTitle="category"
-						labelDescription="Choose a category for your feedback"
-						activeText={activeText}
-						activeClick={activeClick}
-						onSelectItemHandler={onSelectItemHandler}
-					/>
-
-					{editState && (
-						<EditInputSelect
-							labelHtmlFor="updateStatus"
-							labelTitle="update status"
-							labelDescription="Change feedback state"
-							activeText={activeTextEdit}
-							activeClick={editActiveClick}
-							onSelectItemHandler={editSelectItemHandler}
-						/>
-					)}
-
-					<FormInput
-						control="textarea"
-						labelHtmlFor="details"
-						labelName="feedback detail"
-						labelDescription="Include any specific comments on what should be improved, added, etc."
-						name="detailDescription"
-						id="details"
-						onChange={detailDescriptionChangeHandler}
-						onBlur={detailDescriptionBlurHanlder}
-						value={!editState ? detailDescriptionValue : editDescriptionValue}
-						inputClassName={descriptionClass}
-						textAreaError={detailsDescriptionHasError}
-					/>
-
-					<div className="feedbackForm-form__btns">
-						<div className="feedbackForm-form__btns--actions">
-							{editState && (
-								// <div className="feedbackForm-form__btns--delete">
-								<Button
-									btnText="Delete"
-									btnNumber="4"
-									onClick={deleteFeedbackHandler}
-								/>
-							)}
-
-							<Button
-								btnText="Cancel"
-								btnNumber="3"
-								onClick={cancelEditHandler}
+					<form className="feedbackForm-form" onSubmit={submitFormHandler}>
+						<div className="feedbackForm-form__icon">
+							<img
+								src={!editState ? NewFeedbackIcon : EditFeedbackIcon}
+								alt="Form Icon"
 							/>
-
-							{!editState ? (
-								<Button
-									btnText={!feedbackLoading ? "Add Feedback" : "Adding...."}
-									btnNumber="1"
-								/>
-							) : (
-								<Button
-									btnText={!feedbackLoading ? "Save Changes" : "Saving...."}
-									btnNumber="1"
-								/>
-							)}
 						</div>
-					</div>
-				</form>
-			</div>
-			{feedbackToDelete && (
-				<Modal id={editContent?._id} title={editContent?.title} />
-			)}
-			{feedbackToDelete && <Backdrop />}
-		</section>
+						<h2 className="feedbackForm-form__heading">
+							{!editState
+								? "create new feedback"
+								: `Editing '${editContent?.title}'`}
+						</h2>
+
+						<FormInput
+							labelHtmlFor="title"
+							labelName="feedback title"
+							labelDescription="Add a short, descriptive headling"
+							type="text"
+							name="title"
+							id="title"
+							control="input"
+							onChange={titleChangeHandler}
+							onBlur={titleBlurHanlder}
+							value={!editState ? titleValue : editTitleValue}
+							inputClassName={titleClass}
+							inputValueError={titleHasError}
+						/>
+
+						<InputSelect
+							labelHtmlFor="category"
+							labelTitle="category"
+							labelDescription="Choose a category for your feedback"
+							activeText={activeText}
+							activeClick={activeClick}
+							onSelectItemHandler={onSelectItemHandler}
+						/>
+
+						{editState && (
+							<EditInputSelect
+								labelHtmlFor="updateStatus"
+								labelTitle="update status"
+								labelDescription="Change feedback state"
+								activeText={activeTextEdit}
+								activeClick={editActiveClick}
+								onSelectItemHandler={editSelectItemHandler}
+							/>
+						)}
+
+						<FormInput
+							control="textarea"
+							labelHtmlFor="details"
+							labelName="feedback detail"
+							labelDescription="Include any specific comments on what should be improved, added, etc."
+							name="detailDescription"
+							id="details"
+							onChange={detailDescriptionChangeHandler}
+							onBlur={detailDescriptionBlurHanlder}
+							value={!editState ? detailDescriptionValue : editDescriptionValue}
+							inputClassName={descriptionClass}
+							textAreaError={detailsDescriptionHasError}
+						/>
+
+						<div className="feedbackForm-form__btns">
+							<div className="feedbackForm-form__btns--actions">
+								{editState && (
+									// <div className="feedbackForm-form__btns--delete">
+									<Button
+										btnText="Delete"
+										btnNumber="4"
+										onClick={deleteFeedbackHandler}
+									/>
+								)}
+
+								<Button
+									btnText="Cancel"
+									btnNumber="3"
+									onClick={cancelEditHandler}
+								/>
+
+								{!editState ? (
+									<Button
+										btnText={!feedbackLoading ? "Add Feedback" : "Adding...."}
+										btnNumber="1"
+									/>
+								) : (
+									<Button
+										btnText={!feedbackLoading ? "Save Changes" : "Saving...."}
+										btnNumber="1"
+									/>
+								)}
+							</div>
+						</div>
+					</form>
+				</div>
+				{feedbackToDelete && (
+					<Modal id={editContent?._id} title={editContent?.title} />
+				)}
+				{feedbackToDelete && <Backdrop />}
+			</section>
+		</HelmetProvider>
 	);
 }
 

@@ -9,7 +9,7 @@ import Button from "../components/button/button";
 import ArrowLeft from "../assets/images/shared/icon-arrow-left.svg";
 import { LoginUser } from "../store/utils/authentication";
 import { RootState } from "../type";
-import { removeAuthError } from "../store/actions/creators/authentication";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import { FlashMessage } from "../utils/flash-message";
 
@@ -59,73 +59,76 @@ function Login({ authLoading, error, registrationSuccess }: Props) {
 			password: passwordValue,
 		};
 
-		console.log(formData);
-
 		dispatch(LoginUser(formData, navigate));
 	};
 
 	return (
-		<section className="login">
-			{registrationSuccess && (
-				<FlashMessage
-					status="success"
-					text="User successfully registered!"
-					delay={6000}
-					flashType="auth"
-				/>
-			)}
-			<div className="login-contents">
-				<p onClick={() => navigate(-1)}>
-					<span>
-						<img src={ArrowLeft} alt="Arrow facing left" />
-					</span>
-					<span>go back</span>
-				</p>
-
-				<form className="login-contents__form" onSubmit={formSubmitHandler}>
-					{error !== "" ? <p className="error-message">{error}</p> : ""}
-					<h1 className="login-contents__form-heading">Login</h1>
-					<FormInput
-						control="input"
-						labelHtmlFor="email"
-						labelName="Email"
-						name="email"
-						placeholder="email@example.com"
-						type="email"
-						inputClassName="login-contents__form-input"
-						onChange={emailChangeHandler}
-						onBlur={emailBlurHandler}
-						value={emailValue}
-						inputValueError={emailHasError}
-						id="email"
+		<HelmetProvider>
+			<section className="login">
+				<Helmet>
+					<title>Login - Product Feedback</title>
+				</Helmet>
+				{registrationSuccess && (
+					<FlashMessage
+						status="success"
+						text="User successfully registered!"
+						delay={6000}
+						flashType="auth"
 					/>
+				)}
+				<div className="login-contents">
+					<p onClick={() => navigate(-1)}>
+						<span>
+							<img src={ArrowLeft} alt="Arrow facing left" />
+						</span>
+						<span>go back</span>
+					</p>
 
-					<FormInput
-						control="input"
-						labelHtmlFor="password"
-						labelName="Password"
-						name="password"
-						type="password"
-						inputClassName="login-contents__form-input"
-						onChange={passwordChangeHandler}
-						onBlur={passwordBlurHandler}
-						value={passwordValue}
-						inputValueError={passwordHasError}
-						id="password"
-					/>
+					<form className="login-contents__form" onSubmit={formSubmitHandler}>
+						{error !== "" ? <p className="error-message">{error}</p> : ""}
+						<h1 className="login-contents__form-heading">Login</h1>
+						<FormInput
+							control="input"
+							labelHtmlFor="email"
+							labelName="Email"
+							name="email"
+							placeholder="email@example.com"
+							type="email"
+							inputClassName="login-contents__form-input"
+							onChange={emailChangeHandler}
+							onBlur={emailBlurHandler}
+							value={emailValue}
+							inputValueError={emailHasError}
+							id="email"
+						/>
 
-					<Button
-						btnText={!authLoading ? "Login" : "Logging In..."}
-						btnNumber="1"
-					/>
+						<FormInput
+							control="input"
+							labelHtmlFor="password"
+							labelName="Password"
+							name="password"
+							type="password"
+							inputClassName="login-contents__form-input"
+							onChange={passwordChangeHandler}
+							onBlur={passwordBlurHandler}
+							value={passwordValue}
+							inputValueError={passwordHasError}
+							id="password"
+						/>
 
-					<div className="login-contents__form-links">
-						<Link to="/register">register</Link>
-						<Link to="/forgotpassword">forgot password?</Link>
-					</div>
-				</form>
-			</div>
-		</section>
+						<Button
+							btnText={!authLoading ? "Login" : "Logging In..."}
+							btnNumber="1"
+						/>
+
+						<div className="login-contents__form-links">
+							<Link to="/register">register</Link>
+							<Link to="/forgotpassword">forgot password?</Link>
+						</div>
+					</form>
+				</div>
+			</section>
+		</HelmetProvider>
 	);
 }
 
