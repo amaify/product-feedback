@@ -98,3 +98,9 @@ export const updateUpvote = (productId: string) => {
 		data: productId,
 	};
 };
+
+export const editSuccessful = () => {
+	return {
+		type: actionTypes.EDIT_SUCCESSFUL,
+	};
+};

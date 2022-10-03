@@ -1,4 +1,4 @@
-import { FeedbackProps } from "../../type";
+import { ProductFeedbackReducer } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
 import { retrieveStoredData } from "../utils/authentication";
 
@@ -10,31 +10,12 @@ if (storedData?.editFeedback) {
 	editFeedback = storedData.editFeedback;
 }
 
-type ProductFeedbackState = {
-	allFeedbacks: FeedbackProps[];
-	plannedRoadmap: FeedbackProps[];
-	inProgressRoadmap: FeedbackProps[];
-	liveRoadmap: FeedbackProps[];
-	oneFeedback: FeedbackProps | undefined;
-	feedbackLoading: boolean;
-	sortText: string;
-	edit: boolean;
-	editContent: FeedbackProps[];
-	getFeedbackToDelete: boolean;
-	sortFeature: string;
-	error: boolean;
-	errorMessage: string;
-	upvoteError: boolean;
-	upvoteErrorMessage: string;
-	showSidePanel: boolean;
-};
-
 type ProductFeedbackAction = {
 	type: string;
 	data: any;
 };
 
-const initialState: ProductFeedbackState = {
+const initialState: ProductFeedbackReducer = {
 	allFeedbacks: [],
 	oneFeedback: undefined,
 	plannedRoadmap: [],
@@ -50,11 +31,11 @@ const initialState: ProductFeedbackState = {
 	upvoteErrorMessage: "",
 	error: false,
 	errorMessage: "",
-	showSidePanel: false,
+	editSuccessful: false,
 };
 
 export const productFeedbackReducer = (
-	state: ProductFeedbackState = initialState,
+	state: ProductFeedbackReducer = initialState,
 	action: ProductFeedbackAction
 ) => {
 	switch (action.type) {
@@ -148,6 +129,7 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				getFeedbackToDelete: false,
+				feedbackLoading: false,
 			};
 
 		case actionTypes.FEEFBACK_LOADING:
@@ -162,6 +144,9 @@ export const productFeedbackReducer = (
 			return {
 				...state,
 				upvoteError: false,
+				error: false,
+				errorMessage: "",
+				editSuccessful: false,
 			};
 
 		case actionTypes.GET_FEEDBACK_ERROR:
@@ -172,10 +157,10 @@ export const productFeedbackReducer = (
 				errorMessage: action.data,
 			};
 
-		case actionTypes.SHOW_SIDEPANEL:
+		case actionTypes.EDIT_SUCCESSFUL:
 			return {
 				...state,
-				showSidePanel: !state.showSidePanel,
+				editSuccessful: true,
 			};
 
 		default:

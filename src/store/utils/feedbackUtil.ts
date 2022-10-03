@@ -4,12 +4,23 @@ import {
 	feedbackLoading,
 	deleteFeedback,
 	getFeedbackError,
+	cancelDelete,
+	resetFeedbackState,
+	editSuccessful,
 } from "../actions/creators/product-feedback";
+
+const {
+	REACT_APP_GET_ALL_FEEDBACK,
+	REACT_APP_GET_ONE_FEEDBACK,
+	REACT_APP_NEW_FEEDBACK,
+	REACT_APP_EDIT_FEEDBACK,
+	REACT_APP_DELETE_FEEDBACK,
+} = process.env;
 
 export const getFeedbacks = () => {
 	return (dispatch: any) => {
 		dispatch(feedbackLoading());
-		fetch("http://localhost:8080/feedback/feedbacks", {
+		fetch(REACT_APP_GET_ALL_FEEDBACK, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		})
@@ -26,7 +37,7 @@ export const getFeedbacks = () => {
 export const getOneFeedback = (productId: string) => {
 	return (dispatch: any) => {
 		dispatch(feedbackLoading());
-		fetch(`http://localhost:8080/feedback/product-feedback/${productId}`, {
+		fetch(`${REACT_APP_GET_ONE_FEEDBACK}/${productId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -36,7 +47,7 @@ export const getOneFeedback = (productId: string) => {
 			.then((responseData) => {
 				dispatch(getOneProductFeedback(responseData.data));
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => dispatch(getFeedbackError(error.message)));
 	};
 };
 
@@ -47,7 +58,7 @@ export const addNewProductFeedback = (
 ) => {
 	return (dispatch: any) => {
 		dispatch(feedbackLoading());
-		fetch("http://localhost:8080/feedback/new-feedback", {
+		fetch(REACT_APP_NEW_FEEDBACK, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -60,9 +71,19 @@ export const addNewProductFeedback = (
 				if (responseData.statusCode === 201) {
 					navigate("/");
 					dispatch(getFeedbacks());
+					return;
 				}
+				dispatch(getFeedbackError(responseData.message));
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				dispatch(getFeedbackError(error.message));
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
+			});
 	};
 };
 
@@ -74,7 +95,7 @@ export const editProductFeedback = (
 ) => {
 	return (dispatch: any) => {
 		dispatch(feedbackLoading());
-		fetch(`http://localhost:8080/feedback/edit-feedback/${productId}`, {
+		fetch(`${REACT_APP_EDIT_FEEDBACK}/${productId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -85,11 +106,25 @@ export const editProductFeedback = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					navigate("/");
 					dispatch(getFeedbacks());
+					dispatch(editSuccessful());
+					navigate("/");
+					setTimeout(() => {
+						dispatch(resetFeedbackState());
+					}, 6000);
+					return;
 				}
+				dispatch(getFeedbackError(responseData.message));
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				dispatch(getFeedbackError(error.message));
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
+			});
 	};
 };
 
@@ -99,7 +134,8 @@ export const deleteProductFeedback = (
 	navigate: any
 ) => {
 	return (dispatch: any) => {
-		fetch(`http://localhost:8080/feedback/delete-feedback/${productId}`, {
+		dispatch(feedbackLoading());
+		fetch(`${REACT_APP_DELETE_FEEDBACK}/${productId}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -109,11 +145,22 @@ export const deleteProductFeedback = (
 			.then((response) => response.json())
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
-					console.log(responseData.message);
 					dispatch(deleteFeedback());
 					navigate("/");
+					return;
 				}
+				dispatch(getFeedbackError(responseData.message));
+				dispatch(cancelDelete());
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				dispatch(getFeedbackError(error.message));
+				dispatch(cancelDelete());
+				setTimeout(() => {
+					dispatch(resetFeedbackState());
+				}, 30000);
+			});
 	};
 };

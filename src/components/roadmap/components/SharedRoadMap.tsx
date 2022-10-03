@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FeedbackProps } from "../../../type";
 import Upvotes from "../../upvotes/upvotes";
@@ -42,7 +41,7 @@ const RoadMap = ({ roadMapTitle, parentItem, roadMapSubTitle }: Props) => {
 								{items.title}
 							</h2>
 							<p className="roadmap-components__card--text">
-								{truncateText(items?.description, 70, true)}
+								{truncateText(items?.description, 65, true)}
 							</p>
 						</Link>
 						<p className="roadmap-components__card--feature">
@@ -65,6 +64,11 @@ const RoadMap = ({ roadMapTitle, parentItem, roadMapSubTitle }: Props) => {
 						</div>
 					</div>
 				))}
+				{parentItem.length === 0 && (
+					<p style={{ fontSize: "1.8em", fontWeight: "500", color: "#3a4374" }}>
+						Nothing to see here!
+					</p>
+				)}
 			</div>
 		</div>
 	);

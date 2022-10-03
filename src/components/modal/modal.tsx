@@ -16,9 +16,12 @@ function Modal(props: deleteContent) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const userToken = useSelector(
-		(state: RootState) => state.authenticationReducer.token
-	);
+	const reduxState = useSelector((state: RootState) => ({
+		userToken: state.authenticationReducer.token,
+		feedbackLoading: state.productFeedbackReducer.feedbackLoading,
+	}));
+
+	const { userToken, feedbackLoading } = reduxState;
 
 	const cancelDeleteHandler = () => {
 		dispatch(cancelDelete());
@@ -45,7 +48,7 @@ function Modal(props: deleteContent) {
 						/>
 						<Button
 							btnNumber="4"
-							btnText="Delete"
+							btnText={!feedbackLoading ? "Delete" : "Deleting..."}
 							onClick={deleteProductFeedbackHandler}
 						/>
 					</div>

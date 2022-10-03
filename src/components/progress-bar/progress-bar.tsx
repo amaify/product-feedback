@@ -5,19 +5,9 @@ interface Props {
 }
 
 function ProgressBar({ delay }: Props) {
-	const [progress, setProgress] = React.useState<number>(1);
 	const [width, setWidth] = React.useState<any>("");
 	React.useEffect(() => {
-		// let counter = 1;
-		// const interval = setInterval(() => {
-		// 	counter++;
-		// 	setProgress(counter);
-		// 	if (counter === 100) {
-		// 		clearInterval(interval);
-		// 	}
-		// }, 100);
 		frame();
-
 		return () => cancelAnimationFrame(0);
 	}, []);
 
@@ -35,19 +25,15 @@ function ProgressBar({ delay }: Props) {
 		width: "100%",
 		backgroundColor: "transparent",
 		borderRadius: 50,
-		// margin: 50,
 	};
 
 	const fillerStyles = {
 		height: "100%",
-		// width: `calc(100% - ${progress}%)`,
 		width: `${width}%`,
 		borderRadius: 50,
 		backgroundColor: "#c75af6",
 		transition: "all 0.2s ease-out",
 	};
-
-	// console.log(progress);
 
 	return (
 		<div style={containerStyles}>

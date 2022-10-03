@@ -42,7 +42,7 @@ function Upvotes(props: UpvoteProps) {
 		setUpvoteNumber("...");
 		setActive(true);
 
-		fetch(`http://localhost:8080/feedback/upvoting/${prodId}`, {
+		fetch(`${process.env.REACT_APP_UPVOTE}/${prodId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

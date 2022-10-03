@@ -16,6 +16,12 @@ interface UserData {
 	password?: string;
 }
 
+const {
+	REACT_APP_REGISTER_USER,
+	REACT_APP_LOGIN_USER,
+	REACT_APP_FORGOT_PASSWORD,
+} = process.env;
+
 let logoutTimer: any;
 
 const calculateRemainingTime = (expirationTime: string) => {
@@ -59,7 +65,7 @@ export const retrieveStoredData = () => {
 export const RegisterNewuser = (userData: UserData, navigate: any) => {
 	return (dispatch: any) => {
 		dispatch(authLoading());
-		fetch("http://localhost:8080/auth/register", {
+		fetch(REACT_APP_REGISTER_USER, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -88,7 +94,7 @@ export const RegisterNewuser = (userData: UserData, navigate: any) => {
 export const LoginUser = (userData: UserData, navigate: any) => {
 	return (dispatch: any) => {
 		dispatch(authLoading());
-		fetch("http://localhost:8080/auth/login", {
+		fetch(REACT_APP_LOGIN_USER, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -143,7 +149,7 @@ export const LogoutUser = () => {
 export const forgotPasswordUtil = (userInput: { email: string }) => {
 	return (dispatch: any) => {
 		dispatch(authLoading());
-		fetch("http://localhost:8080/auth/forgot-password", {
+		fetch(REACT_APP_FORGOT_PASSWORD, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

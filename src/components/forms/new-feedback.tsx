@@ -26,6 +26,8 @@ interface Props {
 	editContent: FeedbackProps;
 	feedbackToDelete: boolean;
 	feedbackLoading: boolean;
+	error: boolean;
+	errorMessage: string;
 }
 
 function NewFeedbackForm({
@@ -34,6 +36,8 @@ function NewFeedbackForm({
 	feedbackToDelete,
 	editState,
 	feedbackLoading,
+	error,
+	errorMessage,
 }: Props) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -164,7 +168,16 @@ function NewFeedbackForm({
 								? "create new feedback"
 								: `Editing '${editContent?.title}'`}
 						</h2>
-
+						<p
+							style={{
+								color: "red",
+								fontSize: "1.5em",
+								fontWeight: "500",
+								textAlign: "center",
+							}}
+						>
+							{errorMessage !== "" && errorMessage}
+						</p>
 						<FormInput
 							labelHtmlFor="title"
 							labelName="feedback title"
@@ -262,6 +275,8 @@ const mapStateToProps = (state: RootState) => {
 		editContent: state.productFeedbackReducer.oneFeedback,
 		feedbackToDelete: state.productFeedbackReducer.getFeedbackToDelete,
 		feedbackLoading: state.productFeedbackReducer.feedbackLoading,
+		error: state.productFeedbackReducer.error,
+		errorMessage: state.productFeedbackReducer.errorMessage,
 	};
 };
 

@@ -42,7 +42,6 @@ function AddComment({ userToken, addCommentLoading }: Props) {
 		}
 
 		const commentInput: { content: string } = { content: value };
-		console.log(commentInput);
 		dispatch(addComment(feedbackID, userToken, commentInput));
 		resetUserInput();
 	};

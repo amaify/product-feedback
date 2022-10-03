@@ -41,42 +41,49 @@ interface CommentReplies {
 	creator: string;
 }
 
+interface ProductFeedbackReducer {
+	allFeedbacks: FeedbackProps[];
+	plannedRoadmap: FeedbackProps[];
+	inProgressRoadmap: FeedbackProps[];
+	liveRoadmap: FeedbackProps[];
+	oneFeedback: FeedbackProps;
+	feedbackLoading: boolean;
+	sortText: string;
+	sortFeature: string;
+	edit: boolean;
+	editContent: FeedbackProps[];
+	getFeedbackToDelete: boolean;
+	upvoteError: boolean;
+	upvoteErrorMessage: string;
+	error: boolean;
+	errorMessage: string;
+	editSuccessful: boolean;
+}
+
+interface CommentReducer {
+	feedbackComments: FeedbackComment[];
+	commentReplies: CommentReplies[];
+	addCommentLoading: boolean;
+	commentError: boolean;
+	commentErrMessage: string;
+}
+
+interface AuthenticationReducer {
+	token: string;
+	name: string;
+	userId: string;
+	isAuth: boolean;
+	authLoading: boolean;
+	error: string;
+	isError: boolean;
+	registrationSuccess: boolean;
+	authMessage: string;
+}
+
 interface RootState {
-	productFeedbackReducer: {
-		allFeedbacks: FeedbackProps[];
-		plannedRoadmap: FeedbackProps[];
-		inProgressRoadmap: FeedbackProps[];
-		liveRoadmap: FeedbackProps[];
-		oneFeedback: FeedbackProps;
-		feedbackLoading: boolean;
-		sortText: string;
-		sortFeature: string;
-		edit: boolean;
-		editContent: FeedbackProps;
-		getFeedbackToDelete: boolean;
-		upvoteError: boolean;
-		upvoteErrorMessage: string;
-		error: boolean;
-		errorMessage: string;
-	};
-
-	commentReducer: {
-		feedbackComments: FeedbackComment[];
-		commentReplies: CommentReplies[];
-		addCommentLoading: boolean;
-	};
-
-	authenticationReducer: {
-		token: string;
-		name: string;
-		userId: string;
-		isAuth: boolean;
-		authLoading: boolean;
-		error: string;
-		isError: boolean;
-		registrationSuccess: boolean;
-		authMessage: string;
-	};
+	productFeedbackReducer: ProductFeedbackReducer;
+	commentReducer: CommentReducer;
+	authenticationReducer: AuthenticationReducer;
 }
 
 interface FeedbackDropdownProps {

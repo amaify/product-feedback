@@ -14,6 +14,8 @@ import { Loader } from "../../loading/loading";
 import FeedbackTilesDesktop from "../feedback-tiles/components/DesktopFeedbackTiles";
 import FeedbackTilesMobile from "../feedback-tiles/components/MobileFeedbackTiles";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { FeedbackUtility } from "../util";
+import { FlashMessage } from "../../../utils/flash-message";
 
 function FeedbackDetails() {
 	const navigate = useNavigate();
@@ -29,10 +31,13 @@ function FeedbackDetails() {
 			isAuth: state.authenticationReducer.isAuth,
 			userId: state.authenticationReducer.userId,
 			comments: state.commentReducer.feedbackComments,
+			commentErrMessage: state.commentReducer.commentErrMessage,
 		};
 	});
 
-	const { feedback, feedbackLoading, isAuth, userId } = allData;
+	const { error, errMessage } = FeedbackUtility();
+	const { feedback, feedbackLoading, isAuth, userId, commentErrMessage } =
+		allData;
 
 	useEffect(() => {
 		dispatch(getOneFeedback(feedbackID ?? ""));
@@ -55,6 +60,14 @@ function FeedbackDetails() {
 							: "Product Feedback Details"}
 					</title>
 				</Helmet>
+				{commentErrMessage !== "" && (
+					<FlashMessage
+						status="error"
+						text={commentErrMessage}
+						delay={10000}
+						flashType="feedback"
+					/>
+				)}
 				{feedbackLoading && <Loader />}
 				{!feedbackLoading && feedback && (
 					<div className="feedbackdetails-contents">
@@ -93,6 +106,20 @@ function FeedbackDetails() {
 						<Comments feedbackDetails={feedback} />
 						{isAuth && <AddComment />}
 					</div>
+				)}
+
+				{error && (
+					<>
+						<div className="feedbackdetails-contents__controls">
+							<p onClick={() => navigate(-1)}>
+								<span>
+									<img src={ArrowLeft} alt="Arrow facing Left" />
+								</span>
+								<span>go back</span>
+							</p>
+						</div>
+						{errMessage}
+					</>
 				)}
 			</section>
 		</HelmetProvider>

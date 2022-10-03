@@ -1,34 +1,21 @@
-import { CommentReplies } from "../../type";
+import { CommentReducer } from "../../type";
 import * as actionTypes from "../actions/actionTypes";
-
-interface CommentData {
-	_id: string;
-	id: number;
-	content: string;
-	replies: [];
-	creator: string;
-	productFeedback: string;
-}
-
-type CommentState = {
-	feedbackComments: CommentData[];
-	commentReplies: CommentReplies[];
-	addCommentLoading: boolean;
-};
 
 type ProductFeedbackAction = {
 	type: string;
 	data: any;
 };
 
-const initialState: CommentState = {
+const initialState: CommentReducer = {
 	feedbackComments: [],
 	commentReplies: [],
 	addCommentLoading: false,
+	commentError: false,
+	commentErrMessage: "",
 };
 
 export const commentReducer = (
-	state: CommentState = initialState,
+	state: CommentReducer = initialState,
 	action: ProductFeedbackAction
 ) => {
 	switch (action.type) {
@@ -50,6 +37,21 @@ export const commentReducer = (
 			return {
 				...state,
 				addCommentLoading: true,
+			};
+
+		case actionTypes.COMMENT_ERROR:
+			return {
+				...state,
+				commentError: true,
+				addCommentLoading: false,
+				commentErrMessage: action.data,
+			};
+
+		case actionTypes.RESET_COMMENT_STATE:
+			return {
+				...state,
+				commentError: false,
+				commentErrMessage: "",
 			};
 
 		default:
