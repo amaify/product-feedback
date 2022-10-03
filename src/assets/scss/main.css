@@ -1368,6 +1368,7 @@ html {
 @media only screen and (min-width: 760px) {
   .wrapper {
     padding: 5.6em 3.9em;
+    height: 100%;
   }
 }
 

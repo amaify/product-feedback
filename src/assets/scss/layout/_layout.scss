@@ -6,6 +6,7 @@
 
 	@include responsive_layout(bp-sm) {
 		padding: 5.6em 3.9em;
+		height: 100%;
 	}
 
 	@include responsive_layout(bp-md) {
