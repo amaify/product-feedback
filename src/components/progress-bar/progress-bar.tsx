@@ -6,10 +6,6 @@ interface Props {
 
 function ProgressBar({ delay }: Props) {
 	const [width, setWidth] = React.useState<string | number>("");
-	React.useEffect(() => {
-		frame();
-		return () => cancelAnimationFrame(0);
-	}, []);
 
 	let endTime = Date.now() + delay;
 
@@ -19,6 +15,12 @@ function ProgressBar({ delay }: Props) {
 		if (timeLeft === 0) return;
 		requestAnimationFrame(frame);
 	};
+
+	React.useEffect(() => {
+		frame();
+		return () => cancelAnimationFrame(0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const containerStyles = {
 		height: 5,
