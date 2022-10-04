@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import CheckMark from "../../../assets/images/shared/icon-check.svg";
 
 interface DropdownPropList {

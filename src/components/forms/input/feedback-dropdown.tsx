@@ -1,5 +1,3 @@
-import React from "react";
-
 import CheckMark from "../../../assets/images/shared/icon-check.svg";
 import { ListOfArray } from "../../../utils/model";
 import { FeedbackDropdownProps } from "../../../type";
@@ -11,20 +9,6 @@ const selectOptions: ListOfArray[] = [
 	{ id: 3, text: "Enhancement" },
 	{ id: 4, text: "Bug" },
 ];
-
-// const editSelectOptions: ListOfArray[] = [
-// 	{ id: 0, text: "Suggestion" },
-// 	{ id: 1, text: "Planned" },
-// 	{ id: 2, text: "In-Progress" },
-// 	{ id: 3, text: "Live" },
-// ];
-
-// interface FeedbackDropdownProps {
-// 	activeElement: number | string;
-// 	activeTextElement: string;
-// 	displayElement: boolean;
-// 	onSelectItem: (option: { id: number; text: string }) => void;
-// }
 
 function FeedbackDropdown(props: FeedbackDropdownProps) {
 	return (

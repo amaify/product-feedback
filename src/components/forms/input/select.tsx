@@ -1,28 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import FeedbackDropdown from "./feedback-dropdown";
 
 import ArrowDown from "../../../assets/images/shared/icon-arrow-down.svg";
 import ArrowUp from "../../../assets/images/shared/icon-arrow-up.svg";
 import { InputSelectProps } from "../../../type";
 
-// interface InputSelectProps {
-// 	labelTitle: string;
-// 	labelDescription: string;
-// 	labelHtmlFor: string;
-// 	activeText: string;
-// 	activeClick: number | string;
-// 	onSelectItemHandler: (item: { id: number; text: string }) => void;
-// }
-
 function InputSelect(props: InputSelectProps) {
 	const [displayOptions, setDisplayOptions] = useState(false);
-	// const [activeClick, setActiveClick] = useState(0);
-	// const [activeText, setActiveText] = useState("Feature");
-
-	// const onSelectItemHandler = (item: { id: number; text: string }) => {
-	// 	setActiveClick(item.id);
-	// 	setActiveText(item.text);
-	// };
 
 	const onSelectOptionHandler = () => {
 		setDisplayOptions(!displayOptions);

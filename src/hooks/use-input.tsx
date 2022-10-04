@@ -31,7 +31,7 @@ function useInput(validateValue: (value: string) => boolean) {
 	});
 
 	const [isTouched, setIsTouched] = useState<boolean>(false);
-	const [maxCharacters, setMaxCharacter] = useState<number>(250);
+	const [maxCharacters] = useState<number>(250);
 	const [charactersLeft, setCharactersLeft] = useState<number>(250);
 
 	const [activeClick, setActiveClick] = useState(!editState ? 0 : NaN);

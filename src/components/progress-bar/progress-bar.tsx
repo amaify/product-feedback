@@ -5,7 +5,7 @@ interface Props {
 }
 
 function ProgressBar({ delay }: Props) {
-	const [width, setWidth] = React.useState<any>("");
+	const [width, setWidth] = React.useState<string | number>("");
 	React.useEffect(() => {
 		frame();
 		return () => cancelAnimationFrame(0);

@@ -1,6 +1,4 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-
-// import { productFeedbackReducer } from "./reducers/product-feedback";
 import {
 	productFeedbackReducer,
 	commentReducer,

@@ -11,13 +11,6 @@ const editSelectOptions: ListOfArray[] = [
 	{ id: 3, text: "Live" },
 ];
 
-// interface FeedbackDropdownProps {
-// 	activeElement: number | string;
-// 	activeTextElement: string;
-// 	displayElement: boolean;
-// 	onSelectItem: (option: { id: number; text: string }) => void;
-// }
-
 function EditDropdown(props: FeedbackDropdownProps) {
 	return (
 		<ul

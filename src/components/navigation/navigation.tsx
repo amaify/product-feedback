@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
-
 import NavigationSort from "./sort/navigation-sort";
 import Button from "../button/button";
-
 import IconSuggestion from "../../assets/images/suggestions/icon-suggestions.svg";
 import IconPlus from "../../assets/images/shared/icon-plus.svg";
 import IconUser from "../../assets/images/shared/icon-user.svg";
 import IconLogout from "../../assets/images/shared/icon-logout.svg";
-
 import { FeedbackProps, RootState } from "../../type";
 import { LogoutUser } from "../../store/utils/authentication";
 

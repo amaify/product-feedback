@@ -224,26 +224,10 @@ function Comments({
 														</div>
 
 														<div className="comments-comment__contents">
-															{/* <p className="comments-comment__contents--name">
-																{reps.creatorName}{" "}
-															</p>
-															<p className="comments-comment__contents--username">
-																<span>@</span>
-																<span>{reps.creatorUsername}</span>
-															</p> */}
 															<p className="comments-comment__contents--comment">
 																<span>@</span>
 																<span>{reps.replyingTo}</span> {reps.content}
 															</p>
-
-															{/* {isAuth && (
-																<p
-																	className="comments-comment__contents--replyBtn"
-																	onClick={() => replyToggleHandler(reps._id)}
-																>
-																	Reply
-																</p>
-															)} */}
 
 															{reply === reps._id ? (
 																<>

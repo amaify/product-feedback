@@ -1,11 +1,9 @@
-import React from "react";
 import Button from "../button/button";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cancelDelete } from "../../store/actions/creators/product-feedback";
 import { deleteProductFeedback } from "../../store/utils/feedbackUtil";
 import { RootState } from "../../type";
-// import { FeedbackProps } from "../../type";
 
 type deleteContent = {
 	id: string;
