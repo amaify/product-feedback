@@ -13,7 +13,7 @@
 /build
 
 # Files
-/src/assets/images
+# /src/assets/images
 
 # misc
 .DS_Store
