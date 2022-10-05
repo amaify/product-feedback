@@ -108,6 +108,7 @@ export const replyToComment = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					dispatch(getReplies(prodId));
+					return;
 				}
 				dispatch(commentError(responseData.message));
 				setTimeout(() => {
@@ -138,6 +139,7 @@ export const replyToReply = (
 			.then((responseData) => {
 				if (responseData.statusCode === 201) {
 					dispatch(getReplies(commentId));
+					return;
 				}
 				dispatch(commentError(responseData.message));
 				setTimeout(() => {

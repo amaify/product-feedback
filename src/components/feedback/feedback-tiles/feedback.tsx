@@ -66,14 +66,14 @@ function Feedback(props: StateProps) {
 					flashType="feedback"
 				/>
 			)}
-			{props.editSuccessful && (
+			{/* {props.editSuccessful && (
 				<FlashMessage
 					status="success"
 					text="Update Action Successful!"
 					delay={6000}
 					flashType="feedback"
 				/>
-			)}
+			)} */}
 			{Array.isArray(renderedFeedbacks) && !renderedFeedbacks.length ? (
 				<h1 style={{ fontSize: "2em", color: "#373f68", textAlign: "center" }}>
 					<span style={{ display: "block" }}>
